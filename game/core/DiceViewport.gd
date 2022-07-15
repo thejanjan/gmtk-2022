@@ -2,7 +2,7 @@ extends Viewport
 
 
 # Declare member variables here. Examples:
-onready var screen = self.get_parent().get_node("Screen")
+onready var screen = self.get_parent()
 
 
 # Called when the node enters the scene tree for the first time.

@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://game/base/PlayerProjectionBase.gd" type="Script" id=1]
+[ext_resource path="res://models/dice/DiceModel.tscn" type="PackedScene" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 5, 1, 5 )
+
+[node name="PlayerProjectionBase" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="DiceModel" parent="." instance=ExtResource( 2 )]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.822164, 0.569251, 0, -0.569251, 0.822164, 0, 3.51855, 5.10661 )
+projection = 1
+fov = 78.0869
+size = 19.1414
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 7.15988, 0 )
+light_bake_mode = 2
+spot_range = 7.92305
+spot_angle = 27.5868
+
+[node name="BoxedCollisions" type="Spatial" parent="."]
+
+[node name="Floor" type="StaticBody" parent="BoxedCollisions"]
+
+[node name="CollisionShape" type="CollisionShape" parent="BoxedCollisions/Floor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25, 0 )
+shape = SubResource( 1 )
+
+[node name="Back" type="StaticBody" parent="BoxedCollisions"]
+transform = Transform( 1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BoxedCollisions/Back"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
+shape = SubResource( 1 )
+
+[node name="Front" type="StaticBody" parent="BoxedCollisions"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BoxedCollisions/Front"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
+shape = SubResource( 1 )
+
+[node name="Ceiling" type="StaticBody" parent="BoxedCollisions"]
+transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BoxedCollisions/Ceiling"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
+shape = SubResource( 1 )
+
+[node name="Left" type="StaticBody" parent="BoxedCollisions"]
+transform = Transform( -4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BoxedCollisions/Left"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
+shape = SubResource( 1 )
+
+[node name="Right" type="StaticBody" parent="BoxedCollisions"]
+transform = Transform( -4.37114e-08, 1, -1.19249e-08, 0, 1.19249e-08, 1, 1, 4.37114e-08, -5.21253e-16, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="BoxedCollisions/Right"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
+shape = SubResource( 1 )
