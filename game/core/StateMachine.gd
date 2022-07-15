@@ -4,11 +4,8 @@ class_name StateMachine
 #Send out a signal if we change states, might be needed? Enemy who reacts to this too?
 signal change_state(state_name);
 
-#Customize initial state
-export var initial_state := NodePath();
-
 #When game starts up, set the initial state
-onready var state: State = get_node(initial_state);
+onready var state: State = get_parent();
 
 #When we're ready, set everything up
 func _ready():
