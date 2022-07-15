@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://game/base/PlayerBase.gd" type="Script" id=1]
+[ext_resource path="res://models/dice/DiceModel.tscn" type="PackedScene" id=2]
+
+[node name="PlayerBase" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="dice" parent="." instance=ExtResource( 2 )]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.919801, 0.392385, 0, -0.392385, 0.919801, 0, 2, 4 )
+fov = 78.0869
