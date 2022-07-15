@@ -10,10 +10,10 @@ script = ExtResource( 1 )
 [node name="GameTitle" type="RichTextLabel" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -54.0
-margin_top = 150.0
-margin_right = 43.0
-margin_bottom = 168.0
+margin_left = -47.0
+margin_top = 100.0
+margin_right = 47.0
+margin_bottom = 115.0
 text = "ROLL AND DIE"
 
 [node name="ButtonPlay" type="Button" parent="."]
