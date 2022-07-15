@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://models/dice/dice.glb" type="PackedScene" id=1]
+[ext_resource path="res://models/dice/DiceModelInterface.gd" type="Script" id=2]
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_unshaded = true
+params_cull_mode = 1
+params_grow = true
+params_grow_amount = 0.04
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=1]
+next_pass = SubResource( 2 )
+params_diffuse_mode = 4
+params_specular_mode = 3
+albedo_color = Color( 0.713726, 0.713726, 0.713726, 1 )
+roughness = 0.04
+clearcoat_enabled = true
+clearcoat = 1.0
+clearcoat_gloss = 0.5
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[node name="dice" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Icosphere" parent="." index="0"]
+material/0 = SubResource( 1 )
+material/1 = SubResource( 3 )

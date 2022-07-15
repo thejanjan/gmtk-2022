@@ -1,3 +1,6 @@
+extends Node
+
+
 """
 A preload file for storing several different types of enums.
 """
