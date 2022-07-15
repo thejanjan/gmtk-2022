@@ -15,7 +15,7 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 0.822164, 0.569251, 0, -0.569251, 0.822164, 0, 3.51855, 5.10661 )
 projection = 1
 fov = 78.0869
-size = 19.1414
+size = 5.0
 
 [node name="SpotLight" type="SpotLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 7.15988, 0 )
