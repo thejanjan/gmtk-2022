@@ -1,15 +1,7 @@
-extends KinematicBody
+extends RigidBody
 
-
-const JUMP_VELOCITY = 8.5
-
-var movement_dir = Vector3()
-var linear_velocity = Vector3()
-var jumping = false
-var prev_shoot = false
-var shoot_blend = 0
-
-onready var gravity = Vector3(0, 0, 5)
+const JUMP_VELOCITY = 20
+var jumping = 0;
 
 const positional_transforms = {
 	Enum.DiceSide.ONE:   Basis(Vector3(0, 0, 0)),
@@ -20,37 +12,23 @@ const positional_transforms = {
 	Enum.DiceSide.SIX:   Basis(Vector3(0, 0, PI))
 }
 
-
 export var current_side = Enum.DiceSide.ONE setget set_dice_side
 
+onready var DiceModel = $Icosphere
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.set_dice_side(self.current_side)
+	self.set_axis_lock(PhysicsServer.BODY_AXIS_LINEAR_X + PhysicsServer.BODY_AXIS_LINEAR_Z, true)
 
 
 func set_dice_side(side):
 	self.transform.basis = positional_transforms.get(side)
-	
-	
+
+
 func _physics_process(delta):
-	linear_velocity += gravity * delta
-
-	var vv = linear_velocity.y # Vertical velocity.
-	var hv = Vector3(linear_velocity.x, 0, linear_velocity.z) # Horizontal velocity.
-
-	var hdir = hv.normalized() # Horizontal direction.
-	var hspeed = hv.length() # Horizontal speed.
-
-	# Player input.
 	var jump_attempt = Input.is_action_pressed("move_roll")
-
-	if not jumping and jump_attempt:
-		print("WOW")
-		vv = JUMP_VELOCITY
-		jumping = true
-	linear_velocity = hv + Vector3.UP * vv
-	linear_velocity = move_and_slide(linear_velocity, -gravity.normalized())
-	if self.translation.z < 0:
-		jumping = false
-		self.translation.z = 0
+	if jump_attempt and self.translation.y < -0.045 and jumping < 0:
+		self.apply_impulse(Vector3(0, 0, 0), Vector3(0, JUMP_VELOCITY, 0))
+		jumping = 10
+	jumping -= 1
