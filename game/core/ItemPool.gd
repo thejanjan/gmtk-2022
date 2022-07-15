@@ -57,5 +57,5 @@ func test_dumb():
 	add_item(5, 1)
 	add_item(6, 2)
 	
-	for i in range(8):
+	for _i in range(8):
 		print(pop_random_item())
