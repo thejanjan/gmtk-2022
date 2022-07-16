@@ -78,7 +78,7 @@ func _physics_process(delta):
 	else:
 		var minvol = -20;			
 		var maxvol = 0;			
-		ConcreteStream.volume_db = minvol + (abs(minvol)+abs(maxvol)) * min(_stats._speed, totalspeed) / _stats._speed;
+		var target_volume = minvol + (abs(minvol)+abs(maxvol)) * min(_stats._speed, totalspeed) / _stats._speed;
 		concrete_volume += 8
 		if concrete_volume > target_volume:
 			concrete_volume = target_volume
