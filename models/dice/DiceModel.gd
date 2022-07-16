@@ -28,7 +28,7 @@ func _ready():
 	self.tween_pip_color(
 		dice_color,
 		pip_color,
-		8.0
+		0.5
 	)
 
 
@@ -40,10 +40,12 @@ func _physics_process(delta):
 		var jump_attempt = Input.is_action_pressed("move_roll")
 		if jump_attempt:
 			self.apply_impulse(Vector3(0, 0, 0), Vector3(0, JUMP_VELOCITY, 0))
-			jumping = 10
+			jumping = 20
 			in_jump = true
 			emit_signal("jump_start")
 	jumping -= 1
+	if jumping == 1:
+		self._do_spin()
 
 
 func get_active_pip():
@@ -54,7 +56,7 @@ func get_active_pip():
 	"""
 	var best_angle = 1000
 	var best_pip = 0
-	var our_quat = self.transform.basis.get_rotation_quat().get_euler()
+	var our_quat = DiceModel.transform.basis.get_rotation_quat().get_euler()
 	our_quat.y = 0
 	our_quat = Quat(our_quat)
 	for dice_side in self.positional_transforms.keys():
@@ -82,6 +84,41 @@ func handle_speed(speed: Vector2):
 	
 	# Schlorp schlorp schlorp
 	DiceModel.transform = our_quat.slerp(goal_quat, 0.1)
+
+"""
+Do Spin!!
+"""
+
+func get_valid_dice_sides() -> Array:
+	var ret_list = [
+		Enum.DiceSide.ONE,
+		Enum.DiceSide.TWO,
+		Enum.DiceSide.THREE,
+		Enum.DiceSide.FOUR,
+		Enum.DiceSide.FIVE,
+		Enum.DiceSide.SIX,
+	]
+	ret_list.erase(self.get_active_pip())
+	return ret_list
+
+func _do_spin():
+	# We gotta pick a side and then do it.
+	var dice_side = Random.choice(self.get_valid_dice_sides())
+	var goal_quat = self.positional_transforms[dice_side]
+	goal_quat = goal_quat.get_euler()
+	goal_quat.y = DiceModel.transform.basis.get_rotation_quat().y
+	goal_quat = Quat(goal_quat)
+	
+	# Begin lerping to this rotation quat.
+	tween.interpolate_method(
+		self, "_lerp_rotation", DiceModel.transform, Transform(goal_quat, DiceModel.translation),
+		0.5, Tween.TRANS_ELASTIC, Tween.EASE_OUT
+	)
+	tween.start()
+	
+func _lerp_rotation(new_transform):
+	DiceModel.transform = new_transform
+	
 
 """
 Handy scripts for the pip transitions
