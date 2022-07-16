@@ -19,7 +19,7 @@ onready var ESM = $EquipmentStateMachine
 var SideEquipment = {
 	Enum.DiceSide.ONE : Enum.ItemType.BASIC_DAMAGE,
 	Enum.DiceSide.TWO : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.THREE : Enum.ItemType.OIL_SLICK,
+	Enum.DiceSide.THREE : Enum.ItemType.BASIC_DAMAGE,
 	Enum.DiceSide.FOUR : Enum.ItemType.OIL_SLICK,
 	Enum.DiceSide.FIVE : Enum.ItemType.OIL_SLICK,
 	Enum.DiceSide.SIX : Enum.ItemType.OIL_SLICK
@@ -27,10 +27,11 @@ var SideEquipment = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_stats._speed = 300;
+	_stats._speed = 30;
 	_stats._damage = 1;
 	_stats._friction = 3;
 	_stats._acceleration = 6;
+	_stats._bounciness = 100;
 	velocity = Vector2(0,0);
 	#ESM.transition("PipDamage");
 	self.get_rigid_body().connect("jump_start", self, "on_jump")
@@ -85,9 +86,17 @@ func _physics_process(delta):
 		if not ConcreteStream.playing:
 			ConcreteStream.playing = true;
 
-				
+	# Slide or bounce
+	if _stats._bounciness <= 1:
+		velocity = move_and_slide(velocity)
+	else:
+		var col = move_and_collide(velocity)
+		if col != null:
+			velocity = velocity.bounce(col.normal)
+			velocity.x *= (_stats._bounciness/100.0)
+			velocity.y *= (_stats._bounciness/100.0)
+	
 	# Calculate our acceleration.
-	velocity = move_and_slide(velocity)
 	var acceleration = velocity - last_veloc
 	last_veloc = velocity
 	_handle_acceleration(acceleration)
