@@ -2,6 +2,7 @@ extends RigidBody
 
 const JUMP_VELOCITY = 20
 var jumping = 0;
+var current_speed = Vector2(0, 0)
 
 const positional_transforms = {
 	Enum.DiceSide.ONE:   Quat(Vector3(0, 0, 0)),
@@ -30,7 +31,7 @@ func _ready():
 
 func _physics_process(delta):
 	var jump_attempt = Input.is_action_pressed("move_roll")
-	if jump_attempt and self.translation.y < -0.045 and jumping < 0:
+	if jump_attempt and self.translation.y <= 0 and jumping < 0:
 		self.apply_impulse(Vector3(0, 0, 0), Vector3(0, JUMP_VELOCITY, 0))
 		jumping = 10
 	jumping -= 1
@@ -54,6 +55,22 @@ func get_active_pip():
 			best_angle = this_distance
 			best_pip = dice_side
 	return best_pip
+
+"""
+Handle our current speed
+"""
+
+func handle_speed(speed: Vector2):
+	"""Handles rotating the dice depending on our current speed."""
+	current_speed = speed
+	var current_angle = speed.angle()  # in radians
+	var our_quat = DiceModel.transform.basis.get_rotation_quat()
+	var goal_quat = our_quat.get_euler()
+	goal_quat.y = -current_angle  # 180 * (current_angle / PI)
+	goal_quat = Quat(goal_quat)
+	
+	# Schlorp schlorp schlorp
+	DiceModel.transform = our_quat.slerp(goal_quat, 0.1)
 
 """
 Handy scripts for the pip transitions
