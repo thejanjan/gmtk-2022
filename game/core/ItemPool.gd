@@ -1,5 +1,7 @@
 extends Node
 
+var Item = load("res://game/core/Item.gd")
+
 class Element:
 	var _item_id
 	var _weight
@@ -12,12 +14,13 @@ var _items = [];
 var _rarity_weights = [25, 5, 1];
 var _total_weight = 0;
 
+var _item_schema = [];
 var _rng = RandomNumberGenerator.new()
 
 func _ready():
 	_rng.randomize()
 	
-	test_dumb()
+	populate()
 
 func add_item(item_id, rarity):
 	var weight = rarity_to_weight(rarity)
@@ -28,8 +31,7 @@ func remove_item(index):
 	var item = _items.pop_at(index)
 	_total_weight -= item._weight
 
-# Return the item ID of a random item.
-func pop_random_item():
+func pop_random_item_id():
 	var running_weight = _rng.randi_range(0, _total_weight)
 	#for item in _items:
 	for i in range(_items.size()):
@@ -41,6 +43,9 @@ func pop_random_item():
 			running_weight -= item._weight
 	
 	return item_id_when_pool_is_empty()
+	
+func pop_random_item():
+	return _item_schema[pop_random_item_id()]
 
 # Bigger rarity values mean that the item is given less weight in the item pool.
 func rarity_to_weight(rarity):
@@ -48,6 +53,14 @@ func rarity_to_weight(rarity):
 
 func item_id_when_pool_is_empty():
 	return 0
+	
+func populate():
+	var item = Item.new("Cool Speed Boost Item", 1)
+	item._stats._speed = 2.0;
+	_item_schema.append(item)
+	
+	for i in range(_item_schema.size()):
+		add_item(i, _item_schema[i]._rarity)
 
 func test_dumb():
 	add_item(1, 1)
@@ -58,4 +71,4 @@ func test_dumb():
 	add_item(6, 2)
 	
 	for _i in range(8):
-		print(pop_random_item())
+		print(pop_random_item_id())
