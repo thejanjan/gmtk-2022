@@ -7,7 +7,7 @@ generating temporary, finite nodes for equipment.
 """
 
 
-func transition(item_type, cleanup_state: bool = true) -> State:
+func transition(item_type, dice_side: int = 0, cleanup_state: bool = true) -> State:
 	# Exit our old state.
 	if self.state != null:
 		self.state.exit();
@@ -16,6 +16,7 @@ func transition(item_type, cleanup_state: bool = true) -> State:
 	# Make the new node.
 	var equipment_node = Database.get_item_data(item_type).load_resource().instance() as State
 	self.add_child(equipment_node)
+	equipment_node.pip = float(dice_side)
 	self.state = equipment_node;
 	
 	# Enter the new state.
@@ -33,3 +34,8 @@ func transition(item_type, cleanup_state: bool = true) -> State:
 		if old_state != null:
 			self.remove_child(old_state)
 		return old_state
+
+
+func get_player_pip():
+	var player = GameState.get_player()
+	return player.get_active_pip()

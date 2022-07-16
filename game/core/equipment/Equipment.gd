@@ -2,13 +2,13 @@ class_name Equipment
 extends State
 
 # Try to keep all the actual behavior in here so that it's easier to add variants
+var pip = null
+var timers = {}
 
 
 func damageNearbyEnemy(furthest_distance = 50000):
 	#PAIN
 	var player = self.get_player()
-	var pip = player.get_active_pip();
-	
 	var all_enemy = get_tree().get_nodes_in_group("enemy");
 	var close_enemy = null;
 	
@@ -26,7 +26,7 @@ func damageNearbyEnemy(furthest_distance = 50000):
 	
 	#Do damage equal to current pip
 	if (close_enemy != null):
-		close_enemy.lose_health(pip + 1);
+		close_enemy.lose_health(self.pip + 1);
 		print(pip);
 
 # Probably shouldn't use this directly, since it has no behavior for undoing the change
@@ -41,3 +41,44 @@ func tempStatChange(stat, multiplier, secondDuration):
 	_statChange(stat, multiplier)
 	yield(get_tree().create_timer(secondDuration), "timeout")
 	_statChange(stat, 1.0/float(multiplier))
+
+
+"""
+Timer Logic
+"""
+
+func start_timer(timer_key, duration: float, callback: FuncRef, extra_args: Array = []):
+	"""
+	Starts a timer.
+	"""
+	# Set the timer key.
+	if timer_key in self.timers.keys():
+		# Do not run timers of the same key!
+		push_error("Do not run timers of the same key!")
+	
+	self.timers[timer_key] = [callback, extra_args]
+	
+	# Create a timer.
+	var timer = get_tree().create_timer(duration)
+	
+	# Perform it.
+	yield(timer, "timeout")
+	
+	# Perform callback.
+	self.stop_timer(timer_key, true)
+	
+func stop_timer(timer_key, perform_callback: bool = true):
+	"""
+	Stops a timer, if it is still going.
+	Can choose to perform the callback.
+	"""
+	if timer_key in self.timers.keys():
+		# The timer is still active, so we can kill it.
+		var timer_data = self.timers[timer_key] as Array
+		self.timers.erase(timer_key)
+		
+		# Perform the callback if we have not yet already.
+		if perform_callback:
+			var callback = timer_data[0] as FuncRef
+			var extra_args = timer_data[1] as Array
+			callback.call_funcv(extra_args)

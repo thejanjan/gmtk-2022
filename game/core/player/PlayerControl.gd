@@ -147,5 +147,5 @@ Listen for a new dice side
 
 func on_new_dice(side):
 	var item_id = SideEquipment.get(side)
-	self.ESM.transition(item_id)
+	self.ESM.transition(item_id, side)
 	emit_signal("on_new_dice", side, item_id)
