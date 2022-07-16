@@ -1,10 +1,14 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://game/core/GridManager.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://game/core/player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/core/TileMapCheckered.gd" type="Script" id=4]
 [ext_resource path="res://game/core/TileManager.gd" type="Script" id=5]
 [ext_resource path="res://textures/tiles/autotile_template_3x3_minimal_topdown_walls_thick.png" type="Texture" id=7]
+
+[sub_resource type="ViewportTexture" id=24]
+viewport_path = NodePath("Viewport")
 
 [sub_resource type="ConvexPolygonShape2D" id=5]
 points = PoolVector2Array( 48, 88, 16, 88, 16, 16, 48, 16 )
@@ -203,6 +207,8 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 88, 0, 88 )
 } ]
 0/z_index = 0
 
+[sub_resource type="TileSet" id=25]
+
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -216,6 +222,7 @@ __meta__ = {
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 579.245, 307.313 )
+texture = SubResource( 24 )
 
 [node name="TileManager" type="TileMap" parent="."]
 tile_set = SubResource( 4 )
@@ -225,3 +232,8 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="FloorTileMap" type="TileMap" parent="TileManager"]
+tile_set = SubResource( 25 )
+format = 1
+script = ExtResource( 4 )

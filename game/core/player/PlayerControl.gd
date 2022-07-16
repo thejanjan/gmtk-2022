@@ -7,14 +7,17 @@ onready var ConcreteStream: AudioStreamPlayer = $ConcreteStream;
 var _stats = PlayerStats.new()
 var velocity: Vector2;
 # The higher these are, the slower the speed changes to nothing/max speed respectively
-var friction = 10;
-var acceleration = 90;
+var friction = 3;
+var acceleration = 6;
+
+var last_veloc = Vector2(0.0, 0.0);
+var last_accel = Vector2(0.0, 0.0);
 
 onready var PlayerSprite = $PlayerSprite
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_stats._speed = 900;
+	_stats._speed = 200;
 	_stats._damage = 1;
 	velocity = Vector2(0,0);
 	print(ConcreteStream.autoplay);
@@ -52,16 +55,34 @@ func _physics_process(delta):
 		if not ConcreteStream.playing:
 			ConcreteStream.playing = true;
 
+				
+	# Calculate our acceleration.
 	velocity = move_and_slide(velocity)
+	var acceleration = velocity - last_veloc
+	last_veloc = velocity
+	_handle_acceleration(acceleration)
+	
+	
 	for i in get_slide_count():
 			var collision = get_slide_collision(i)
-			print("I collided with ", collision.collider.name)
+			# print("I collided with ", collision.collider.name)
 	# self.translate()
 
 func apply_item(item):
 	_stats._speed += item._stats._speed
 	_stats._damage += item._stats._damage
+	
+	
+func _handle_acceleration(accel: Vector2):
+	"""Handles acceleration."""
+	var rigid_body = self.get_rigid_body()
+	# rigid_body.add_force(Vector3(accel.x, 0, accel.y), Vector3.UP)
+	rigid_body.handle_speed(velocity)
 
 
 func get_player_sprite():
 	return PlayerSprite
+	
+	
+func get_rigid_body():
+	return get_player_sprite().get_player_viewport().get_player_base().get_dice_model()

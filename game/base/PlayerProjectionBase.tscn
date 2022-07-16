@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://game/base/PlayerProjectionBase.gd" type="Script" id=1]
 [ext_resource path="res://models/dice/DiceModel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://textures/player/dropshadow.png" type="Texture" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2, 1, 2 )
@@ -26,3 +27,7 @@ shape = SubResource( 1 )
 [node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 37.5669, 0 )
 omni_range = 42.4747
+
+[node name="DropShadow" type="Sprite3D" parent="."]
+transform = Transform( -3.49691e-07, 16, -4.37114e-08, 0, -6.99382e-07, -1, -8, -6.99382e-07, 1.91069e-15, 0, -1.3, 0 )
+texture = ExtResource( 3 )

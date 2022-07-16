@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/black_reversi.png-3c8b4b12db2b8317ef40b5403e708467.stex"
+path="res://.import/pedestal.png-086484d1625debae42c6c31bc92a2fe3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/black_reversi.png"
-dest_files=[ "res://.import/black_reversi.png-3c8b4b12db2b8317ef40b5403e708467.stex" ]
+source_file="res://textures/environmental/pedestal/pedestal.png"
+dest_files=[ "res://.import/pedestal.png-086484d1625debae42c6c31bc92a2fe3.stex" ]
 
 [params]
 

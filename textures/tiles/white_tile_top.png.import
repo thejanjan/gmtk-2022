@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/white_reversi.png-0384c5537fc9fa9f04588828dc8e4239.stex"
+path="res://.import/white_tile_top.png-45ca35897c4ef5692eabfded26de07ac.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/white_reversi.png"
-dest_files=[ "res://.import/white_reversi.png-0384c5537fc9fa9f04588828dc8e4239.stex" ]
+source_file="res://textures/tiles/white_tile_top.png"
+dest_files=[ "res://.import/white_tile_top.png-45ca35897c4ef5692eabfded26de07ac.stex" ]
 
 [params]
 
