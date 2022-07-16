@@ -15,7 +15,7 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 0.822164, 0.569251, 0, -0.569251, 0.822164, 0, 3.51855, 5.10661 )
 projection = 1
 fov = 78.0869
-size = 5.0
+size = 25.0
 
 [node name="Floor" type="StaticBody" parent="."]
 
