@@ -1,4 +1,4 @@
-extends "res://enemytemplate.gd"
+extends "res://game/enemies/enemytemplate.gd"
 
 onready var tween = $Tween;
 
