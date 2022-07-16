@@ -23,7 +23,6 @@ func _physics_process(delta):
 	var jump_attempt = Input.is_action_pressed("move_roll")
 	if jump_attempt and self.translation.y < -0.045 and jumping < 0:
 		self.apply_impulse(Vector3(0, 0, 0), Vector3(0, JUMP_VELOCITY, 0))
-		self.apply_torque_impulse(Vector3(5, 3, 0.5))
 		jumping = 10
 	jumping -= 1
 
