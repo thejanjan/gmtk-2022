@@ -5,7 +5,7 @@
 [ext_resource path="res://game/core/enemies/Pawn.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 13, 22 )
+extents = Vector2( 14, 24 )
 
 [node name="Pawn" type="RigidBody2D" groups=["enemy"]]
 mode = 1
@@ -16,14 +16,14 @@ script = ExtResource( 3 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 9, 15 )
+position = Vector2( 0, -18 )
 shape = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 8.75, 15 )
-scale = Vector2( 3.5, 3.5 )
+position = Vector2( 2, -18 )
+scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
