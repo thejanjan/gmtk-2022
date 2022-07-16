@@ -14,12 +14,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game/core/player/EquipmentStateMachine.gd"
 }, {
-"base": "Node2D",
+"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://game/core/State.gd"
 }, {
-"base": "Node2D",
+"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://game/core/StateMachine.gd"
@@ -38,11 +38,12 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Enum="*res://autoload/Enum.gd"
-GameState="*res://autoload/GameState.gd"
-Random="*res://autoload/Random.gd"
-Database="*res://autoload/Database.gd"
-ItemPool="*res://autoload/ItemPool.gd"
+Enum="*res://onload/Enum.gd"
+DiceSide="*res://onload/DiceSide.gd"
+GameState="*res://onload/GameState.gd"
+Random="*res://onload/Random.gd"
+Database="*res://onload/Database.gd"
+ItemPool="*res://onload/ItemPool.gd"
 
 [input]
 
