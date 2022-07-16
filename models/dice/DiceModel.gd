@@ -27,7 +27,7 @@ func _physics_process(delta):
 	jumping -= 1
 
 
-func _get_active_pip():
+func get_active_pip():
 	"""
 	Return the pip on the top of the dice.
 	Since this is based on the DiceSide enum,

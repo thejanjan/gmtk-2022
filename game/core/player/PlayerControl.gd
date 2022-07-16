@@ -1,9 +1,11 @@
 extends KinematicBody2D
 
-var Item = load("res://game/core/Item.gd")
-var PlayerStats = load("res://game/core/player/PlayerStats.gd")
+const Item = preload("res://game/core/Item.gd")
+const PlayerStats = preload("res://game/core/player/PlayerStats.gd")
 
 var _stats = PlayerStats.new()
+
+onready var PlayerSprite = $PlayerSprite
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,3 +29,7 @@ func _physics_process(delta):
 func apply_item(item):
 	_stats._speed += item._stats._speed
 	_stats._damage += item._stats._damage
+
+
+func get_player_sprite():
+	return PlayerSprite
