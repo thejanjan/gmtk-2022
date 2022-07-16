@@ -5,32 +5,40 @@ class_name StateMachine
 signal change_state(state_name);
 
 #When game starts up, set the initial state
-onready var state: State = get_parent();
+onready var state: State = null;
 
 #When we're ready, set everything up
 func _ready():
 	for child in get_children():
 		child.state_machine = self;
-	state.enter();
+	if state != null:
+		state.enter();
 
 #Pass input events -only- to the current active state
 func _unhandled_input(event: InputEvent):
-	state.handle_input(event);
+	if state != null:
+		state.handle_input(event);
 	
 #Pass update only to current active state
 func _process(delta: float):
-	state.update(delta);
+	if state != null:
+		state.update(delta);
 	
 #Physics process only to current active state
 func _physics_process(delta: float):
-	state.physics_update(delta);
+	if state != null:
+		state.physics_update(delta);
 	
 #Transition to new state
 func transition(target_state: String):
 	if not has_node(target_state):
 		return;
-		
-	state.exit();
+	
+	if state != null:
+		state.exit();
 	state = get_node(target_state);
-	state.enter();
-	emit_signal("change_state", state.name);
+	if state != null:
+		state.enter();
+		emit_signal("change_state", state.name);
+	else:
+		emit_signal("change_state", null);

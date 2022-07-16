@@ -14,3 +14,9 @@ enum DiceSide {
 	FIVE,
 	SIX
 }
+
+enum ItemType {
+	NIL = -1,
+	TEST
+}
+
