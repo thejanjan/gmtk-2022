@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game/base/EnemyBase.gd"
 }, {
+"base": "State",
+"class": "Equipment",
+"language": "GDScript",
+"path": "res://game/core/equipment/Equipment.gd"
+}, {
 "base": "StateMachine",
 "class": "EquipmentStateMachine",
 "language": "GDScript",
@@ -29,12 +34,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game/core/equipment/RubberOfTheSoul.gd"
 }, {
-"base": "Node",
+"base": "Node2D",
 "class": "State",
 "language": "GDScript",
 "path": "res://game/core/State.gd"
 }, {
-"base": "Node",
+"base": "Node2D",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://game/core/StateMachine.gd"
@@ -46,6 +51,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "EnemyBase": "",
+"Equipment": "",
 "EquipmentStateMachine": "",
 "OilSlick": "",
 "RubberOfTheSoul": "",

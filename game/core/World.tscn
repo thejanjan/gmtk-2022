@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://game/core/GridManager.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://textures/tiles/autotile_template_3x3_minimal_topdown_walls_thick.png" type="Texture" id=7]
 [ext_resource path="res://game/core/enemies/King.tscn" type="PackedScene" id=8]
 [ext_resource path="res://game/core/enemies/Queen.tscn" type="PackedScene" id=9]
+[ext_resource path="res://game/core/enemies/Rook.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ConvexPolygonShape2D" id=5]
 points = PoolVector2Array( 48, 88, 16, 88, 16, 16, 48, 16 )
@@ -245,3 +246,6 @@ position = Vector2( 676, 328 )
 
 [node name="Queen" parent="." instance=ExtResource( 9 )]
 position = Vector2( 795, 228 )
+
+[node name="Rook" parent="." instance=ExtResource( 10 )]
+position = Vector2( 483, 387 )
