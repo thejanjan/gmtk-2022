@@ -19,9 +19,9 @@ const positional_transforms = {
 }
 
 onready var tween = $Tween
-onready var DiceModel = $Icosphere
-onready var dice_color = DiceModel.get_surface_material(0).get_albedo()
-onready var pip_color = DiceModel.get_surface_material(1).get_albedo()
+onready var DiceContainer = $IcosphereContainer
+onready var dice_color = self.get_root_die().get_surface_material(0).get_albedo()
+onready var pip_color = self.get_root_die().get_surface_material(1).get_albedo()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -60,7 +60,7 @@ func get_active_pip():
 	"""
 	var best_angle = 1000
 	var best_pip = 0
-	var our_quat = DiceModel.transform.basis.get_rotation_quat().get_euler()
+	var our_quat = self.get_root_die().transform.basis.get_rotation_quat().get_euler()
 	our_quat.y = 0
 	our_quat = Quat(our_quat)
 	for dice_side in self.positional_transforms.keys():
@@ -70,6 +70,14 @@ func get_active_pip():
 			best_angle = this_distance
 			best_pip = dice_side
 	return best_pip
+	
+
+func get_dice_models():
+	return self.DiceContainer.get_dice_models()
+	
+	
+func get_root_die():
+	return self.DiceContainer.get_root_die()
 
 """
 Handle our current speed
@@ -79,7 +87,7 @@ func handle_speed(speed: Vector2):
 	"""Handles rotating the dice depending on our current speed."""
 	current_speed = speed
 	var current_angle = speed.angle()  # in radians
-	var our_quat = DiceModel.transform.basis.get_rotation_quat()
+	var our_quat = self.get_root_die().transform.basis.get_rotation_quat()
 	var goal_quat = our_quat
 	if speed.length() > 0.1:
 		goal_quat = our_quat.get_euler()
@@ -87,7 +95,8 @@ func handle_speed(speed: Vector2):
 		goal_quat = Quat(goal_quat)
 	
 	# Schlorp schlorp schlorp
-	DiceModel.transform = our_quat.slerp(goal_quat, 0.1)
+	for DiceModel in self.get_dice_models():
+		DiceModel.transform = our_quat.slerp(goal_quat, 0.1)
 
 """
 Do Spin!!
@@ -111,18 +120,20 @@ func _do_spin():
 	emit_signal("side_swapped", dice_side)
 	var goal_quat = self.positional_transforms[dice_side]
 	goal_quat = goal_quat.get_euler()
-	goal_quat.y = DiceModel.transform.basis.get_rotation_quat().y
+	goal_quat.y = self.get_root_die().transform.basis.get_rotation_quat().y
 	goal_quat = Quat(goal_quat)
 	
 	# Begin lerping to this rotation quat.
-	tween.interpolate_method(
-		self, "_lerp_rotation", DiceModel.transform, Transform(goal_quat, DiceModel.translation),
-		0.5, Tween.TRANS_ELASTIC, Tween.EASE_OUT
-	)
+	for DiceModel in self.get_dice_models():
+		tween.interpolate_method(
+			self, "_lerp_rotation", DiceModel.transform, Transform(goal_quat, DiceModel.translation),
+			0.5, Tween.TRANS_ELASTIC, Tween.EASE_OUT
+		)
 	tween.start()
 	
 func _lerp_rotation(new_transform):
-	DiceModel.transform = new_transform
+	for DiceModel in self.get_dice_models():
+		DiceModel.transform = new_transform
 	
 
 """
@@ -136,14 +147,23 @@ func revert_pip_color():
 
 func set_pip_color(color: Color):
 	"""Sets the pip color of the dice."""
-	DiceModel.get_surface_material(1).set_albedo(color)
+	for DiceModel in self.get_dice_models():
+		DiceModel.get_surface_material(1).set_albedo(color)
 
 
 func tween_pip_color(color_a: Color, color_b: Color, duration: float = 1.0):
-	tween.interpolate_property(
-		self.DiceModel.get_surface_material(1),
-		"albedo_color",
-		color_a, color_b,
-		duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT 
-	)
+	for DiceModel in self.get_dice_models():
+		tween.interpolate_property(
+			DiceModel.get_surface_material(1),
+			"albedo_color",
+			color_a, color_b,
+			duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT 
+		)
 	tween.start()
+
+
+func set_pip_bonus_count(val: int):
+	if val == 0:
+		DiceContainer.clear_stack()
+	else:
+		DiceContainer.add_onto_stack()

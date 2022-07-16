@@ -13,10 +13,10 @@ script = ExtResource( 1 )
 [node name="DiceModel" parent="." instance=ExtResource( 2 )]
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.822164, 0.569251, 0, -0.569251, 0.822164, 0, 3.51855, 5.10661 )
+transform = Transform( 1, 0, 0, 0, 0.822164, 0.569251, 0, -0.569251, 0.822164, 0, 21.114, 30.642 )
 projection = 1
 fov = 78.0869
-size = 25.0
+size = 75.0
 
 [node name="Floor" type="StaticBody" parent="."]
 

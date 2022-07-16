@@ -16,8 +16,16 @@ func transition(item_type, dice_side: int = 0, cleanup_state: bool = true) -> St
 	# Make the new node.
 	var equipment_node = Database.get_item_data(item_type).load_resource().instance() as State
 	self.add_child(equipment_node)
-	equipment_node.pip = float(dice_side)
 	self.state = equipment_node;
+	
+	# Do pip applications.
+	var playerStats = GameState.get_player()._stats
+	var pip_mult = 1.0 + float(playerStats._pip_stacks)
+	equipment_node.pip = float(dice_side + 1) * pip_mult
+	
+	if self.state.get_reset_pip_stacks():
+		playerStats._pip_stacks = 0
+		GameState.get_player().emit_signal("pip_stacks_updated", 0)
 	
 	# Enter the new state.
 	self.state.enter();

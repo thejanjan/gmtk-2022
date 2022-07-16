@@ -8,3 +8,6 @@ var _acceleration = 1;
 # <=1 and it does nothing. Would be zero but it needs tomething to multiply
 # Aside from that, represents a percentage of speed retained when hitting a wall
 var _bounciness = 1;
+
+# Pip stacks.
+var _pip_stacks = 0;

@@ -5,6 +5,10 @@ extends State
 var pip = null
 var timers = {}
 
+# Does this equipment reset pip stacks?
+func get_reset_pip_stacks() -> bool:
+	return true
+
 
 func damageNearbyEnemy(furthest_distance = 50000):
 	#PAIN

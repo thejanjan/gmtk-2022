@@ -24,7 +24,7 @@ texture = SubResource( 3 )
 script = ExtResource( 6 )
 
 [node name="PlayerViewport" type="Viewport" parent="PlayerSprite"]
-size = Vector2( 150, 150 )
+size = Vector2( 450, 450 )
 transparent_bg = true
 render_target_v_flip = true
 script = ExtResource( 2 )
