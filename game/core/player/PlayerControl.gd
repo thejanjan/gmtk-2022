@@ -18,20 +18,19 @@ onready var ESM = $EquipmentStateMachine
 
 var SideEquipment = {
 	Enum.DiceSide.ONE : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.TWO : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.THREE : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.FOUR : Enum.ItemType.OIL_SLICK,
-	Enum.DiceSide.FIVE : Enum.ItemType.OIL_SLICK,
-	Enum.DiceSide.SIX : Enum.ItemType.OIL_SLICK
+	Enum.DiceSide.TWO : Enum.ItemType.RUBBER_OF_THE_SOUL,
+	Enum.DiceSide.THREE : Enum.ItemType.RUBBER_OF_THE_SOUL,
+	Enum.DiceSide.FOUR : Enum.ItemType.RUBBER_OF_THE_SOUL,
+	Enum.DiceSide.FIVE : Enum.ItemType.RUBBER_OF_THE_SOUL,
+	Enum.DiceSide.SIX : Enum.ItemType.RUBBER_OF_THE_SOUL
 }
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_stats._speed = 30;
+	_stats._speed = 300;
 	_stats._damage = 1;
 	_stats._friction = 3;
 	_stats._acceleration = 6;
-	_stats._bounciness = 100;
 	velocity = Vector2(0,0);
 	#ESM.transition("PipDamage");
 	self.get_rigid_body().connect("jump_start", self, "on_jump")

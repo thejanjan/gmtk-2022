@@ -68,6 +68,11 @@ var ItemDB = {
 		"Oil Slick",
 		Enum.ItemRarity.COMMON,
 		'res://game/core/equipment/OilSlick.tscn'
+	),
+	Enum.ItemType.RUBBER_OF_THE_SOUL: _ItemData.new(
+		"Rubber of the Soul",
+		Enum.ItemRarity.COMMON,
+		'res://game/core/equipment/RubberOfTheSoul.tscn'
 	)
 }
 
