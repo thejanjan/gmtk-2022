@@ -21,4 +21,6 @@ func set_health(initHealth):
 	
 func lose_health(healthDam):
 	health -= healthDam
+	if health < 0:
+		health = 0
 	$healthcolorrect.set_size(Vector2(health / maxhealth * 100, 10))
