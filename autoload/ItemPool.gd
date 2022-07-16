@@ -1,7 +1,5 @@
 extends Node
 
-var Item = load("res://game/core/Item.gd")
-
 class Element:
 	var _item_id
 	var _weight
@@ -11,7 +9,6 @@ class Element:
 		self._weight = weight
 
 var _items = [];
-var _rarity_weights = [25, 5, 1];
 var _total_weight = 0;
 
 var _item_schema = [];
@@ -22,9 +19,8 @@ func _ready():
 	
 	populate()
 
-func add_item(item_id, rarity):
-	var weight = rarity_to_weight(rarity)
-	_items.append(Element.new(item_id, weight))
+func add_item(item_data, weight):
+	_items.append(Element.new(item_data, weight))
 	_total_weight += weight;
 
 func remove_item(index):
@@ -47,20 +43,16 @@ func pop_random_item_id():
 func pop_random_item():
 	return _item_schema[pop_random_item_id()]
 
-# Bigger rarity values mean that the item is given less weight in the item pool.
-func rarity_to_weight(rarity):
-	return _rarity_weights[rarity-1]
-
 func item_id_when_pool_is_empty():
 	return Enum.ItemType.NIL
 	
 func populate():
-	var item = Item.new(Enum.ItemType.TEST, 1)
-	item._stats._speed = 2.0;
-	_item_schema.append(item)
-	
-	for i in range(_item_schema.size()):
-		add_item(i, _item_schema[i]._rarity)
+	for item_type in Database.ItemDB.keys():
+		var item_data = Database.ItemDB.get(item_type)
+		item_data.assign_item_type(item_type)
+		if item_data.get_in_pool():
+			_item_schema.append(item_data)
+			add_item(item_data, item_data.get_rarity())
 
 func test_dumb():
 	add_item(1, 1)

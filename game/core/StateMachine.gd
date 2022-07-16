@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 class_name StateMachine
 
 #Send out a signal if we change states, might be needed? Enemy who reacts to this too?
@@ -10,7 +10,7 @@ onready var state: State = null;
 #When we're ready, set everything up
 func _ready():
 	for child in get_children():
-		child.state_machine = self;
+		child.initialize(self);
 
 #Pass input events -only- to the current active state
 func _unhandled_input(event: InputEvent):
@@ -20,15 +20,15 @@ func _unhandled_input(event: InputEvent):
 #Pass update only to current active state
 func _process(delta: float):
 	if state != null:
-		state.update(delta);
+		state.process(delta);
 	
 #Physics process only to current active state
 func _physics_process(delta: float):
 	if state != null:
-		state.physics_update(delta);
+		state.physics_process(delta);
 	
 #Transition to new state
-func transition(target_state: String):
+func transition(target_state):
 	if not has_node(target_state):
 		return;
 	

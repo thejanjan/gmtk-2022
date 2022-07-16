@@ -2,7 +2,8 @@ extends State
 
 func enter():
 	#PAIN
-	var pip = owner.get_rigid_body().get_active_pip();
+	var player = self.get_player()
+	var pip = player.get_active_pip();
 	
 	var all_enemy = get_tree().get_nodes_in_group("enemy");
 	var close_enemy = null;
@@ -10,7 +11,7 @@ func enter():
 	#Set this to the maximum distance^2 we want to search
 	#Remember we use distance_SQUARED_to!!!
 	var close_distance = 50000;
-	var pos = owner.get_position();
+	var pos = player.get_position();
 	
 	#Find closest enemy, ez
 	for enemy in all_enemy:

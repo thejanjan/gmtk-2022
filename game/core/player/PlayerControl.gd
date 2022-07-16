@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const Item = preload("res://game/core/Item.gd")
+
 const PlayerStats = preload("res://game/core/player/PlayerStats.gd")
 onready var ConcreteStream: AudioStreamPlayer = $ConcreteStream;
 var concrete_volume = -80
@@ -14,15 +14,15 @@ var last_veloc = Vector2(0.0, 0.0);
 var last_accel = Vector2(0.0, 0.0);
 
 onready var PlayerSprite = $PlayerSprite
-onready var PlayerState = $StateMachine
+onready var ESM = $EquipmentStateMachine
 
 var SideEquipment = {
-	Enum.DiceSide.ONE : "PipDamage",
-	Enum.DiceSide.TWO : "PipDamage",
-	Enum.DiceSide.THREE : "PipDamage",
-	Enum.DiceSide.FOUR : "PipDamage",
-	Enum.DiceSide.FIVE : "PipDamage",
-	Enum.DiceSide.SIX : "PipDamage"
+	Enum.DiceSide.ONE : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.TWO : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.THREE : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.FOUR : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.FIVE : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.SIX : Enum.ItemType.BASIC_DAMAGE
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -32,7 +32,7 @@ func _ready():
 	_stats._friction = 3;
 	_stats._acceleration = 6;
 	velocity = Vector2(0,0);
-	#PlayerState.transition("PipDamage");
+	#ESM.transition("PipDamage");
 	self.get_rigid_body().connect("jump_start", self, "on_jump")
 	self.get_rigid_body().connect("jump_end", self, "on_jump_end")
 	self.get_rigid_body().connect("side_swapped", self, "on_new_dice")
@@ -97,10 +97,6 @@ func _physics_process(delta):
 			var collision = get_slide_collision(i)
 			# print("I collided with ", collision.collider.name)
 	# self.translate()
-
-func apply_item(item):
-	_stats._speed += item._stats._speed
-	_stats._damage += item._stats._damage
 	
 	
 func _handle_acceleration(accel: Vector2):
@@ -109,10 +105,15 @@ func _handle_acceleration(accel: Vector2):
 	# rigid_body.add_force(Vector3(accel.x, 0, accel.y), Vector3.UP)
 	rigid_body.handle_speed(velocity)
 
+"""
+Useful getters
+"""
+
+func get_active_pip():
+	return self.get_rigid_body().get_active_pip();
 
 func get_player_sprite():
 	return PlayerSprite
-	
 	
 func get_rigid_body():
 	# bruh
@@ -133,4 +134,4 @@ Listen for a new dice side
 """
 
 func on_new_dice(side):
-	PlayerState.transition(SideEquipment.get(side))
+	self.ESM.transition(SideEquipment.get(side))

@@ -9,17 +9,23 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
+"base": "StateMachine",
+"class": "EquipmentStateMachine",
+"language": "GDScript",
+"path": "res://game/core/player/EquipmentStateMachine.gd"
+}, {
+"base": "Node2D",
 "class": "State",
 "language": "GDScript",
 "path": "res://game/core/State.gd"
 }, {
-"base": "Node",
+"base": "Node2D",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://game/core/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"EquipmentStateMachine": "",
 "State": "",
 "StateMachine": ""
 }
