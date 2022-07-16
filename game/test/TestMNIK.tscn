@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://game/core/player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://game/core/ItemCollectible.tscn" type="PackedScene" id=2]
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("Viewport")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+scale = Vector2( 0.647265, 0.574848 )
+texture = SubResource( 1 )
+
+[node name="Node2D" parent="Player" instance=ExtResource( 2 )]
+position = Vector2( 290.677, 25.1823 )

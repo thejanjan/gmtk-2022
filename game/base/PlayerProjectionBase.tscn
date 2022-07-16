@@ -4,7 +4,7 @@
 [ext_resource path="res://models/dice/DiceModel.tscn" type="PackedScene" id=2]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 2, 1, 2 )
+extents = Vector3( 5, 1, 5 )
 
 [node name="PlayerProjectionBase" type="Spatial"]
 script = ExtResource( 1 )
