@@ -39,28 +39,32 @@ func lose_health(healthDam):
 
 func move_tile(direction, enemy):
 	if direction == 0:
-		enemy.translated(Vector2(0,-8))
+		enemy.postiony -= tile_height
 		emit_signal("UP")
 	elif direction == 1:
-		enemy.translated(Vector2(0,8))
+		enemy.positiony += tile_height
 		emit_signal("DOWN")
 	elif direction == 2:
-		enemy.translated(Vector2(-13,0))
+		enemy.positionx -= tile_width
 		emit_signal("LEFT")
 	elif direction == 3:
-		enemy.translated(Vector2(13,0))
+		enemy.positionx += tile_width
 		emit_signal("RIGHT")
 	elif direction == 4:
-		enemy.translated(Vector2(-13,8))
+		enemy.positionx -= tile_width
+		enemy.positiony += tile_height
 		emit_signal("DOWNLEFT")
 	elif direction == 5:
-		enemy.translated(Vector2(13,8))
+		enemy.positionx += tile_width
+		enemy.positiony += tile_height
 		emit_signal("DOWNRIGHT")
 	elif direction == 6:
-		enemy.translated(Vector2(-13,-8))
+		enemy.positionx -= tile_width
+		enemy.positiony -= tile_height
 		emit_signal("UPLEFT")
 	elif direction == 7:
-		enemy.translated(Vector2(13,-8))
+		enemy.positionx += tile_width
+		enemy.positiony -= tile_height
 		emit_signal("UPRIGHT")
 
 func find_player(playerx, playery, enemy) -> Vector2:

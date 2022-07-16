@@ -1,10 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://game/enemies/health bar.tscn" type="PackedScene" id=1]
-[ext_resource path="res://enemytemplate.gd" type="Script" id=2]
+[ext_resource path="res://game/enemies/enemytemplate.gd" type="Script" id=2]
 
-[node name="enemytemplate" type="RigidBody2D"]
-gravity_scale = 0.0
+[node name="enemytemplate" type="Node"]
 script = ExtResource( 2 )
 
 [node name="health bar" parent="." instance=ExtResource( 1 )]

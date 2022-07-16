@@ -1,6 +1,4 @@
-extends Node
-
-export (PackedScene) var king_scene
+extends RigidBody2D
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -10,13 +8,10 @@ export (PackedScene) var king_scene
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-
+	$enemytemplate.set_health(10)
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-func king_movement(king):
-	while(1):
-		$enemytemplate.move_tile(randi() % 8, king)
+func _physics_process(delta):
+	$enemytemplate.move_tile(randi() % 8, king)
 	
