@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal on_new_dice(dice_side)
+signal initialize_equips(equip_dict)
 
 const PlayerStats = preload("res://game/core/player/PlayerStats.gd")
 onready var ConcreteStream: AudioStreamPlayer = $ConcreteStream;
@@ -37,6 +39,7 @@ func _ready():
 	self.get_rigid_body().connect("jump_end", self, "on_jump_end")
 	self.get_rigid_body().connect("side_swapped", self, "on_new_dice")
 	self.on_new_dice(self.get_rigid_body().get_active_pip())
+	emit_signal("initialize_equips", self.SideEquipment)
 	pass # Replace with function bitches instead.
 
 
@@ -134,4 +137,6 @@ Listen for a new dice side
 """
 
 func on_new_dice(side):
-	self.ESM.transition(SideEquipment.get(side))
+	var item_id = SideEquipment.get(side)
+	self.ESM.transition(item_id)
+	emit_signal("on_new_dice", side, item_id)
