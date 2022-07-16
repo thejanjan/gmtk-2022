@@ -9,22 +9,28 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "State",
+"class": "Equipment",
+"language": "GDScript",
+"path": "res://game/core/equipment/Equipment.gd"
+}, {
 "base": "StateMachine",
 "class": "EquipmentStateMachine",
 "language": "GDScript",
 "path": "res://game/core/player/EquipmentStateMachine.gd"
 }, {
-"base": "Node2D",
+"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://game/core/State.gd"
 }, {
-"base": "Node2D",
+"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://game/core/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"Equipment": "",
 "EquipmentStateMachine": "",
 "State": "",
 "StateMachine": ""
@@ -39,6 +45,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Enum="*res://autoload/Enum.gd"
+DiceSide="*res://onload/DiceSide.gd"
 GameState="*res://autoload/GameState.gd"
 Random="*res://autoload/Random.gd"
 Database="*res://autoload/Database.gd"
