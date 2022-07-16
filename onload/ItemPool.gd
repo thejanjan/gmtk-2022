@@ -1,6 +1,6 @@
 extends Node
 
-var Item = load("res://game/core/Item.gd")
+var Item = load("res://game/base/Item.gd")
 
 class Element:
 	var _item_id
@@ -52,10 +52,10 @@ func rarity_to_weight(rarity):
 	return _rarity_weights[rarity-1]
 
 func item_id_when_pool_is_empty():
-	return 0
+	return Enum.ItemType.NIL
 	
 func populate():
-	var item = Item.new("Cool Speed Boost Item", 1)
+	var item = Item.new(Enum.ItemType.TEST, 1)
 	item._stats._speed = 2.0;
 	_item_schema.append(item)
 	

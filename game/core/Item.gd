@@ -1,10 +1,10 @@
 var PlayerStats = load("res://game/core/player/PlayerStats.gd")
 
-var _name;
+var _id;
 var _rarity;
 var _stats;
 
-func _init(name, rarity):
-	_name = name
+func _init(id, rarity):
+	_id = id
 	_rarity = rarity
 	_stats = PlayerStats.new()
