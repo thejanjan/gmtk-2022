@@ -1,4 +1,4 @@
-extends Sprite
+extends KinematicBody2D
 
 var Item = load("res://game/core/Item.gd")
 var PlayerStats = load("res://game/core/player/PlayerStats.gd")
@@ -7,7 +7,7 @@ var _stats = PlayerStats.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_stats._speed = 3;
+	_stats._speed = 30;
 	_stats._damage = 1;
 	pass # Replace with function body.
 
@@ -17,7 +17,12 @@ func _physics_process(delta):
 	var h_move = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 	var v_move = int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
 	
-	self.translate(Vector2(h_move * _stats._speed, v_move * _stats._speed))
+	var velocity = Vector2(h_move * _stats._speed, v_move * _stats._speed)
+	velocity = move_and_slide(velocity)
+	for i in get_slide_count():
+			var collision = get_slide_collision(i)
+			print("I collided with ", collision.collider.name)
+	# self.translate()
 
 func apply_item(item):
 	_stats._speed += item._stats._speed
