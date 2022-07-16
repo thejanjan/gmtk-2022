@@ -22,7 +22,7 @@ var SideEquipment = {
 	Enum.DiceSide.THREE : Enum.ItemType.BASIC_DAMAGE,
 	Enum.DiceSide.FOUR : Enum.ItemType.BASIC_DAMAGE,
 	Enum.DiceSide.FIVE : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.SIX : Enum.ItemType.BASIC_DAMAGE
+	Enum.DiceSide.SIX : Enum.ItemType.FAST
 }
 
 # Called when the node enters the scene tree for the first time.

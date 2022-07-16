@@ -58,6 +58,11 @@ var ItemDB = {
 		Enum.ItemRarity.COMMON,
 		'res://game/core/equipment/PipDamage.tscn',
 		false
+	),
+	Enum.ItemType.FAST: _ItemData.new(
+		"I'm too scared to actually make the die a ball",
+		Enum.ItemRarity.COMMON,
+		'res://game/core/equipment/Fast.tscn'
 	)
 }
 

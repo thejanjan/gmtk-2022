@@ -28,3 +28,16 @@ func damageNearbyEnemy(furthest_distance = 50000):
 	if (close_enemy != null):
 		close_enemy.lose_health(pip + 1);
 		print(pip);
+
+# Probably shouldn't use this directly, since it has no behavior for undoing the change
+# Done with multipliers instead of absolute values so that changes can stack properly
+func _statChange(stat, multiplier):
+	var stats = get_player()._stats
+	var og = stats.get(stat)
+	stats.set(stat, stats.get(stat) * multiplier)
+	print("Set {0} from {1} to {2}".format([stat, og, stats.get(stat)]))
+
+func tempStatChange(stat, multiplier, secondDuration):
+	_statChange(stat, multiplier)
+	yield(get_tree().create_timer(secondDuration), "timeout")
+	_statChange(stat, 1.0/float(multiplier))

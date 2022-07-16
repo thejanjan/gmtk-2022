@@ -17,7 +17,8 @@ enum DiceSide {
 
 enum ItemType {
 	NIL = -1,
-	BASIC_DAMAGE
+	BASIC_DAMAGE,
+	FAST
 }
 
 enum ItemRarity {
