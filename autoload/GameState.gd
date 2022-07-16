@@ -16,3 +16,9 @@ var Equipment = {
 	Enum.DiceSide.FIVE: null,
 	Enum.DiceSide.SIX: null,
 }
+
+func get_player():
+	var player_group = self.get_tree().get_nodes_in_group("Player")
+	if player_group:
+		return player_group[0]
+	return null

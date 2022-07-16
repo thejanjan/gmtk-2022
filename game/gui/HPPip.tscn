@@ -1,10 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://game/gui/HPPip.gd" type="Script" id=1]
-[ext_resource path="res://textures/player/HP_StreamTexture.tres" type="Texture" id=2]
 
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 2 )
+[sub_resource type="StreamTexture" id=7]
+load_path = "res://.import/hp_die.png-d51f5fb47e79d73dd863f6d942a9bbb6.stex"
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = SubResource( 7 )
+region = Rect2( 0, 0, 9, 9 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = SubResource( 5 )
 region = Rect2( 0, 0, 9, 9 )
 
 [sub_resource type="Animation" id=3]
@@ -90,7 +96,7 @@ margin_top = -40.0
 margin_right = 9.0
 margin_bottom = -31.0
 rect_scale = Vector2( 4, 4 )
-texture = SubResource( 1 )
+texture = SubResource( 6 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"

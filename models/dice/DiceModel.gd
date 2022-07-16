@@ -44,6 +44,9 @@ func _physics_process(delta):
 			jumping = 20
 			in_jump = true
 			emit_signal("jump_start")
+	if jumping == 18 and self.translation.y <= 0:
+		# Our jump failed.
+		jumping = -1
 	jumping -= 1
 	if jumping == 1:
 		self._do_spin()

@@ -1,0 +1,152 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://game/gui/EquipPip.gd" type="Script" id=1]
+[ext_resource path="res://textures/player/EquipPip.tres" type="Texture" id=2]
+[ext_resource path="res://game/gui/GameTheme.tres" type="Theme" id=3]
+
+[sub_resource type="Animation" id=3]
+resource_name = "Activate"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.2, 26.9438, 40, -0.3, 8.03755, 0.3, -1.00469 ),
+"times": PoolRealArray( 0, 0.4 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Deactivate"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 40, -0.25, 0, 0.2, 26.9438, 0, -0.3, 8.03755, 0.3, -1.00469 ),
+"times": PoolRealArray( 0, 0.4 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Idle"
+length = 4.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 3, 4 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 3, 4 )
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Activate"
+length = 0.7
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("RichTextLabel:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.2, 1.55271, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7 )
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Deactivate"
+length = 0.7
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("RichTextLabel:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.1, -1.01566, 0, -0.3, 0.00368795, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.7 )
+}
+
+[node name="EquipPip" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="PipSprite" type="TextureRect" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -40.0
+margin_right = 9.0
+margin_bottom = -31.0
+rect_scale = Vector2( 4, 4 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
+anims/Activate = SubResource( 3 )
+anims/Deactivate = SubResource( 4 )
+anims/Idle = SubResource( 2 )
+
+[node name="TexAnimPlayer" type="AnimationPlayer" parent="."]
+anims/Activate = SubResource( 5 )
+anims/Deactivate = SubResource( 6 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 40.0
+margin_top = -2.0
+margin_right = 180.0
+margin_bottom = 8.0
+rect_scale = Vector2( 4, 4 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 3 )
+visible_characters = 0
+percent_visible = 0.0
+text = "Devour"
+scroll_active = false
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
