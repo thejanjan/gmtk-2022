@@ -12,11 +12,20 @@ const positional_transforms = {
 	Enum.DiceSide.SIX:   Quat(Vector3(0, 0, PI)),
 }
 
+onready var tween = $Tween
 onready var DiceModel = $Icosphere
+onready var dice_color = DiceModel.get_surface_material(0).get_albedo()
+onready var pip_color = DiceModel.get_surface_material(1).get_albedo()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.set_axis_lock(PhysicsServer.BODY_AXIS_LINEAR_X + PhysicsServer.BODY_AXIS_LINEAR_Z, true)
+	
+	self.tween_pip_color(
+		dice_color,
+		pip_color,
+		8.0
+	)
 
 
 func _physics_process(delta):
@@ -45,3 +54,26 @@ func get_active_pip():
 			best_angle = this_distance
 			best_pip = dice_side
 	return best_pip
+
+"""
+Handy scripts for the pip transitions
+"""
+
+
+func revert_pip_color():
+	set_pip_color(self.base_color)
+
+
+func set_pip_color(color: Color):
+	"""Sets the pip color of the dice."""
+	DiceModel.get_surface_material(1).set_albedo(color)
+
+
+func tween_pip_color(color_a: Color, color_b: Color, duration: float = 1.0):
+	tween.interpolate_property(
+		self.DiceModel.get_surface_material(1),
+		"albedo_color",
+		color_a, color_b,
+		duration, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT 
+	)
+	tween.start()
