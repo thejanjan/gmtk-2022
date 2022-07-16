@@ -14,5 +14,5 @@ var Equipment = {
 	Enum.DiceSide.THREE: null,
 	Enum.DiceSide.FOUR: null,
 	Enum.DiceSide.FIVE: null,
-	Enum.DiceSide.SIx: null,
+	Enum.DiceSide.SIX: null,
 }
