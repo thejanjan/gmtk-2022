@@ -33,7 +33,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Enum="*res://onload/Enum.gd"
-DiceSide="*res://onload/DiceSide.gd"
+GameState="*res://onload/GameState.gd"
 
 [input]
 
