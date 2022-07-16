@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 const Item = preload("res://game/core/Item.gd")
 const PlayerStats = preload("res://game/core/player/PlayerStats.gd")
+onready var ConcreteStream: AudioStreamPlayer = $ConcreteStream;
 
 var _stats = PlayerStats.new()
 var velocity: Vector2;
@@ -19,11 +20,13 @@ func _ready():
 	_stats._speed = 200;
 	_stats._damage = 1;
 	velocity = Vector2(0,0);
-	pass # Replace with function body.
+	print(ConcreteStream.autoplay);
+	pass # Replace with function bitches instead.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	# Movement
 	var h_move = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 	var v_move = int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
 	
@@ -39,6 +42,19 @@ func _physics_process(delta):
 				velocity[i] = movetowardsmaxspeed;
 			else:
 				velocity[i] = movetowardszero;
+	
+	# Concrete
+	var totalspeed = abs(velocity[0] + velocity[1]);
+	if totalspeed <= 1:
+		ConcreteStream.volume_db = -80;
+		ConcreteStream.playing = false;
+	else:
+		var minvol = -20;			
+		var maxvol = 20;			
+		ConcreteStream.volume_db = minvol + (abs(minvol)+abs(maxvol)) * min(_stats._speed, abs(velocity[0] + velocity[1])) / _stats._speed;
+		if not ConcreteStream.playing:
+			ConcreteStream.playing = true;
+
 				
 	# Calculate our acceleration.
 	velocity = move_and_slide(velocity)

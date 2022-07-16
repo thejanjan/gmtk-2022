@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/concrete.ogg-2183d1e48743ba769175a7855e58f184.oggstr"
+
+[deps]
+
+source_file="res://audio/concrete.ogg"
+dest_files=[ "res://.import/concrete.ogg-2183d1e48743ba769175a7855e58f184.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
