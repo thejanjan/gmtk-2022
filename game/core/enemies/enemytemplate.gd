@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends Node
 
 signal killedenemy
 signal UP
@@ -77,4 +77,3 @@ func find_player(playerx, playery, enemy) -> Vector2:
 	var tiley = (playery - enemyy) / 13
 	
 	return Vector2(tilex, tiley) # returns number of tiles away from player
-	
