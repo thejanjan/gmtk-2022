@@ -14,11 +14,22 @@ var last_veloc = Vector2(0.0, 0.0);
 var last_accel = Vector2(0.0, 0.0);
 
 onready var PlayerSprite = $PlayerSprite
+onready var PlayerState = $State/StateMachine
+
+var SideEquipment = {
+	Enum.DiceSide.ONE : "PipDamage",
+	Enum.DiceSide.TWO : "PipDamage",
+	Enum.DiceSide.THREE : "PipDamage",
+	Enum.DiceSide.FOUR : "PipDamage",
+	Enum.DiceSide.FIVE : "PipDamage",
+	Enum.DiceSide.SIX : "PipDamage"
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_stats._speed = 200;
 	_stats._damage = 1;
+	PlayerState.transition("PipDamage");
 	velocity = Vector2(0,0);
 	print(ConcreteStream.autoplay);
 	pass # Replace with function bitches instead.
@@ -50,8 +61,8 @@ func _physics_process(delta):
 		ConcreteStream.playing = false;
 	else:
 		var minvol = -20;			
-		var maxvol = 20;			
-		ConcreteStream.volume_db = minvol + (abs(minvol)+abs(maxvol)) * min(_stats._speed, abs(velocity[0] + velocity[1])) / _stats._speed;
+		var maxvol = 0;			
+		ConcreteStream.volume_db = minvol + (abs(minvol)+abs(maxvol)) * min(_stats._speed, abs(velocity[0]) + abs(velocity[1])) / _stats._speed;
 		if not ConcreteStream.playing:
 			ConcreteStream.playing = true;
 

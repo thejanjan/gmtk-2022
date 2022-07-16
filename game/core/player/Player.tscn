@@ -10,21 +10,21 @@
 [ext_resource path="res://audio/concrete.ogg" type="AudioStream" id=8]
 
 [sub_resource type="ViewportTexture" id=3]
-viewport_path = NodePath("Render/Viewport")
+viewport_path = NodePath("PlayerSprite/PlayerViewport")
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 16.186
 
 [node name="PlayerControl" type="KinematicBody2D"]
+collision_layer = 2
 script = ExtResource( 4 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
-scale = Vector2( 0.647265, 0.611704 )
 texture = SubResource( 3 )
 script = ExtResource( 6 )
 
 [node name="PlayerViewport" type="Viewport" parent="PlayerSprite"]
-size = Vector2( 500, 500 )
+size = Vector2( 300, 300 )
 transparent_bg = true
 render_target_v_flip = true
 script = ExtResource( 2 )

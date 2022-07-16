@@ -65,9 +65,11 @@ func handle_speed(speed: Vector2):
 	current_speed = speed
 	var current_angle = speed.angle()  # in radians
 	var our_quat = DiceModel.transform.basis.get_rotation_quat()
-	var goal_quat = our_quat.get_euler()
-	goal_quat.y = -current_angle  # 180 * (current_angle / PI)
-	goal_quat = Quat(goal_quat)
+	var goal_quat = our_quat
+	if speed.length() > 0.1:
+		goal_quat = our_quat.get_euler()
+		goal_quat.y = -current_angle  # 180 * (current_angle / PI)
+		goal_quat = Quat(goal_quat)
 	
 	# Schlorp schlorp schlorp
 	DiceModel.transform = our_quat.slerp(goal_quat, 0.1)
