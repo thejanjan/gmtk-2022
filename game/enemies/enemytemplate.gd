@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends Node
 
 signal killedenemy
 signal UP
@@ -39,40 +39,43 @@ func lose_health(healthDam):
 
 func move_tile(direction, enemy):
 	if direction == 0:
-		enemy.postiony -= tile_height
+		enemy.position.x -= tile_height
 		emit_signal("UP")
 	elif direction == 1:
-		enemy.positiony += tile_height
+		enemy.position.y += tile_height
 		emit_signal("DOWN")
 	elif direction == 2:
-		enemy.positionx -= tile_width
+		enemy.position.x -= tile_width
 		emit_signal("LEFT")
 	elif direction == 3:
-		enemy.positionx += tile_width
+		enemy.position.x += tile_width
 		emit_signal("RIGHT")
 	elif direction == 4:
-		enemy.positionx -= tile_width
-		enemy.positiony += tile_height
+		enemy.position.x -= tile_width
+		enemy.position.y += tile_height
 		emit_signal("DOWNLEFT")
 	elif direction == 5:
-		enemy.positionx += tile_width
-		enemy.positiony += tile_height
+		enemy.position.x += tile_width
+		enemy.position.y += tile_height
 		emit_signal("DOWNRIGHT")
 	elif direction == 6:
-		enemy.positionx -= tile_width
-		enemy.positiony -= tile_height
+		enemy.position.x -= tile_width
+		enemy.position.y -= tile_height
 		emit_signal("UPLEFT")
 	elif direction == 7:
-		enemy.positionx += tile_width
-		enemy.positiony -= tile_height
+		enemy.position.x += tile_width
+		enemy.position.y -= tile_height
 		emit_signal("UPRIGHT")
+	
+	$"health bar".rect_position.x = enemy.position.x
+	$"health bar".rect_position.y = enemy.position.y + 50 
 
 func find_player(playerx, playery, enemy) -> Vector2:
 	playerx = playerx % 13
 	playery = playery % 8
 	
-	var enemyx = enemy.positionx % 13
-	var enemyy = enemy.positiony % 8
+	var enemyx = enemy.position.x % 13
+	var enemyy = enemy.position.y % 8
 	
 	var tilex = (playerx - enemyx) / 13
 	var tiley = (playery - enemyy) / 13
