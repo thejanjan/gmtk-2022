@@ -59,3 +59,16 @@ func move_tile(direction, enemy):
 	elif direction == 7:
 		enemy.translated(Vector2(13,-8))
 		emit_signal("UPRIGHT")
+
+func find_player(playerx, playery, enemy) -> Vector2:
+	playerx = playerx % 13
+	playery = playery % 8
+	
+	var enemyx = enemy.positionx % 13
+	var enemyy = enemy.positiony % 8
+	
+	var tilex = (playerx - enemyx) / 13
+	var tiley = (playery - enemyy) / 13
+	
+	return Vector2(tilex, tiley) # returns number of tiles away from player
+	
