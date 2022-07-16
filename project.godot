@@ -32,12 +32,11 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Enum="*res://onload/Enum.gd"
-DiceSide="*res://onload/DiceSide.gd"
-GameState="*res://onload/GameState.gd"
-Random="*res://onload/Random.gd"
-Database="*res://onload/Database.gd"
-ItemPool="*res://onload/ItemPool.gd"
+Enum="*res://autoload/Enum.gd"
+GameState="*res://autoload/GameState.gd"
+Random="*res://autoload/Random.gd"
+Database="*res://autoload/Database.gd"
+ItemPool="*res://autoload/ItemPool.gd"
 
 [input]
 
