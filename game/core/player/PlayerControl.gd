@@ -3,12 +3,15 @@ extends KinematicBody2D
 const Item = preload("res://game/core/Item.gd")
 const PlayerStats = preload("res://game/core/player/PlayerStats.gd")
 onready var ConcreteStream: AudioStreamPlayer = $ConcreteStream;
+var concrete_volume = -80
 
 var _stats = PlayerStats.new()
 var velocity: Vector2;
 # The higher these are, the slower the speed changes to nothing/max speed respectively
 var friction = 3;
 var acceleration = 6;
+
+var jumping = false;
 
 var last_veloc = Vector2(0.0, 0.0);
 var last_accel = Vector2(0.0, 0.0);
@@ -31,7 +34,9 @@ func _ready():
 	_stats._damage = 1;
 	PlayerState.transition("PipDamage");
 	velocity = Vector2(0,0);
-	print(ConcreteStream.autoplay);
+	self.get_rigid_body().connect("jump_start", self, "on_jump")
+	self.get_rigid_body().connect("jump_end", self, "on_jump_end")
+	
 	pass # Replace with function bitches instead.
 
 
@@ -55,14 +60,22 @@ func _physics_process(delta):
 				velocity[i] = movetowardszero;
 	
 	# Concrete
+	# TODO : make a custom audiostreamplayer that does this for us
 	var totalspeed = abs(velocity[0] + velocity[1]);
-	if totalspeed <= 1:
-		ConcreteStream.volume_db = -80;
-		ConcreteStream.playing = false;
+	if totalspeed <= 1 or jumping:
+		concrete_volume -= 4;
+		ConcreteStream.volume_db = concrete_volume;
+		if concrete_volume < -40:
+			concrete_volume = -40
+			ConcreteStream.playing = false;
 	else:
 		var minvol = -20;			
 		var maxvol = 0;			
-		ConcreteStream.volume_db = minvol + (abs(minvol)+abs(maxvol)) * min(_stats._speed, abs(velocity[0]) + abs(velocity[1])) / _stats._speed;
+		var target_volume = minvol + (abs(minvol)+abs(maxvol)) * min(_stats._speed, abs(velocity[0]) + abs(velocity[1])) / _stats._speed;
+		concrete_volume += 8
+		if concrete_volume > target_volume:
+			concrete_volume = target_volume
+		ConcreteStream.volume_db = concrete_volume
 		if not ConcreteStream.playing:
 			ConcreteStream.playing = true;
 
@@ -97,3 +110,15 @@ func get_player_sprite():
 	
 func get_rigid_body():
 	return get_player_sprite().get_player_viewport().get_player_base().get_dice_model()
+	
+"""
+Jump connections
+"""
+
+func on_jump():
+	print('on_jump')
+	jumping = true
+	
+func on_jump_end():
+	print('on_jump_end')
+	jumping = false
