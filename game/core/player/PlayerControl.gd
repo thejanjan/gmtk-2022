@@ -116,6 +116,7 @@ func get_player_sprite():
 	
 	
 func get_rigid_body():
+	# bruh
 	return get_player_sprite().get_player_viewport().get_player_base().get_dice_model()
 	
 """
