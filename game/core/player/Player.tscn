@@ -37,6 +37,8 @@ shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2( 0.647265, 0.611704 )
+current = true
+smoothing_speed = 6.0
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 5 )

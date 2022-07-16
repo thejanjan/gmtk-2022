@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://game/core/GridManager.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -6,9 +6,6 @@
 [ext_resource path="res://game/core/TileMapCheckered.gd" type="Script" id=4]
 [ext_resource path="res://game/core/TileManager.gd" type="Script" id=5]
 [ext_resource path="res://textures/tiles/autotile_template_3x3_minimal_topdown_walls_thick.png" type="Texture" id=7]
-
-[sub_resource type="ViewportTexture" id=24]
-viewport_path = NodePath("Viewport")
 
 [sub_resource type="ConvexPolygonShape2D" id=5]
 points = PoolVector2Array( 48, 88, 16, 88, 16, 16, 48, 16 )
@@ -222,12 +219,11 @@ __meta__ = {
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 579.245, 307.313 )
-texture = SubResource( 24 )
 
 [node name="TileManager" type="TileMap" parent="."]
 tile_set = SubResource( 4 )
 format = 1
-tile_data = PoolIntArray( 131076, 0, 1, 131077, 0, 196610, 131078, 0, 196610, 131079, 0, 196610, 131080, 0, 196610, 131081, 0, 196610, 131082, 0, 2, 131083, 0, 196610, 131084, 0, 3, 196612, 0, 65536, 196618, 0, 131072, 196620, 0, 65536, 262148, 0, 65536, 262156, 0, 65536, 327684, 0, 65536, 327686, 0, 0, 327692, 0, 65536, 393220, 0, 131073, 393221, 0, 196610, 393222, 0, 131074, 393223, 0, 196610, 393224, 0, 196610, 393225, 0, 196610, 393226, 0, 196610, 393227, 0, 196610, 393228, 0, 131075 )
+tile_data = PoolIntArray( 131076, 0, 1, 131077, 0, 196610, 131078, 0, 196610, 131079, 0, 196610, 131080, 0, 196610, 131081, 0, 196610, 131082, 0, 2, 131083, 0, 196610, 131084, 0, 196611, 196612, 0, 65536, 196618, 0, 131072, 262148, 0, 65536, 327684, 0, 65536, 327686, 0, 0, 393220, 0, 131073, 393221, 0, 196610, 393222, 0, 131074, 393223, 0, 196610, 393224, 0, 196610, 393225, 0, 196610, 393226, 0, 196610, 393227, 0, 196611 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_lock_": true
