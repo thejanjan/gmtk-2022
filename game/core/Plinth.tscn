@@ -10,6 +10,7 @@ height = 30.0
 
 [node name="Plinth" type="Area2D"]
 position = Vector2( 513.715, 299.765 )
+scale = Vector2( 4, 4 )
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 1 )
@@ -22,5 +23,6 @@ shape = SubResource( 1 )
 texture = ExtResource( 3 )
 
 [node name="PlayerControl" parent="." instance=ExtResource( 2 )]
+scale = Vector2( 0.25, 0.25 )
 
 [connection signal="body_entered" from="." to="." method="_on_Plinth_body_entered"]

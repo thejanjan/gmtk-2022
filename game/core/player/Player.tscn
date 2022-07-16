@@ -19,11 +19,12 @@ collision_layer = 2
 script = ExtResource( 4 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
+scale = Vector2( 4, 4 )
 texture = SubResource( 3 )
 script = ExtResource( 6 )
 
 [node name="PlayerViewport" type="Viewport" parent="PlayerSprite"]
-size = Vector2( 300, 300 )
+size = Vector2( 150, 150 )
 transparent_bg = true
 render_target_v_flip = true
 script = ExtResource( 2 )

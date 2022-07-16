@@ -30,7 +30,7 @@ var SideEquipment = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_stats._speed = 200;
+	_stats._speed = 300;
 	_stats._damage = 1;
 	PlayerState.transition("PipDamage");
 	velocity = Vector2(0,0);
