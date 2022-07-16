@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://game/gui/HPMeter.gd" type="Script" id=3]
+
+[node name="HPMeter" type="Control"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = -44.0
+margin_right = 48.0
+margin_bottom = -4.0
+script = ExtResource( 3 )
