@@ -20,7 +20,8 @@ enum ItemType {
 	BASIC_DAMAGE,
 	FAST,
 	OIL_SLICK,
-	RUBBER_OF_THE_SOUL
+	RUBBER_OF_THE_SOUL,
+	STUNT_DOUBLER
 }
 
 enum ItemRarity {
