@@ -1,6 +1,6 @@
 extends Node
 
-var Item = load("res://game/base/Item.gd")
+var Item = load("res://game/core/Item.gd")
 
 class Element:
 	var _item_id
