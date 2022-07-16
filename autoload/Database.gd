@@ -63,6 +63,11 @@ var ItemDB = {
 		"I'm too scared to actually make the die a ball",
 		Enum.ItemRarity.COMMON,
 		'res://game/core/equipment/Fast.tscn'
+	),
+	Enum.ItemType.OIL_SLICK: _ItemData.new(
+		"Oil Slick",
+		Enum.ItemRarity.COMMON,
+		'res://game/core/equipment/OilSlick.tscn'
 	)
 }
 

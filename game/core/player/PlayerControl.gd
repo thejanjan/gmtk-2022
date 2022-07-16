@@ -19,10 +19,10 @@ onready var ESM = $EquipmentStateMachine
 var SideEquipment = {
 	Enum.DiceSide.ONE : Enum.ItemType.BASIC_DAMAGE,
 	Enum.DiceSide.TWO : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.THREE : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.FOUR : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.FIVE : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.SIX : Enum.ItemType.FAST
+	Enum.DiceSide.THREE : Enum.ItemType.OIL_SLICK,
+	Enum.DiceSide.FOUR : Enum.ItemType.OIL_SLICK,
+	Enum.DiceSide.FIVE : Enum.ItemType.OIL_SLICK,
+	Enum.DiceSide.SIX : Enum.ItemType.OIL_SLICK
 }
 
 # Called when the node enters the scene tree for the first time.
