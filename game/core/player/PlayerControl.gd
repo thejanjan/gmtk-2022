@@ -69,7 +69,6 @@ func _physics_process(delta):
 	
 	# Concrete
 	# TODO : make a custom audiostreamplayer that does this for us
-	var totalspeed = abs(velocity[0] + velocity[1]);
 	if totalspeed <= 1 or jumping:
 		concrete_volume -= 4;
 		ConcreteStream.volume_db = concrete_volume;
