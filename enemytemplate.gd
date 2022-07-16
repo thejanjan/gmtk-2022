@@ -34,28 +34,28 @@ func lose_health(healthDam):
 	if health <= 0:
 		emit_signal("killedenemy")
 
-func move_tile(direction):
-	if direction == 'UP':
-		# Add code for movement here
+func move_tile(direction, enemy):
+	if direction == 0:
+		enemy.translated(Vector2(0,-64))
 		emit_signal("UP")
-	elif direction == 'DOWN':
-		# Add code for movement here
+	elif direction == 1:
+		enemy.translated(Vector2(0,64))
 		emit_signal("DOWN")
-	elif direction == 'LEFT':
-		# Add code for movement here
+	elif direction == 2:
+		enemy.translated(Vector2(-64,0))
 		emit_signal("LEFT")
-	elif direction == 'RIGHT':
-		# Add code for movement here
+	elif direction == 3:
+		enemy.translated(Vector2(64,0))
 		emit_signal("RIGHT")
-	elif direction == 'DOWNLEFT':
-		# Add code for movement here
+	elif direction == 4:
+		enemy.translated(Vector2(-64,64))
 		emit_signal("DOWNLEFT")
-	elif direction == 'DOWNRIGHT':
-		# Add code for movement here
+	elif direction == 5:
+		enemy.translated(Vector2(64,64))
 		emit_signal("DOWNRIGHT")
-	elif direction == 'UPLEFT':
-		# Add code for movement here
+	elif direction == 6:
+		enemy.translated(Vector2(-64,-64))
 		emit_signal("UPLEFT")
-	elif direction == 'UPRIGHT':
-		# Add code for movement here
+	elif direction == 7:
+		enemy.translated(Vector2(64,-64))
 		emit_signal("UPRIGHT")
