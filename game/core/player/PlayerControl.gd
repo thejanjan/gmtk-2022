@@ -6,8 +6,8 @@ var PlayerStats = load("res://game/core/player/PlayerStats.gd")
 var _stats = PlayerStats.new()
 var velocity: Vector2;
 # The higher these are, the slower the speed changes to nothing/max speed respectively
-var friction = 10;
-var acceleration = 1000;
+var friction = 60;
+var acceleration = 90;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
