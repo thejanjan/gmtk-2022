@@ -2,7 +2,7 @@ extends State
 
 func enter():
 	#PAIN
-	var pip = owner.get_player_sprite().get_player_viewport().get_player_base().get_dice_model().get_active_pip();
+	var pip = owner.get_rigid_body().get_active_pip();
 	
 	var all_enemy = get_tree().get_nodes_in_group("enemy");
 	var close_enemy = null;

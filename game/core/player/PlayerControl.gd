@@ -17,7 +17,7 @@ var last_veloc = Vector2(0.0, 0.0);
 var last_accel = Vector2(0.0, 0.0);
 
 onready var PlayerSprite = $PlayerSprite
-onready var PlayerState = $State/StateMachine
+onready var PlayerState = $StateMachine
 
 var SideEquipment = {
 	Enum.DiceSide.ONE : "PipDamage",
@@ -65,7 +65,6 @@ func _physics_process(delta):
 		for i in range(2):
 			velocity[i] *= _stats._speed/totalspeed
 		totalspeed = pow(pow(abs(velocity[0]),2) + pow(abs(velocity[1]),2), 0.5);
-	print(totalspeed)
 	
 	# Concrete
 	# TODO : make a custom audiostreamplayer that does this for us
@@ -123,9 +122,7 @@ Jump connections
 """
 
 func on_jump():
-	print('on_jump')
 	jumping = true
 	
 func on_jump_end():
-	print('on_jump_end')
 	jumping = false

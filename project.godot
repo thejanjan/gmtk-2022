@@ -35,6 +35,7 @@ config/icon="res://icon.png"
 Enum="*res://onload/Enum.gd"
 DiceSide="*res://onload/DiceSide.gd"
 GameState="*res://onload/GameState.gd"
+Random="*res://onload/Random.gd"
 
 [input]
 
