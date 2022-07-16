@@ -1,8 +1,12 @@
 extends RigidBody
 
 const JUMP_VELOCITY = 20
-var jumping = 0;
+var jumping = -10;
+var in_jump = false;
 var current_speed = Vector2(0, 0)
+
+signal jump_start;
+signal jump_end;
 
 const positional_transforms = {
 	Enum.DiceSide.ONE:   Quat(Vector3(0, 0, 0)),
@@ -21,7 +25,6 @@ onready var pip_color = DiceModel.get_surface_material(1).get_albedo()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.set_axis_lock(PhysicsServer.BODY_AXIS_LINEAR_X + PhysicsServer.BODY_AXIS_LINEAR_Z, true)
-	
 	self.tween_pip_color(
 		dice_color,
 		pip_color,
@@ -30,10 +33,16 @@ func _ready():
 
 
 func _physics_process(delta):
-	var jump_attempt = Input.is_action_pressed("move_roll")
-	if jump_attempt and self.translation.y <= 0 and jumping < 0:
-		self.apply_impulse(Vector3(0, 0, 0), Vector3(0, JUMP_VELOCITY, 0))
-		jumping = 10
+	if self.translation.y <= 0 and jumping < 0:
+		if in_jump:
+			emit_signal("jump_end")
+			in_jump = false
+		var jump_attempt = Input.is_action_pressed("move_roll")
+		if jump_attempt:
+			self.apply_impulse(Vector3(0, 0, 0), Vector3(0, JUMP_VELOCITY, 0))
+			jumping = 10
+			in_jump = true
+			emit_signal("jump_start")
 	jumping -= 1
 
 
