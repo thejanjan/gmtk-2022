@@ -36,7 +36,8 @@ func _ready():
 	velocity = Vector2(0,0);
 	self.get_rigid_body().connect("jump_start", self, "on_jump")
 	self.get_rigid_body().connect("jump_end", self, "on_jump_end")
-	
+	self.get_rigid_body().connect("side_swapped", self, "on_new_dice")
+	self.on_new_dice(self.get_rigid_body().get_active_pip())
 	pass # Replace with function bitches instead.
 
 
@@ -126,3 +127,10 @@ func on_jump():
 	
 func on_jump_end():
 	jumping = false
+
+"""
+Listen for a new dice side
+"""
+
+func on_new_dice(side):
+	PlayerState.transition(SideEquipment.get(side))

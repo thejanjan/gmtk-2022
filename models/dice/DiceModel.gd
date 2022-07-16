@@ -7,6 +7,7 @@ var current_speed = Vector2(0, 0)
 
 signal jump_start;
 signal jump_end;
+signal side_swapped(side);
 
 const positional_transforms = {
 	Enum.DiceSide.ONE:   Quat(Vector3(0, 0, 0)),
@@ -104,6 +105,7 @@ func get_valid_dice_sides() -> Array:
 func _do_spin():
 	# We gotta pick a side and then do it.
 	var dice_side = Random.choice(self.get_valid_dice_sides())
+	emit_signal("side_swapped", dice_side)
 	var goal_quat = self.positional_transforms[dice_side]
 	goal_quat = goal_quat.get_euler()
 	goal_quat.y = DiceModel.transform.basis.get_rotation_quat().y
