@@ -5,10 +5,8 @@
 [ext_resource path="res://game/core/player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/core/TileMapCheckered.gd" type="Script" id=4]
 [ext_resource path="res://game/core/TileManager.gd" type="Script" id=5]
+[ext_resource path="res://game/core/enemies/Pawn.tscn" type="PackedScene" id=6]
 [ext_resource path="res://textures/tiles/autotile_template_3x3_minimal_topdown_walls_thick.png" type="Texture" id=7]
-
-[sub_resource type="ViewportTexture" id=24]
-viewport_path = NodePath("Viewport")
 
 [sub_resource type="ConvexPolygonShape2D" id=5]
 points = PoolVector2Array( 48, 88, 16, 88, 16, 16, 48, 16 )
@@ -222,7 +220,6 @@ __meta__ = {
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 579.245, 307.313 )
-texture = SubResource( 24 )
 
 [node name="TileManager" type="TileMap" parent="."]
 tile_set = SubResource( 4 )
@@ -237,3 +234,6 @@ __meta__ = {
 tile_set = SubResource( 25 )
 format = 1
 script = ExtResource( 4 )
+
+[node name="Pawn" parent="." instance=ExtResource( 6 )]
+position = Vector2( 505, 245 )

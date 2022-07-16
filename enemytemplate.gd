@@ -29,12 +29,13 @@ func _ready():
 func set_health(initHealth):
 	maxhealth = initHealth
 	health = initHealth
-	$"health bar".set_health(initHealth)
+	#$"health bar".set_health(initHealth)
 	
 func lose_health(healthDam):
 	health -= healthDam
-	$"health bar".lose_health(healthDam)
+	#$"health bar".lose_health(healthDam)
 	if health <= 0:
+		self.queue_free();
 		emit_signal("killedenemy")
 
 func move_tile(direction, enemy):
