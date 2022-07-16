@@ -73,6 +73,11 @@ var ItemDB = {
 		"Rubber of the Soul",
 		Enum.ItemRarity.COMMON,
 		'res://game/core/equipment/RubberOfTheSoul.tscn'
+	),
+	Enum.ItemType.STUNT_DOUBLER: _ItemData.new(
+		"Stunt Doubler",
+		Enum.ItemRarity.COMMON,
+		'res://game/core/equipment/StuntDoubler.tscn'
 	)
 }
 
