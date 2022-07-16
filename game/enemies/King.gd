@@ -13,5 +13,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	$enemytemplate.move_tile(randi() % 8, king)
+	$enemytemplate.move_tile(randi() % 8, self)
 	
