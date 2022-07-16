@@ -11,8 +11,6 @@ onready var state: State = null;
 func _ready():
 	for child in get_children():
 		child.state_machine = self;
-	if state != null:
-		state.enter();
 
 #Pass input events -only- to the current active state
 func _unhandled_input(event: InputEvent):
@@ -37,8 +35,5 @@ func transition(target_state: String):
 	if state != null:
 		state.exit();
 	state = get_node(target_state);
-	if state != null:
-		state.enter();
-		emit_signal("change_state", state.name);
-	else:
-		emit_signal("change_state", null);
+	state.enter();
+	emit_signal("change_state", state.name);

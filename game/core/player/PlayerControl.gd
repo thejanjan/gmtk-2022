@@ -32,8 +32,8 @@ var SideEquipment = {
 func _ready():
 	_stats._speed = 300;
 	_stats._damage = 1;
-	PlayerState.transition("PipDamage");
 	velocity = Vector2(0,0);
+	#PlayerState.transition("PipDamage");
 	self.get_rigid_body().connect("jump_start", self, "on_jump")
 	self.get_rigid_body().connect("jump_end", self, "on_jump_end")
 	self.get_rigid_body().connect("side_swapped", self, "on_new_dice")
