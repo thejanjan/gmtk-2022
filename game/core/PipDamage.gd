@@ -21,4 +21,4 @@ func enter():
 	
 	#Do damage equal to current pip
 	if (close_enemy != null):
-		close_enemy.do_damage(pip);
+		close_enemy.lose_health(pip);

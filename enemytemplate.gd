@@ -10,13 +10,16 @@ signal DOWNRIGHT
 signal UPLEFT
 signal UPRIGHT
 
+const tile_height = 8;
+const tile_width = 13;
+
 # Declare member variables here. Examples:
 var maxhealth
 var health
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	pass;
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
