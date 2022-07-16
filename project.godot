@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Equipment",
+"class": "BananaPeel",
+"language": "GDScript",
+"path": "res://game/core/equipment/BananaPeel.gd"
+}, {
 "base": "RigidBody2D",
 "class": "EnemyBase",
 "language": "GDScript",
@@ -34,12 +39,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game/core/equipment/RubberOfTheSoul.gd"
 }, {
-"base": "Node2D",
+"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://game/core/State.gd"
 }, {
-"base": "Node2D",
+"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://game/core/StateMachine.gd"
@@ -55,6 +60,7 @@ _global_script_classes=[ {
 "path": "res://util/TempTween.gd"
 } ]
 _global_script_class_icons={
+"BananaPeel": "",
 "EnemyBase": "",
 "Equipment": "",
 "EquipmentStateMachine": "",
