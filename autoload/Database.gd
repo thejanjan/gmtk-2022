@@ -58,6 +58,21 @@ var ItemDB = {
 		Enum.ItemRarity.COMMON,
 		'res://game/core/equipment/PipDamage.tscn',
 		false
+	),
+	Enum.ItemType.FAST: _ItemData.new(
+		"I'm too scared to actually make the die a ball",
+		Enum.ItemRarity.COMMON,
+		'res://game/core/equipment/Fast.tscn'
+	),
+	Enum.ItemType.OIL_SLICK: _ItemData.new(
+		"Oil Slick",
+		Enum.ItemRarity.COMMON,
+		'res://game/core/equipment/OilSlick.tscn'
+	),
+	Enum.ItemType.RUBBER_OF_THE_SOUL: _ItemData.new(
+		"Rubber of the Soul",
+		Enum.ItemRarity.COMMON,
+		'res://game/core/equipment/RubberOfTheSoul.tscn'
 	)
 }
 

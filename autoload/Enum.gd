@@ -17,7 +17,10 @@ enum DiceSide {
 
 enum ItemType {
 	NIL = -1,
-	BASIC_DAMAGE
+	BASIC_DAMAGE,
+	FAST,
+	OIL_SLICK,
+	RUBBER_OF_THE_SOUL
 }
 
 enum ItemRarity {
