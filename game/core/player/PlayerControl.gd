@@ -46,22 +46,29 @@ func _physics_process(delta):
 	var h_move = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 	var v_move = int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
 	
-	for x in [[0, h_move], [1, v_move]]:
+	for x in [[0, h_move], [1, v_move]]: # Equivalent to "for i, move in enumerate([h_move, v_move])"
 		var i = x[0];
 		var move = x[1];
-		var movetowardszero = (velocity[i]*(friction-1))/friction
+		var movetowardszero = (velocity[i]*(friction-1))/friction # Averages out friction-1 copies of the speed and 0
 		if move == 0:
 			velocity[i] = movetowardszero;
 		else:
-			var movetowardsmaxspeed = (_stats._speed*move + velocity[i]*(acceleration-1))/acceleration;
+			var movetowardsmaxspeed = (_stats._speed*move + velocity[i]*(acceleration-1))/acceleration; # Averages out acceleration-1 copies of the speed and max speed
 			if abs(movetowardsmaxspeed-(_stats._speed*move)) < abs(movetowardszero-(_stats._speed*move)):
 				velocity[i] = movetowardsmaxspeed;
 			else:
 				velocity[i] = movetowardszero;
 	
+	# Normalize
+	var totalspeed = pow(pow(abs(velocity[0]),2) + pow(abs(velocity[1]),2), 0.5);
+	if totalspeed > _stats._speed:
+		for i in range(2):
+			velocity[i] *= _stats._speed/totalspeed
+		totalspeed = pow(pow(abs(velocity[0]),2) + pow(abs(velocity[1]),2), 0.5);
+	print(totalspeed)
+	
 	# Concrete
 	# TODO : make a custom audiostreamplayer that does this for us
-	var totalspeed = abs(velocity[0] + velocity[1]);
 	if totalspeed <= 1 or jumping:
 		concrete_volume -= 4;
 		ConcreteStream.volume_db = concrete_volume;
@@ -71,7 +78,7 @@ func _physics_process(delta):
 	else:
 		var minvol = -20;			
 		var maxvol = 0;			
-		var target_volume = minvol + (abs(minvol)+abs(maxvol)) * min(_stats._speed, abs(velocity[0]) + abs(velocity[1])) / _stats._speed;
+		var target_volume = minvol + (abs(minvol)+abs(maxvol)) * min(_stats._speed, totalspeed) / _stats._speed;
 		concrete_volume += 8
 		if concrete_volume > target_volume:
 			concrete_volume = target_volume
