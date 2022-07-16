@@ -6,11 +6,22 @@ const PlayerStats = preload("res://game/core/player/PlayerStats.gd")
 var _stats = PlayerStats.new()
 
 onready var PlayerSprite = $PlayerSprite
+onready var PlayerState = $State/StateMachine
+
+var SideEquipment = {
+	Enum.DiceSide.ONE : "PipDamage",
+	Enum.DiceSide.TWO : "PipDamage",
+	Enum.DiceSide.THREE : "PipDamage",
+	Enum.DiceSide.FOUR : "PipDamage",
+	Enum.DiceSide.FIVE : "PipDamage",
+	Enum.DiceSide.SIX : "PipDamage"
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_stats._speed = 30;
 	_stats._damage = 1;
+	PlayerState.transition("PipDamage");
 	pass # Replace with function body.
 
 
