@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/vdom_pip_2.png-68c49e02ef1f84f79f1d32b5781b057e.stex"
+path="res://.import/white_peg.png-60999ad2a886930cdb3861014c7e51ee.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/enemies/dominos/vdom_pip_2.png"
-dest_files=[ "res://.import/vdom_pip_2.png-68c49e02ef1f84f79f1d32b5781b057e.stex" ]
+source_file="res://textures/enemies/battleship/white_peg.png"
+dest_files=[ "res://.import/white_peg.png-60999ad2a886930cdb3861014c7e51ee.stex" ]
 
 [params]
 

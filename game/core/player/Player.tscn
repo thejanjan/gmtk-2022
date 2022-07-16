@@ -18,6 +18,7 @@ collision_layer = 2
 script = ExtResource( 4 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
+position = Vector2( 0, -21 )
 scale = Vector2( 4, 4 )
 texture = SubResource( 3 )
 script = ExtResource( 6 )

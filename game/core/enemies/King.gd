@@ -1,15 +1,16 @@
-extends "res://game/core/enemies/enemytemplate.gd"
+extends EnemyBase
 
-onready var tween = $Tween;
-
-func _ready():
-	set_health(20);
-	randomize()
+onready var AnimPlayer = $AnimationPlayer
+	
+func perform_destroy():
+	set_collision_layer(0)
+	set_collision_mask(0)
+	AnimPlayer.play("Death")
 
 func _on_Timer_timeout():
-	move_tile(randi() % 8, self);
+	var xpos = Random.choice([-1, 1])
+	var ypos = Random.choice([-1, 1])
+	move_tile(xpos, ypos, 0.5);
 
-func translated(w : int, h : int) -> void:
-	var dir = Vector2(w, h);
-	tween.interpolate_property(self, "position", self.position, self.position + dir, 1.0, Tween.TRANS_SINE, Tween.EASE_IN_OUT);
-	tween.start();
+func _on_AnimationPlayer_animation_finished(anim_name):
+	self.queue_free()
