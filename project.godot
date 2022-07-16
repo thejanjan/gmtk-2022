@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "RigidBody2D",
+"class": "EnemyBase",
+"language": "GDScript",
+"path": "res://game/base/EnemyBase.gd"
+}, {
 "base": "StateMachine",
 "class": "EquipmentStateMachine",
 "language": "GDScript",
@@ -23,11 +28,18 @@ _global_script_classes=[ {
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://game/core/StateMachine.gd"
+}, {
+"base": "Tween",
+"class": "TempTween",
+"language": "GDScript",
+"path": "res://util/TempTween.gd"
 } ]
 _global_script_class_icons={
+"EnemyBase": "",
 "EquipmentStateMachine": "",
 "State": "",
-"StateMachine": ""
+"StateMachine": "",
+"TempTween": ""
 }
 
 [application]
