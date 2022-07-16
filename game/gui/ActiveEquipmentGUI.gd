@@ -24,6 +24,16 @@ func _ready():
 	self.pips[active_dice].equip_pip(true)
 
 
+func approach_plinth():
+	for pip in self.pips:
+		pip.approach_plinth()
+	
+	
+func unapproach_plinth():
+	for pip in self.pips:
+		pip.unapproach_plinth()
+
+
 func initialize_equips(equip_dict):
 	for i in equip_dict.keys():
 		var item_id = equip_dict[i]

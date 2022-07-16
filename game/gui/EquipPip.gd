@@ -65,7 +65,7 @@ func approach_plinth():
 	self.open_requests.append(OpenRequests.Plinth)
 	
 	
-func unapproach_plint():
+func unapproach_plinth():
 	if OpenRequests.Plinth in self.open_requests:
 		self.open_requests.erase(OpenRequests.Plinth)
 
