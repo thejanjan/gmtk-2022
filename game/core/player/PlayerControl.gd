@@ -7,9 +7,6 @@ var concrete_volume = -80
 
 var _stats = PlayerStats.new()
 var velocity: Vector2;
-# The higher these are, the slower the speed changes to nothing/max speed respectively
-var friction = 3;
-var acceleration = 6;
 
 var jumping = false;
 
@@ -32,6 +29,8 @@ var SideEquipment = {
 func _ready():
 	_stats._speed = 300;
 	_stats._damage = 1;
+	_stats._friction = 3;
+	_stats._acceleration = 6;
 	velocity = Vector2(0,0);
 	#PlayerState.transition("PipDamage");
 	self.get_rigid_body().connect("jump_start", self, "on_jump")
@@ -50,11 +49,11 @@ func _physics_process(delta):
 	for x in [[0, h_move], [1, v_move]]: # Equivalent to "for i, move in enumerate([h_move, v_move])"
 		var i = x[0];
 		var move = x[1];
-		var movetowardszero = (velocity[i]*(friction-1))/friction # Averages out friction-1 copies of the speed and 0
+		var movetowardszero = (velocity[i]*(_stats._friction-1))/_stats._friction # Averages out friction-1 copies of the speed and 0
 		if move == 0:
 			velocity[i] = movetowardszero;
 		else:
-			var movetowardsmaxspeed = (_stats._speed*move + velocity[i]*(acceleration-1))/acceleration; # Averages out acceleration-1 copies of the speed and max speed
+			var movetowardsmaxspeed = (_stats._speed*move + velocity[i]*(_stats._acceleration-1))/_stats._acceleration; # Averages out acceleration-1 copies of the speed and max speed
 			if abs(movetowardsmaxspeed-(_stats._speed*move)) < abs(movetowardszero-(_stats._speed*move)):
 				velocity[i] = movetowardsmaxspeed;
 			else:
