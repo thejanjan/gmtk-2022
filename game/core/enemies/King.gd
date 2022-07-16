@@ -3,11 +3,11 @@ extends "res://game/core/enemies/enemytemplate.gd"
 onready var tween = $Tween;
 
 func _ready():
-	set_health(2);
-
+	set_health(20);
+	randomize()
 
 func _on_Timer_timeout():
-	move_tile(2, self);
+	move_tile(randi() % 8, self);
 
 func translated(w : int, h : int) -> void:
 	var dir = Vector2(w, h);
