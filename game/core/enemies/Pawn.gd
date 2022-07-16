@@ -2,10 +2,9 @@ extends EnemyBase
 
 onready var AnimPlayer = $AnimationPlayer
 
-func _ready():
-	set_health(10);
-
 func perform_destroy():
+	set_collision_layer(0)
+	set_collision_mask(0)
 	AnimPlayer.play("Death")
 
 func _on_Timer_timeout():

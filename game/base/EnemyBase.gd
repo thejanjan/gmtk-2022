@@ -9,8 +9,8 @@ signal enemy_killed
 signal enemy_moved
 
 # Declare member variables here. Examples:
-var max_hp = 10000
-var hp = 10000
+export var max_hp = 10
+var hp = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -80,6 +80,16 @@ func on_collision_from(body: Node, group: String):
 
 """
 Getters
+"""
+
+func get_hp():
+	return self.hp
+	
+func get_max_hp():
+	return self.max_hp
+
+"""
+Helpers
 """
 
 func make_tween() -> TempTween:
