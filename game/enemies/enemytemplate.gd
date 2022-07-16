@@ -32,8 +32,10 @@ func set_health(initHealth):
 	#$"health bar".set_health(initHealth)
 	
 func lose_health(healthDam):
+	if (health == null): return;
 	health -= healthDam
 	#$"health bar".lose_health(healthDam)
+	print("Oof, owie, ouch, an enemy got hit");
 	if health <= 0:
 		self.queue_free();
 		emit_signal("killedenemy")

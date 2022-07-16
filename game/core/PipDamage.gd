@@ -9,7 +9,7 @@ func enter():
 	
 	#Set this to the maximum distance^2 we want to search
 	#Remember we use distance_SQUARED_to!!!
-	var close_distance = 5000;
+	var close_distance = 50000;
 	var pos = owner.get_position();
 	
 	#Find closest enemy, ez
@@ -21,4 +21,5 @@ func enter():
 	
 	#Do damage equal to current pip
 	if (close_enemy != null):
-		close_enemy.lose_health(pip);
+		close_enemy.lose_health(pip + 1);
+		print(pip);
