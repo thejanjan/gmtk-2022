@@ -51,7 +51,7 @@ func _physics_process(delta):
 	else:
 		var minvol = -20;			
 		var maxvol = 0;			
-		ConcreteStream.volume_db = minvol + (abs(minvol)+abs(maxvol)) * min(_stats._speed, abs(velocity[0] + velocity[1])) / _stats._speed;
+		ConcreteStream.volume_db = minvol + (abs(minvol)+abs(maxvol)) * min(_stats._speed, abs(velocity[0]) + abs(velocity[1])) / _stats._speed;
 		if not ConcreteStream.playing:
 			ConcreteStream.playing = true;
 
