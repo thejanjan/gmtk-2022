@@ -61,6 +61,7 @@ func _statChange(stat, multiplier):
 	var stats = get_player()._stats
 	var og = stats.get(stat)
 	stats.set(stat, stats.get(stat) * multiplier)
+	return
 	
 	print("Set {0} from {1} to {2}".format([stat, og, stats.get(stat)]))
 	# Show with particles

@@ -17,7 +17,7 @@ dungeon_width = 60
 dungeon_height = 60
 room_min_width = 5
 room_min_height = 5
-room_max_color_id = 31
+room_max_color_id = 2
 
 [node name="FloorTileMap" type="TileMap" parent="DungeonGenerator" groups=["floor_tilemap"]]
 scale = Vector2( 4, 4 )

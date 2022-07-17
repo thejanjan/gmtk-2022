@@ -2,8 +2,9 @@ extends RigidBody
 
 const JUMP_VELOCITY = 20
 const HOP_VELOCITY = 10
-const SMASH_VELOCITY = -30
+const SMASH_VELOCITY = -60
 var jumping = -10;
+var debounce = -1
 var in_jump = false;
 var current_speed = Vector2(0, 0)
 
@@ -38,19 +39,26 @@ func _ready():
 
 
 func _physics_process(delta):
-	if self.translation.y <= 0 and jumping < 0:
+	debounce -= 1
+	if self.translation.y <= -0.05 and jumping < 0:
 		if in_jump:
 			emit_signal("jump_end")
 			$land.play()
+			emit_signal("side_swapped", the_dice_side)
 			in_jump = false
+			var item_id = GameState.get_player().SideEquipment.get(the_dice_side)
+			var item_data = Database.get_item_data(item_id)
+			debounce = item_data.get_cooldown() * 60.0
 		var jump_attempt = Input.is_action_pressed("move_roll")
-		if jump_attempt:
+		if jump_attempt and debounce < 0:
+			self.linear_velocity = Vector3(0, 0, 0)
 			self.apply_impulse(Vector3(0, 0, 0), Vector3(0, JUMP_VELOCITY, 0))
 			jumping = 20
 			in_jump = true
 			emit_signal("jump_start")
+			$AnimationPlayer.play("Jump")
 			$jump.play()
-	if jumping == 18 and self.translation.y <= 0:
+	if jumping == 18 and self.translation.y <= -0.05:
 		# Our jump failed.
 		jumping = -1
 	jumping -= 1
@@ -124,7 +132,6 @@ func _do_spin():
 	# We gotta pick a side and then do it.
 	var dice_side = Random.choice(self.get_valid_dice_sides())
 	the_dice_side = dice_side
-	emit_signal("side_swapped", dice_side)
 	var goal_quat = self.positional_transforms[dice_side]
 	goal_quat = goal_quat.get_euler()
 	goal_quat.y = self.get_root_die().transform.basis.get_rotation_quat().y
