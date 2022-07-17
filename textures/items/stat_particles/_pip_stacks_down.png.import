@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/_bounciness_down.png-1ec4aa114c8629a46a8f2f290dfd979f.stex"
+path="res://.import/_pip_stacks_down.png-6caf048dce826e48bb313210dd4b2045.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/items/stat_particles/_bounciness_down.png"
-dest_files=[ "res://.import/_bounciness_down.png-1ec4aa114c8629a46a8f2f290dfd979f.stex" ]
+source_file="res://textures/items/stat_particles/_pip_stacks_down.png"
+dest_files=[ "res://.import/_pip_stacks_down.png-6caf048dce826e48bb313210dd4b2045.stex" ]
 
 [params]
 
