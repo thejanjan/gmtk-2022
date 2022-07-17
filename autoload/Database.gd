@@ -99,7 +99,7 @@ var ItemDB = {
 		Enum.ItemRarity.COMMON,
 		"Aerodynamic form improves speed",
 		1.0,
-		true,
+		false,
 		'res://game/core/equipment/Fast.tscn',
 		'res://textures/items/item_weird_die.png',
 		'res://textures/items/icons/icon_weird_die.png'
