@@ -49,7 +49,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game/core/State.gd"
 }, {
-"base": "Node2D",
+"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://game/core/StateMachine.gd"

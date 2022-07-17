@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://game/core/Plinth.gd" type="Script" id=1]
-[ext_resource path="res://textures/items/unknown.png" type="Texture" id=2]
+[ext_resource path="res://textures/items/DJUNGELSKOG.png" type="Texture" id=2]
 [ext_resource path="res://textures/environmental/pedestal/pedestal.png" type="Texture" id=3]
 [ext_resource path="res://game/gui/GameTheme.tres" type="Theme" id=4]
 
