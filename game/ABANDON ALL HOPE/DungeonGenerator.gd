@@ -7,6 +7,7 @@
 extends Node
 
 onready var tile_mapper_floor = $FloorTileMap as TileMap
+onready var tile_mapper_wall = $WallTileMap as TileMap
 
 export(int) var dungeon_width = 100
 export(int) var dungeon_height = 100
@@ -38,6 +39,8 @@ func generate_dungeon():
 		generate_room()
 		
 	generate_hallways()
+	
+	generate_wall_tiles()
 		
 	# Place the player in the first room.
 	position_player()
@@ -94,6 +97,13 @@ func generate_hallway_vertical(position_start, position_end, thickness, color):
 	for x in range(position_start.x, position_start.x + thickness):
 		for y in range(starty, endy):
 			place_hallway_tile(x, y, color)
+			
+func generate_wall_tiles():
+	# This is efficient!
+	for tile in tile_mapper_floor.get_used_cells():
+		for vec in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
+			if tile_mapper_floor.get_cellv(tile + vec) == TileMap.INVALID_CELL:
+				tile_mapper_wall.set_cellv(tile + vec, 0)
 	
 func place_floor_tile(x, y, color):
 	# Checkerboard pattern!
