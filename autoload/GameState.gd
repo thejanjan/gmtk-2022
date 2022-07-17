@@ -41,6 +41,7 @@ func all_spots():
 
 
 var HP = 6 
+var cash = 0
 var ActiveCoins = []
 
 func get_player():
