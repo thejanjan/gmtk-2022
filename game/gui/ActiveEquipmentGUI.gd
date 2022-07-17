@@ -26,6 +26,8 @@ func _ready():
 	# Equip the starter dice.
 	self.pips[active_dice].equip_pip(true)
 	
+	register_plinths()
+	
 	
 func _add_coin(coin_data: DataClasses.CoinData):
 	var i = self.coin_pips.size()
@@ -50,6 +52,16 @@ func approach_plinth():
 func unapproach_plinth():
 	for pip in self.pips + self.coin_pips:
 		pip.unapproach_plinth()
+	
+	
+# TODO: move this plinth registry bullshit somewhere way better
+func register_plinths() -> void:
+	print("registering plinths")
+	var plinths = get_tree().get_nodes_in_group('plinths')
+	for plinth in plinths:
+		print("registered plinth")
+		plinth.connect("body_entered", self, "approach_plinth")
+		plinth.connect("body_exited", self, "unapproach_plinth")
 
 
 func initialize_equips(equip_dict):

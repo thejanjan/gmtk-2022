@@ -99,6 +99,11 @@ var ItemDB = {
 		"Stunt Doubler",
 		Enum.ItemRarity.COMMON,
 		'res://game/core/equipment/StuntDoubler.tscn'
+	),
+	Enum.ItemType.BANANA_PEEL: _ItemData.new(
+		"Banana Peel",
+		Enum.ItemRarity.COMMON,
+		'res://game/core/equipment/BananaPeel.tscn'
 	)
 }
 

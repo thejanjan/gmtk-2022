@@ -20,12 +20,12 @@ onready var PlayerSprite = $PlayerSprite
 onready var ESM = $EquipmentStateMachine
 
 var SideEquipment = {
-	Enum.DiceSide.ONE : Enum.ItemType.STUNT_DOUBLER,
-	Enum.DiceSide.TWO : Enum.ItemType.STUNT_DOUBLER,
-	Enum.DiceSide.THREE : Enum.ItemType.STUNT_DOUBLER,
-	Enum.DiceSide.FOUR : Enum.ItemType.STUNT_DOUBLER,
-	Enum.DiceSide.FIVE : Enum.ItemType.STUNT_DOUBLER,
-	Enum.DiceSide.SIX : Enum.ItemType.FAST
+	Enum.DiceSide.ONE : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.TWO : Enum.ItemType.FAST,
+	Enum.DiceSide.THREE : Enum.ItemType.FAST,
+	Enum.DiceSide.FOUR : Enum.ItemType.FAST,
+	Enum.DiceSide.FIVE : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.SIX : Enum.ItemType.BASIC_DAMAGE
 }
 
 # Called when the node enters the scene tree for the first time.
