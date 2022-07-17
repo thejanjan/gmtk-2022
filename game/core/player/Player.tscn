@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://game/base/PlayerProjectionBase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/core/DiceViewport.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://game/core/player/PlayerControl.gd" type="Script" id=4]
 [ext_resource path="res://game/core/player/CoinManager.gd" type="Script" id=5]
 [ext_resource path="res://game/core/player/PlayerSprite.gd" type="Script" id=6]
+[ext_resource path="res://textures/items/stat_particles/_acceleration_down.png" type="Texture" id=7]
 [ext_resource path="res://audio/concrete.ogg" type="AudioStream" id=8]
 
 [sub_resource type="ViewportTexture" id=3]
@@ -50,3 +51,19 @@ pitch_scale = 0.65
 
 [node name="CoinManager" type="Node2D" parent="."]
 script = ExtResource( 5 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 0, -50 )
+emitting = false
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource( 7 )
+emission_shape = 1
+emission_sphere_radius = 8.05
+spread = 180.0
+gravity = Vector2( 0, 10 )
+initial_velocity = 82.57
+initial_velocity_random = 0.53
+angular_velocity_random = 1.0
+scale_amount = 3.0
