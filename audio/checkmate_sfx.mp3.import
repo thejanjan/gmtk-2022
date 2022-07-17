@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/checkmate_sfx.mp3-bf2be9869d8cbbbf9dd72de808c0f7a8.mp3str"
+
+[deps]
+
+source_file="res://audio/checkmate_sfx.mp3"
+dest_files=[ "res://.import/checkmate_sfx.mp3-bf2be9869d8cbbbf9dd72de808c0f7a8.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -2,6 +2,7 @@ extends Node
 
 signal new_coin(coin_data)
 signal coin_flipped(coin_index, item_id)
+signal money_change(new_money)
 
 var pos_dict = {};
 
@@ -118,4 +119,5 @@ func make_text(parent: Node, text: String, color: String):
 
 func make_cash(cash_dropped):
 	cash += cash_dropped
-	make_text(get_player(), "$%s (+%s)" % [cash, cash_dropped], 'ffff00')
+	emit_signal("money_changed", cash)
+	make_text(get_player(), "+$%s" % cash_dropped, 'ffff00')

@@ -23,7 +23,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 )
 }
 
-[node name="Queen" type="RigidBody2D" groups=["enemy"]]
+[node name="Queen" type="RigidBody2D" groups=["chess_piece", "enemy"]]
 mode = 1
 gravity_scale = 0.0
 script = ExtResource( 4 )

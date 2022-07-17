@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/checkmate_sfx.ogg-ab1ae63a3511dfe952762118de80e79e.oggstr"
+
+[deps]
+
+source_file="res://audio/checkmate_sfx.ogg"
+dest_files=[ "res://.import/checkmate_sfx.ogg-ab1ae63a3511dfe952762118de80e79e.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

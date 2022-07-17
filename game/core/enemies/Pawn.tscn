@@ -42,7 +42,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.5, 1.6 )
 }
 
-[node name="Pawn" type="RigidBody2D" groups=["enemy"]]
+[node name="Pawn" type="RigidBody2D" groups=["chess_piece", "enemy"]]
 mode = 1
 mass = 4.87
 gravity_scale = 0.0

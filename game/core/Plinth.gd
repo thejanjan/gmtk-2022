@@ -44,6 +44,7 @@ func try_purchase() -> void:
 	# check if they have enough caaaaaaash
 	if GameState.cash >= cost:
 		GameState.cash -= cost
+		GameState.emit_signal("money_changed", GameState.cash)
 		set_cost(0)
 		_label_anim.play("purchase_succeed")
 		var received_equipment = GameState.get_player().swap_current_equipment(item_type)

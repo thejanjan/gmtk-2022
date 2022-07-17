@@ -22,7 +22,7 @@ func exit():
 	if changedConcreteSound:
 	 changeConcreteSound("res://audio/concrete.ogg")
 
-func damageNearbyEnemy(furthest_distance = 50000):
+func damageNearbyEnemy(furthest_distance = 50000, damage_override = null):
 	#PAIN
 	var player = self.get_player()
 	var all_enemy = get_tree().get_nodes_in_group("enemy");
@@ -36,13 +36,16 @@ func damageNearbyEnemy(furthest_distance = 50000):
 	#Find closest enemy, ez
 	for enemy in all_enemy:
 		var p_to_enemy = pos.distance_squared_to(enemy.get_position());
-		if p_to_enemy < close_distance:
+		if p_to_enemy < close_distance and enemy.hp > 0:
 			close_distance = p_to_enemy;
 			close_enemy = enemy;
 	
 	#Do damage equal to current pip
 	if (close_enemy != null):
-		close_enemy.lose_health(self.pip);
+		if damage_override == null:
+			close_enemy.lose_health(self.pip);
+		else:
+			close_enemy.lose_health(damage_override);
 		print(pip);
 
 func createTrail(size, length, color):

@@ -79,7 +79,7 @@ var ItemDB = {
 		false
 	),
 	Enum.ItemType.BASIC_DAMAGE: _ItemData.new(
-		'Devour',
+		'Takedown',
 		Enum.ItemRarity.COMMON,
 		"Does damage based on your roll",
 		1.0,
@@ -89,28 +89,28 @@ var ItemDB = {
 
 	),
 	Enum.ItemType.FAST: _ItemData.new(
-		"I'm too scared to actually make the die a ball",
+		"Endurance",
 		Enum.ItemRarity.COMMON,
 		"Aerodynamic form improves speed",
-		5.0,
+		1.0,
 		true,
 		'res://game/core/equipment/Fast.tscn',
 		'res://textures/items/item_weird_die.png'
 	),
 	Enum.ItemType.OIL_SLICK: _ItemData.new(
 		"Oil Slick",
-		Enum.ItemRarity.COMMON,
+		Enum.ItemRarity.RARE,
 		"Party like it's 2010",
-		4.0,
+		8.0,
 		true,
 		'res://game/core/equipment/OilSlick.tscn',
 		'res://textures/items/item_tar_die.png'
 	),
 	Enum.ItemType.RUBBER_OF_THE_SOUL: _ItemData.new(
 		"Rubber of the Soul",
-		Enum.ItemRarity.COMMON,
+		Enum.ItemRarity.RARE,
 		"Set my heart a-boinging",
-		6.0,
+		8.0,
 		true,
 		'res://game/core/equipment/RubberOfTheSoul.tscn',
 		'res://textures/items/item_weird_die.png'
@@ -118,8 +118,8 @@ var ItemDB = {
 	Enum.ItemType.STUNT_DOUBLER: _ItemData.new(
 		"Stunt Doubler",
 		Enum.ItemRarity.COMMON,
-		"A Stunt Double adds to your roll!",
-		7.0,
+		"Stacked in your favor",
+		0.4,
 		true,
 		'res://game/core/equipment/StuntDoubler.tscn',
 		'res://textures/items/item_stack_die.png'
@@ -127,10 +127,37 @@ var ItemDB = {
 	Enum.ItemType.BANANA_PEEL: _ItemData.new(
 		"Banana Peel",
 		Enum.ItemRarity.COMMON,
-		"WHOA-",
-		4.0,
+		"Whoa-",
+		1.0,
 		true,
 		'res://game/core/equipment/BananaPeel.tscn',
+		'res://textures/items/item_banana_die.png'
+	),
+	Enum.ItemType.TRIPLE_DAMAGE: _ItemData.new(
+		"Triple Takedown",
+		Enum.ItemRarity.RARE,
+		"Show them what you've got",
+		2.5,
+		true,
+		'res://game/core/equipment/TripleDamage.tscn',
+		'res://textures/items/item_banana_die.png'
+	),
+	Enum.ItemType.CHECKMATE: _ItemData.new(
+		"Checkmate",
+		Enum.ItemRarity.RARE,
+		"Obliterate a chess piece",
+		2.0,
+		true,
+		'res://game/core/equipment/Checkmate.tscn',
+		'res://textures/items/item_banana_die.png'
+	),
+	Enum.ItemType.SHOCKWAVE: _ItemData.new(
+		"Shockwave",
+		Enum.ItemRarity.COMMON,
+		"Hit em all",
+		0.7,
+		true,
+		'res://game/core/equipment/Shockwave.tscn',
 		'res://textures/items/item_banana_die.png'
 	)
 }
