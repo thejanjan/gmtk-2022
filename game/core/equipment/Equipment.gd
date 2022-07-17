@@ -53,14 +53,7 @@ func createTrail(size, length, color):
 	instance.position = player.position
 
 func changeConcreteSound(res):
-	var speech_player = get_player().get_node("ConcreteStream")
-	speech_player.stop()
-	var audio_file = res
-	if File.new().file_exists(audio_file):
-		var sfx = load(audio_file)
-		speech_player.stream = sfx
-		speech_player.play()
-	changedConcreteSound = true
+	get_player().change_audio_to(res)
 
 # Probably shouldn't use this directly, since it has no behavior for undoing the change
 # Done with multipliers instead of absolute values so that changes can stack properly

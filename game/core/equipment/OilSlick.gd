@@ -4,7 +4,7 @@ extends Equipment
 
 func enter():
 	self.apply_stats(false)
-	changeConcreteSound("res://audio/lancersplat.wav")
+	changeConcreteSound("OilSplat")
 	
 func apply_stats(invert: bool):
 	if not invert:
@@ -18,7 +18,7 @@ func apply_stats(invert: bool):
 	
 func exit():
 	self.apply_stats(true)
-	changeConcreteSound("res://audio/concrete.ogg")
+	changeConcreteSound("ConcreteStream")
 
 func _physics_process(delta):
 	createTrail(1, 2, Color("#1a1a1f"))
