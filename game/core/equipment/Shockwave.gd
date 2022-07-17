@@ -1,4 +1,5 @@
 extends Equipment
+onready var shockwaveVisual = preload("res://game/core/equipment/helpers/ShockwaveVisual.tscn")
 
 func enter():
 	var valid_enemies = []
@@ -17,3 +18,9 @@ func enter():
 		enemy.lose_health(1)
 
 	$AudioStreamPlayer.play()
+
+	# Draw a lil guy
+	var instance = self.shockwaveVisual.instance()
+	var player = get_player()
+	player.get_parent().add_child(instance)
+	instance.position = player.position
