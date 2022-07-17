@@ -80,6 +80,7 @@ room_min_height = 5
 
 [node name="FloorTileMap" type="TileMap" parent="DungeonGenerator"]
 scale = Vector2( 4, 4 )
+z_index = -5
 tile_set = SubResource( 25 )
 cell_size = Vector2( 13, 8 )
 format = 1
