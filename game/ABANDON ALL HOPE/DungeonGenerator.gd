@@ -65,6 +65,9 @@ func generate_dungeon():
 	position_player()
 	
 	emit_signal("player_spawned")
+	
+	# Start the song.
+	$Music.play()
 
 func generate_room():
 	var room_undecided = true

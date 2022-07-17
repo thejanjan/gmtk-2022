@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/song_KING.ogg-6adb4bf4b5a0b6cbeef1cb365a1fc789.oggstr"
+
+[deps]
+
+source_file="res://audio/song_KING.ogg"
+dest_files=[ "res://.import/song_KING.ogg-6adb4bf4b5a0b6cbeef1cb365a1fc789.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

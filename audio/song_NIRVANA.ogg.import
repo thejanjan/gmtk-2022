@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/song_NIRVANA.ogg-8f691c9f635cc8bd083d82d5a079fc98.oggstr"
+
+[deps]
+
+source_file="res://audio/song_NIRVANA.ogg"
+dest_files=[ "res://.import/song_NIRVANA.ogg-8f691c9f635cc8bd083d82d5a079fc98.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
