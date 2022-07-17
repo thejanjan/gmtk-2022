@@ -84,7 +84,9 @@ var ItemDB = {
 		"Does damage based on your roll",
 		1.0,
 		false,
-		'res://game/core/equipment/PipDamage.tscn'
+		'res://game/core/equipment/PipDamage.tscn',
+		'res://textures/items/item_weird_die.png'
+
 	),
 	Enum.ItemType.FAST: _ItemData.new(
 		"I'm too scared to actually make the die a ball",
@@ -92,7 +94,8 @@ var ItemDB = {
 		"Aerodynamic form improves speed",
 		5.0,
 		true,
-		'res://game/core/equipment/Fast.tscn'
+		'res://game/core/equipment/Fast.tscn',
+		'res://textures/items/item_weird_die.png'
 	),
 	Enum.ItemType.OIL_SLICK: _ItemData.new(
 		"Oil Slick",
@@ -100,7 +103,8 @@ var ItemDB = {
 		"Party like it's 2010",
 		4.0,
 		true,
-		'res://game/core/equipment/OilSlick.tscn'
+		'res://game/core/equipment/OilSlick.tscn',
+		'res://textures/items/item_tar_die.png'
 	),
 	Enum.ItemType.RUBBER_OF_THE_SOUL: _ItemData.new(
 		"Rubber of the Soul",
@@ -108,7 +112,8 @@ var ItemDB = {
 		"Set my heart a-boinging",
 		6.0,
 		true,
-		'res://game/core/equipment/RubberOfTheSoul.tscn'
+		'res://game/core/equipment/RubberOfTheSoul.tscn',
+		'res://textures/items/item_weird_die.png'
 	),
 	Enum.ItemType.STUNT_DOUBLER: _ItemData.new(
 		"Stunt Doubler",
@@ -116,7 +121,8 @@ var ItemDB = {
 		"A Stunt Double adds to your roll!",
 		7.0,
 		true,
-		'res://game/core/equipment/StuntDoubler.tscn'
+		'res://game/core/equipment/StuntDoubler.tscn',
+		'res://textures/items/item_stack_die.png'
 	),
 	Enum.ItemType.BANANA_PEEL: _ItemData.new(
 		"Banana Peel",
@@ -124,7 +130,8 @@ var ItemDB = {
 		"WHOA-",
 		4.0,
 		true,
-		'res://game/core/equipment/BananaPeel.tscn'
+		'res://game/core/equipment/BananaPeel.tscn',
+		'res://textures/items/item_banana_die.png'
 	)
 }
 

@@ -225,7 +225,6 @@ margin_bottom = 40.0
 theme = ExtResource( 4 )
 
 [node name="Label" type="Label" parent="CenterContainer"]
-modulate = Color( 0.14902, 1, 0, 1 )
 margin_left = 23.0
 margin_top = 14.0
 margin_right = 41.0
