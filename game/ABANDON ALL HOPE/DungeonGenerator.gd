@@ -19,7 +19,7 @@ onready var environmental = [
 	[0.4, preload("res://game/core/environmental/Shrubbery.tscn")],
 	[1.2, preload("res://game/core/environmental/Urn.tscn")],
 	[0.7, preload("res://game/core/environmental/Column.tscn")],
-	[0.7, preload("res://game/core/environmental/Streetlamp.tscn")],
+	[0.5, preload("res://game/core/environmental/Streetlamp.tscn")],
 ]
 
 onready var tile_mapper_floor = $FloorTileMap as TileMap
@@ -385,23 +385,34 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 		if vec2 == Vector2.INF:
 			continue
 		
-		# don't create an object where we already put one
-		if attempts < 200:
+		# don't create an object near to where we already put one
+		if attempts <= 200:
+			var too_close = false
 			for b in position_blocklist:
-				if vec2.distance_squared_to(b) < 4:
-					continue
+				# attempts = 1, required_distance = 4
+				# attempts = 200, required_distance = 1
+				var required_distance = (250-attempts)/50
+				if vec2.distance_to(b) < required_distance:
+					too_close = true
+					break # skip the other for loop checks, we don't need them
+			if too_close:
+				continue # next while loop spawn attempt
 		
-		if attempts < 100:
-			var success = true
+		# don't spawn too close to invalid cells
+		if attempts < 250:
+			var close_to_invalid = false
 			for offvec in [Vector2.ZERO, Vector2.LEFT, Vector2.UP, Vector2.RIGHT, Vector2.DOWN]:
 				if tile_mapper_floor.get_cellv(vec2 + offvec) == TileMap.INVALID_CELL:
-					success = false
-					break
-			if success:
-				break
+					close_to_invalid = true
+					break # skip the other for loop checks, we don't need them
+			if close_to_invalid:
+				continue # next while loop spawn attempt
+		
+		break # this is a good spawn location!
 	
 	# phew!
-	
+	# print(attempts)
+
 	# Return our vector.
 	position_blocklist.append(vec2)
 	return vec2
