@@ -53,11 +53,11 @@ func generate_room():
 	var color = Random.randint(0, room_max_color_id + 1)
 	
 	room_coordinates.append(Rect2(room_position, Vector2(room_width, room_height)))
-
-	for i in range(room_width):
-		for j in range(room_height):
-			var x = room_position.x + i
-			var y = room_position.y + j
+	
+	var top_left = get_room_top_left_tilepos(room_coordinates.size() - 1)
+	
+	for x in range(top_left.x, top_left.x + room_width):
+		for y in range(top_left.y, top_left.y + room_height):
 			place_room_tile(x, y, color)
 			
 func generate_hallways():
@@ -133,11 +133,16 @@ func place_hallway_tile(x, y, color):
 	#tile_mapper_floor.set_cell(x, y, 0)
 
 func get_room_center_tilepos(room_id):
-	var room_rect = room_coordinates[room_id] as Rect2
-	return room_rect.position + (room_rect.size / 2)
+	return room_coordinates[room_id].position
+	#var room_rect = room_coordinates[room_id] as Rect2
+	#return room_rect.position + (room_rect.size / 2)
 
 func get_room_center(room_id):
 	return get_room_center_tilepos(room_id) + Vector2(0.5, 0.5)
+	
+func get_room_top_left_tilepos(room_id):
+	var room_rect = room_coordinates[room_id] as Rect2
+	return room_rect.position - room_rect.size/2
 	
 func position_player():
 	var room_center = get_room_center(self.player_start_room)
