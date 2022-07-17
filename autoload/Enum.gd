@@ -36,7 +36,8 @@ enum EnemyFlavor {
 	BATTLESHIP_M,
 	BATTLESHIP_L,
 	GO,
-	REVERSI
+	REVERSI,
+	CHECKERS
 }
 
 enum ItemRarity {

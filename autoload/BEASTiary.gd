@@ -93,6 +93,12 @@ var EnemyDB = [
 		2.0,
 		"res://game/core/enemies/Rook.tscn"
 	),
+	_EnemyData.new(
+		Enum.EnemyFlavor.CHECKERS,
+		[1, 4],
+		2.0,
+		"res://game/core/enemies/Checkers.tscn"
+	)
 ]
 
 
