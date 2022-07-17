@@ -16,16 +16,13 @@ func _on_Timer_timeout():
 	xpos = Random.choice([-1, 0, 1])
 	ypos = Random.choice([-1, 0, 1])
 	
-	if whiteup == 0:
-		AnimPlayer.play("Black To White")
-		whiteup = 1
-	else:
-		AnimPlayer.play("White To Black")
-		whiteup = 0
 	if (xpos == 0) and (ypos == 0):
-		shockwave()
+		if whiteup == 0:
+			AnimPlayer.play("Black To White")
+			whiteup = 1
+		else:
+			AnimPlayer.play("White To Black")
+			whiteup = 0
+		$CollisionShape2D.scale = Vector2(5,5)
 	else:
 		move_tile(xpos, ypos, 0.5);
-
-func shockwave():
-	$CollisionShape2D.scale = Vector2(5,5)
