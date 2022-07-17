@@ -68,8 +68,8 @@ func generate_hallways():
 		generate_hallway(i, i + 1, thickness, horizontal_first)
 	
 func generate_hallway(room_id_start, room_id_end, thickness, horizontal_first):
-	var position_start = room_coordinates[room_id_start].position
-	var position_end = room_coordinates[room_id_end].position
+	var position_start = get_room_center_tilepos(room_id_start)
+	var position_end = get_room_center_tilepos(room_id_end)
 	var color = Random.randint(0, room_max_color_id + 1)
 	var hallways = []
 	
@@ -90,18 +90,22 @@ func generate_hallway(room_id_start, room_id_end, thickness, horizontal_first):
 func generate_hallway_horizontal(position_start, position_end, thickness, color):
 	var startx = min(position_start.x, position_end.x)
 	var endx = max(position_start.x, position_end.x)
+	var starty = position_start.y - thickness/2
+	var endy = starty + thickness
 	for x in range(startx, endx):
-		for y in range(position_start.y, position_start.y + thickness):
-			place_hallway_tile(x, y, color)
-	return Rect2(startx, position_start.y, endx - startx, thickness)
-			
-func generate_hallway_vertical(position_start, position_end, thickness, color):
-	var starty = min(position_start.y, position_end.y)
-	var endy = max(position_start.y, position_end.y)
-	for x in range(position_start.x, position_start.x + thickness):
 		for y in range(starty, endy):
 			place_hallway_tile(x, y, color)
-	return Rect2(position_start.x, starty, thickness, endy - starty)
+	return Rect2(startx, starty, endx - startx, thickness)
+			
+func generate_hallway_vertical(position_start, position_end, thickness, color):
+	var startx = position_start.x - thickness/2
+	var endx = startx + thickness
+	var starty = min(position_start.y, position_end.y)
+	var endy = max(position_start.y, position_end.y)
+	for x in range(startx, endx):
+		for y in range(starty, endy):
+			place_hallway_tile(x, y, color)
+	return Rect2(startx, starty, thickness, endy - starty)
 			
 func generate_wall_tiles():
 	# This is efficient!
@@ -127,10 +131,13 @@ func place_room_tile(x, y, color):
 func place_hallway_tile(x, y, color):
 	place_floor_tile(x, y, color)
 	#tile_mapper_floor.set_cell(x, y, 0)
-	
-func get_room_center(room_id):
+
+func get_room_center_tilepos(room_id):
 	var room_rect = room_coordinates[room_id] as Rect2
-	return room_rect.position + (room_rect.size / 2) + Vector2(0.5, 0.5)
+	return room_rect.position + (room_rect.size / 2)
+
+func get_room_center(room_id):
+	return get_room_center_tilepos(room_id) + Vector2(0.5, 0.5)
 	
 func position_player():
 	var room_center = get_room_center(self.player_start_room)
@@ -150,15 +157,22 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 	var valid_rect2s = []
 	
 	if in_room:
-		valid_rect2s.append_array(['OHhh YEAHHH!!!! OOOHH YEAH BABEYY!!!!'])
+		for i in room_coordinates.size():
+			if i == self.player_start_room:
+				continue
+			valid_rect2s.append(room_coordinates[i])
 	if in_hallway:
-		pass
+		for key in hallway_coordinates.keys():
+			if self.player_start_room in key:
+				continue
+			valid_rect2s.append_array(hallway_coordinates[key])
 		
 	# Pick a random vector within a rect2.
-	var rect2 = Random.choice(valid_rect2s)
+	var rect2 = Random.choice(valid_rect2s) as Rect2
+	var vec2 = Random.point_in_rect2(rect2)
 	
 	# Return our vector.
-	return Vector2(0, 0)
+	return vec2
 	
 
 # Delaunay triangulation brings forth the power of the simplex.
@@ -167,3 +181,4 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 # Herpes simplex virus.
 func triangulate():
 	pass
+

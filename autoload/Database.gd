@@ -76,8 +76,8 @@ var ItemDB = {
 		Enum.ItemRarity.COMMON,
 		"Does damage based on your roll",
 		false,
-		'res://textures/items/DJUNGELSKOG.png',
-		'res://game/core/equipment/PipDamage.tscn'
+		'res://game/core/equipment/PipDamage.tscn',
+		'res://textures/items/DJUNGELSKOG.png'
 	),
 	Enum.ItemType.FAST: _ItemData.new(
 		"I'm too scared to actually make the die a ball",
