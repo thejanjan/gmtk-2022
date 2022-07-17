@@ -20,6 +20,8 @@ export(int) var room_max_width = 10
 export(int) var room_min_height = 1
 export(int) var room_max_height = 10
 
+export(int) var room_max_color_id = 0
+
 export(int) var hallway_min_thickness = 3
 export(int) var hallway_max_thickness = 6
 
@@ -48,13 +50,15 @@ func generate_room():
 	var room_width = Random.randint(room_min_width, room_max_width + 1)
 	var room_height = Random.randint(room_min_height, room_max_height + 1)
 	
+	var color = Random.randint(0, room_max_color_id + 1)
+	
 	room_positions.append(room_position)
 	
 	for i in range(room_width):
 		for j in range(room_height):
 			var x = room_position.x + i
 			var y = room_position.y + j
-			place_room_tile(x, y)
+			place_room_tile(x, y, color)
 			
 func generate_hallways():
 	# TODO: Graph magic.
@@ -92,18 +96,19 @@ func generate_hallway_vertical(position_start, position_end, thickness):
 		for y in range(starty, endy):
 			place_hallway_tile(x, y)
 	
-func place_floor_tile(x, y):
+func place_floor_tile(x, y, color):
 	# Checkerboard pattern!
 	var tile_id = int(x + y) % int(2)
+	tile_id += color * 2
 	
 	tile_mapper_floor.set_cell(x, y, tile_id)
 
-func place_room_tile(x, y):
-	place_floor_tile(x, y)
+func place_room_tile(x, y, color):
+	place_floor_tile(x, y, color)
 	#tile_mapper_floor.set_cell(x, y, 0)
 
 func place_hallway_tile(x, y):
-	place_floor_tile(x, y)
+	place_floor_tile(x, y, 0)
 	#tile_mapper_floor.set_cell(x, y, 0)
 
 # Delaunay triangulation brings forth the power of the simplex.
