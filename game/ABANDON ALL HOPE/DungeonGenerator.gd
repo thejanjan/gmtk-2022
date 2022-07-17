@@ -14,12 +14,12 @@ onready var Plinth = preload("res://game/core/Plinth.tscn")
 onready var KeyPedestal = preload("res://game/core/KeyPedestal.tscn")
 onready var Doorway = preload("res://game/core/Doorway.tscn")
 
-# [[proporational chance, resource path]]
+# [[proportional chance, resource path, spawn only on edges]]
 onready var environmental = [
-	[0.4, preload("res://game/core/environmental/Shrubbery.tscn")],
-	[1.2, preload("res://game/core/environmental/Urn.tscn")],
-	[0.7, preload("res://game/core/environmental/Column.tscn")],
-	[0.5, preload("res://game/core/environmental/Streetlamp.tscn")],
+	[0.4, preload("res://game/core/environmental/Shrubbery.tscn"), false],
+	[1.2, preload("res://game/core/environmental/Urn.tscn"), false],
+	[0.7, preload("res://game/core/environmental/Column.tscn"), false],
+	[0.5, preload("res://game/core/environmental/Streetlamp.tscn"), true],
 ]
 
 onready var tile_mapper_floor = $FloorTileMap as TileMap
@@ -132,7 +132,7 @@ func generate_room():
 	
 	# Keep looping until the room intersects no other rooms or a max iteration count is passed.
 	var iterations = 0
-	var iterations_max = 10
+	var iterations_max = 25
 	while room_undecided and iterations < iterations_max:
 		var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
 		room_width = Random.randint(room_min_width, room_max_width + 1)
@@ -317,13 +317,15 @@ func generate_environmental():
 		var choice = rand_range(0, total)
 		# no functional programming so I have to go through and find the chosen one
 		var new_object_class = null
+		var on_edge = false
 		for e in environmental:
 			new_object_class = e[1]
+			on_edge = e[2]
 			if e[0] > choice:
 				break
 		var new_object = new_object_class.instance()
 		add_child(new_object)
-		var object_pos = self.get_random_spawn_pos(true, true) # rooms and hallways
+		var object_pos = self.get_random_spawn_pos(true, true, on_edge) # rooms and hallways
 		new_object.translate(object_pos * Vector2(13, 8) * 4)
 		# random chance to be facing the other way
 		if randf() < 0.5:
@@ -406,7 +408,7 @@ func position_player():
 	else:
 		print("???")
 		
-func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Vector2:
+func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false, on_edge: bool = false) -> Vector2:
 	"""
 	Gets a random spawn position that is safe.
 	"""
@@ -449,6 +451,14 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 		# don't be an infinite vector (how???)
 		if vec2 == Vector2.INF:
 			continue
+			
+		if on_edge:
+			var direction = Random.randint(0, 4)
+			var directions = [Vector2.LEFT, Vector2.UP, Vector2.RIGHT, Vector2.DOWN]
+			var delta = directions[direction]
+			# Seems buggy for some reason.
+			#while tile_mapper_floor.get_cellv(vec2 + delta) != TileMap.INVALID_CELL:
+			#	vec2 += delta
 		
 		# don't create an object near to where we already put one
 		if attempts <= 200:
