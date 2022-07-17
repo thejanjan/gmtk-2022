@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/everybodys_problem.ogg-877edb60348250c3bd5e12b9cc69ebc6.oggstr"
+
+[deps]
+
+source_file="res://audio/voice/everybodys_problem.ogg"
+dest_files=[ "res://.import/everybodys_problem.ogg-877edb60348250c3bd5e12b9cc69ebc6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -14,6 +14,9 @@ func perform_destroy():
 func _ready():
 	if randf() > 0.5:
 		$Sprite.texture = white;
+	set_collision_layer(1);
+	set_collision_mask(1);
+	contact_monitor = true;
 		
 func init(start_pos : Vector2):
 	self.position = start_pos;
@@ -21,3 +24,18 @@ func init(start_pos : Vector2):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func _on_Peg_collision():
+	$Timer.die();
+	print("Time to die!")
+
+func _on_Timer_timeout():
+	self.perform_destroy();
+	
+func _on_body_entered(body: Node):
+	$Timer.die();
+	print("Time to die!")
+
+func _on_Peg_body_entered(body):
+	$Timer.die();
+	print("Time to die!")
