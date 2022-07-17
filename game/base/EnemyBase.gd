@@ -7,6 +7,7 @@ const tile_width = 13;
 signal health_changed
 signal enemy_killed
 signal enemy_moved
+signal collision
 
 # Declare member variables here. Examples:
 export var max_hp = 10
@@ -15,6 +16,7 @@ var hp = 10
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.connect("body_entered", self, "_on_body_entered")
+	randomize()
 
 """
 Health modifiers
@@ -53,8 +55,8 @@ func find_player(playerx, playery, enemy) -> Vector2:
 	playerx = playerx % self.tile_width
 	playery = playery % self.tile_height
 	
-	var enemyx = enemy.positionx % self.tile_width
-	var enemyy = enemy.positiony % self.tile_height
+	var enemyx = enemy.position.x % self.tile_width
+	var enemyy = enemy.position.y % self.tile_height
 	
 	var tilex = (playerx - enemyx) / self.tile_width
 	var tiley = (playery - enemyy) / self.tile_height
@@ -76,7 +78,7 @@ func _on_body_entered(body: Node):
 		self.on_collision_from(body, group)
 
 func on_collision_from(body: Node, group: String):
-	pass
+	emit_signal("collision")
 
 """
 Getters

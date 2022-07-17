@@ -1,5 +1,8 @@
 extends KinematicBody2D
 
+signal on_new_dice(dice_side)
+signal initialize_equips(equip_dict)
+signal pip_stacks_updated
 
 const PlayerStats = preload("res://game/core/player/PlayerStats.gd")
 onready var ConcreteStream: AudioStreamPlayer = $ConcreteStream;
@@ -18,16 +21,17 @@ onready var ESM = $EquipmentStateMachine
 
 var SideEquipment = {
 	Enum.DiceSide.ONE : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.TWO : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.THREE : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.FOUR : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.TWO : Enum.ItemType.FAST,
+	Enum.DiceSide.THREE : Enum.ItemType.FAST,
+	Enum.DiceSide.FOUR : Enum.ItemType.FAST,
 	Enum.DiceSide.FIVE : Enum.ItemType.BASIC_DAMAGE,
 	Enum.DiceSide.SIX : Enum.ItemType.BASIC_DAMAGE
 }
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_stats._speed = 300;
+	print("New")
+	_stats._speed = 1000;
 	_stats._damage = 1;
 	_stats._friction = 3;
 	_stats._acceleration = 6;
@@ -36,7 +40,9 @@ func _ready():
 	self.get_rigid_body().connect("jump_start", self, "on_jump")
 	self.get_rigid_body().connect("jump_end", self, "on_jump_end")
 	self.get_rigid_body().connect("side_swapped", self, "on_new_dice")
-	self.on_new_dice(self.get_rigid_body().get_active_pip())
+	self.connect("pip_stacks_updated", self, "pip_stacks_updated")
+	# self.on_new_dice(self.get_rigid_body().get_active_pip())
+	emit_signal("initialize_equips", self.SideEquipment)
 	pass # Replace with function bitches instead.
 
 
@@ -85,9 +91,17 @@ func _physics_process(delta):
 		if not ConcreteStream.playing:
 			ConcreteStream.playing = true;
 
-				
+	# Slide or bounce
+	if _stats._bounciness <= 1:
+		velocity = move_and_slide(velocity)
+	else:
+		var col = move_and_collide(velocity)
+		if col != null:
+			velocity = velocity.bounce(col.normal)
+			velocity.x *= (_stats._bounciness/100.0)
+			velocity.y *= (_stats._bounciness/100.0)
+	
 	# Calculate our acceleration.
-	velocity = move_and_slide(velocity)
 	var acceleration = velocity - last_veloc
 	last_veloc = velocity
 	_handle_acceleration(acceleration)
@@ -134,4 +148,25 @@ Listen for a new dice side
 """
 
 func on_new_dice(side):
-	self.ESM.transition(SideEquipment.get(side))
+	var item_id = SideEquipment.get(side)
+	self.ESM.transition(item_id, side)
+	emit_signal("on_new_dice", side, item_id)
+
+func pip_stacks_updated(pip_count: int):
+	self.get_rigid_body().set_pip_bonus_count(pip_count)
+
+"""
+Inventory managment
+"""
+# Takes a new item ID and equips it in the given side
+func swap_equipment(side, item_id):
+	var old_equipment = SideEquipment[side]
+	SideEquipment[side] = item_id
+	emit_signal("initialize_equips", SideEquipment)
+	
+	return old_equipment
+
+# Swaps the active equipment
+func swap_current_equipment(item_id):
+	var active_pip = get_active_pip()
+	return swap_equipment(active_pip, item_id)
