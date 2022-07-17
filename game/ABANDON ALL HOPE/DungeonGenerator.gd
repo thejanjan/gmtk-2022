@@ -6,8 +6,6 @@
 
 extends Node
 
-onready var GameWorld = get_parent()
-onready var Player = preload("res://game/core/player/Player.tscn")
 onready var tile_mapper_floor = $FloorTileMap as TileMap
 
 export(int) var dungeon_width = 100
@@ -26,6 +24,7 @@ export(int) var hallway_min_thickness = 3
 export(int) var hallway_max_thickness = 6
 
 var room_positions = []
+var room_centers = []
 
 # Used by the hallway connection system.
 var grid_of_occupation = [[]]
@@ -42,8 +41,7 @@ func generate_dungeon():
 	generate_hallways()
 		
 	# Place the player in the first room.
-	var player = Player.instance()
-	GameWorld.add_child(player)
+	GameState.get_player().translate(room_centers[0] * Vector2(13, 8) * 4)
 
 func generate_room():
 	var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
@@ -53,6 +51,7 @@ func generate_room():
 	var color = Random.randint(0, room_max_color_id + 1)
 	
 	room_positions.append(room_position)
+	room_centers.append((room_position + Vector2(room_width / 2, room_height / 2) + Vector2(0.5, 0.5)))
 	
 	for i in range(room_width):
 		for j in range(room_height):

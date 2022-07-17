@@ -8,16 +8,15 @@
 [node name="World" type="YSort"]
 script = ExtResource( 1 )
 
-[node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 659, 571 )
-
 [node name="DungeonGenerator" type="Node2D" parent="."]
 script = ExtResource( 13 )
 dungeon_width = 60
 dungeon_height = 60
 room_min_width = 5
 room_min_height = 5
-room_max_color_id = 31
+room_max_color_id = 2
+hallway_min_thickness = 2
+hallway_max_thickness = 4
 
 [node name="FloorTileMap" type="TileMap" parent="DungeonGenerator"]
 scale = Vector2( 4, 4 )
@@ -27,3 +26,5 @@ format = 1
 
 [node name="WallTileMap" type="TileMap" parent="DungeonGenerator"]
 format = 1
+
+[node name="PlayerControl" parent="." instance=ExtResource( 3 )]
