@@ -25,6 +25,9 @@ export(int) var hallway_min_thickness = 3
 export(int) var hallway_max_thickness = 6
 
 var room_coordinates = []
+var hallway_coordinates = {}
+
+var player_start_room = 0
 
 # Called when the node enters the... oh, you know that already.
 func _ready():
@@ -68,18 +71,21 @@ func generate_hallway(room_id_start, room_id_end, thickness, horizontal_first):
 	var position_start = room_coordinates[room_id_start].position
 	var position_end = room_coordinates[room_id_end].position
 	var color = Random.randint(0, room_max_color_id + 1)
+	var hallways = []
 	
 	if horizontal_first:
 		var position_elbow = position_start
 		position_elbow.x = position_end.x
-		generate_hallway_horizontal(position_start, position_elbow, thickness, color)
-		generate_hallway_vertical(position_elbow, position_end, thickness, color)
+		hallways.append(generate_hallway_horizontal(position_start, position_elbow, thickness, color))
+		hallways.append(generate_hallway_vertical(position_elbow, position_end, thickness, color))
 	else:
 		var position_elbow = position_start
 		position_elbow.y = position_end.y
-		generate_hallway_vertical(position_start, position_elbow, thickness, color)
-		generate_hallway_horizontal(position_elbow, position_end, thickness, color)
-		
+		hallways.append(generate_hallway_vertical(position_start, position_elbow, thickness, color))
+		hallways.append(generate_hallway_horizontal(position_elbow, position_end, thickness, color))
+	
+	# Assign the hallways to this room ID pair.
+	self.hallway_coordinates[[room_id_start, room_id_end]] = hallways
 		
 func generate_hallway_horizontal(position_start, position_end, thickness, color):
 	var startx = min(position_start.x, position_end.x)
@@ -87,6 +93,7 @@ func generate_hallway_horizontal(position_start, position_end, thickness, color)
 	for x in range(startx, endx):
 		for y in range(position_start.y, position_start.y + thickness):
 			place_hallway_tile(x, y, color)
+	return Rect2(startx, position_start.y, endx - startx, thickness)
 			
 func generate_hallway_vertical(position_start, position_end, thickness, color):
 	var starty = min(position_start.y, position_end.y)
@@ -94,6 +101,7 @@ func generate_hallway_vertical(position_start, position_end, thickness, color):
 	for x in range(position_start.x, position_start.x + thickness):
 		for y in range(starty, endy):
 			place_hallway_tile(x, y, color)
+	return Rect2(position_start.x, starty, thickness, endy - starty)
 			
 func generate_wall_tiles():
 	# This is efficient!
@@ -125,12 +133,33 @@ func get_room_center(room_id):
 	return room_rect.position + (room_rect.size / 2) + Vector2(0.5, 0.5)
 	
 func position_player():
-	var room_center = get_room_center(0)
+	var room_center = get_room_center(self.player_start_room)
 	var player = GameState.get_player()
 	if player:
 		player.translate(room_center * Vector2(13, 8) * 4)
 	else:
 		print("???")
+		
+func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Vector2:
+	"""
+	Gets a random spawn position that is safe.
+	"""
+	assert (in_room or in_hallway)
+	
+	# Figure out all the rect2s that are safe.
+	var valid_rect2s = []
+	
+	if in_room:
+		valid_rect2s.append_array(['OHhh YEAHHH!!!! OOOHH YEAH BABEYY!!!!'])
+	if in_hallway:
+		pass
+		
+	# Pick a random vector within a rect2.
+	var rect2 = Random.choice(valid_rect2s)
+	
+	# Return our vector.
+	return Vector2(0, 0)
+	
 
 # Delaunay triangulation brings forth the power of the simplex.
 # Do you know what else holds the power of the simplex?

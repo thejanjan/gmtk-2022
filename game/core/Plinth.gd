@@ -1,6 +1,7 @@
+tool
 extends Area2D
 
-export(int) var cost = 0
+export(int) var cost = 0 setget set_cost
 export(Enum.ItemType) var item_type = Enum.ItemType.NIL
 
 onready var _item_sprite = $ItemSprite
@@ -13,8 +14,9 @@ func _ready():
 	# if an item isn't manually set, pull from the pool
 	if item_type == Enum.ItemType.NIL:
 		print("populating empty plinth from pool")
-		populate()
-	else:
+		var item_data: Database._ItemData = ItemPool.pop_random_item()
+		set_item_type(item_data.get_item_type())
+	else: 
 		set_item_type(item_type)
 	update_label()
 	
@@ -26,12 +28,7 @@ func _unhandled_input(event):
 func set_item_type(new_item_type: int):
 	item_type = new_item_type
 	var item_data = Database.get_item_data(item_type)
-	if new_item_type != Enum.ItemType.NIL:
-		_item_sprite.set_texture(item_data.get_texture())
-
-func populate():
-	var item_data: Database._ItemData = ItemPool.pop_random_item()
-	set_item_type(item_data.get_item_type())
+	_item_sprite.set_texture(item_data.get_texture())
 
 func set_cost(new_cost: int):
 	cost = new_cost
