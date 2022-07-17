@@ -17,6 +17,7 @@ func break_urn():
 	$Sprite.playing = true
 	$Timer.start()
 	$AudioStreamPlayer.play()
+	GameState.make_cash(1)
 
 # use the timer to deactivate physics a moment after breaking
 func _on_timer():

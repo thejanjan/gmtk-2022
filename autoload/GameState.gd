@@ -116,7 +116,6 @@ func make_text(parent: Node, text: String, color: String):
 	parent.add_child(txt)
 	txt.empower()
 
-func make_cash():
-	var cash_dropped = Random.randint(1, 3)
+func make_cash(cash_dropped):
 	cash += cash_dropped
 	make_text(get_player(), "$%s (+%s)" % [cash, cash_dropped], 'ffff00')

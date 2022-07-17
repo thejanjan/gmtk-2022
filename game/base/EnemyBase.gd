@@ -41,7 +41,7 @@ func lose_health(damage):
 		emit_signal("health_changed", self.hp, self.max_hp)
 	if self.hp <= 0:
 		emit_signal("enemy_killed")
-		GameState.make_cash()
+		GameState.make_cash(Random.randint(2, 4))
 		self.perform_destroy()
 		
 func perform_destroy():
