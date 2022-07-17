@@ -11,6 +11,7 @@ func perform_destroy():
 	#AnimPlayer.play("Death")
 
 func _on_Timer_timeout(): 
+	AnimPlayer.stop()
 	$CollisionShape2D.scale = Vector2(1,1)
 	xpos = Random.choice([-1, 0, 1])
 	ypos = Random.choice([-1, 0, 1])
