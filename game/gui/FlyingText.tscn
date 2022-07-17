@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://game/gui/GameTheme.tres" type="Theme" id=1]
+[ext_resource path="res://game/gui/FlyingText.gd" type="Script" id=2]
+
+[node name="FlyingText" type="RichTextLabel"]
+margin_left = -300.0
+margin_right = -150.0
+margin_bottom = 50.0
+rect_scale = Vector2( 4, 4 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 1 )
+bbcode_enabled = true
+scroll_active = false
+script = ExtResource( 2 )

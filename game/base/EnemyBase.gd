@@ -35,6 +35,7 @@ func set_health(hp):
 	self.hp = hp
 	
 func lose_health(damage):
+	GameState.make_text(self, "-" + str(damage), "00ff00")
 	if self.hp > 0:
 		self.hp -= damage
 		emit_signal("health_changed", self.hp, self.max_hp)

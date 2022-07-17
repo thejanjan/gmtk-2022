@@ -42,7 +42,7 @@ func damageNearbyEnemy(furthest_distance = 50000):
 	
 	#Do damage equal to current pip
 	if (close_enemy != null):
-		close_enemy.lose_health(self.pip + 1);
+		close_enemy.lose_health(self.pip);
 		print(pip);
 
 func createTrail(size, length, color):

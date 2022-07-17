@@ -279,6 +279,8 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 		vec2 = Random.point_in_rect2(rect2)
 		if vec2 in position_blocklist:
 			continue
+		if tile_mapper_floor.get_cellv(vec2) == TileMap.INVALID_CELL:
+			continue
 		break
 	
 	# Return our vector.
