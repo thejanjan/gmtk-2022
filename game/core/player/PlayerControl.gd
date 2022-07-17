@@ -128,6 +128,7 @@ func _physics_process(delta):
 					emit_signal("player_hurt")
 					
 					if GameState.HP <= 0:
+						GameState.reset_variables()
 						get_tree().reload_current_scene()
 
 	
