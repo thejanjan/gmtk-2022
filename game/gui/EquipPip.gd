@@ -1,4 +1,5 @@
 extends Control
+class_name EquipPip
 
 onready var PipSprite = $PipSprite
 onready var AtlasTex = preload("res://textures/player/EquipPip.tres")

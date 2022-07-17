@@ -20,12 +20,12 @@ onready var PlayerSprite = $PlayerSprite
 onready var ESM = $EquipmentStateMachine
 
 var SideEquipment = {
-	Enum.DiceSide.ONE : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.ONE : Enum.ItemType.STUNT_DOUBLER,
 	Enum.DiceSide.TWO : Enum.ItemType.STUNT_DOUBLER,
 	Enum.DiceSide.THREE : Enum.ItemType.STUNT_DOUBLER,
 	Enum.DiceSide.FOUR : Enum.ItemType.STUNT_DOUBLER,
 	Enum.DiceSide.FIVE : Enum.ItemType.STUNT_DOUBLER,
-	Enum.DiceSide.SIX : Enum.ItemType.STUNT_DOUBLER
+	Enum.DiceSide.SIX : Enum.ItemType.FAST
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -41,7 +41,7 @@ func _ready():
 	self.get_rigid_body().connect("jump_end", self, "on_jump_end")
 	self.get_rigid_body().connect("side_swapped", self, "on_new_dice")
 	self.connect("pip_stacks_updated", self, "pip_stacks_updated")
-	self.on_new_dice(self.get_rigid_body().get_active_pip())
+	# self.on_new_dice(self.get_rigid_body().get_active_pip())
 	emit_signal("initialize_equips", self.SideEquipment)
 	pass # Replace with function bitches instead.
 

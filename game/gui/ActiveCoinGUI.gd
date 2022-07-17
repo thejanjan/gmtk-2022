@@ -2,10 +2,7 @@ extends Control
 
 
 onready var EquipPip = preload("res://game/gui/EquipPip.tscn")
-onready var CoinEquipPip = preload("res://game/gui/CoinEquipPip.tscn")
-onready var CoinGUI = $CoinGUI
 var pips = []
-var coin_pips = []
 var active_dice = 0
 
 
@@ -25,30 +22,15 @@ func _ready():
 	
 	# Equip the starter dice.
 	self.pips[active_dice].equip_pip(true)
-	
-	
-func _add_coin(coin_data: DataClasses.CoinData):
-	var i = self.coin_pips.size()
-	var head_pip = CoinEquipPip.instance()
-	self.CoinGUI.add_child(head_pip)
-	head_pip.initialize(0, coin_data.get_heads())
-	head_pip.rect_position += Vector2(0, i * 40)
-	self.coin_pips.append(head_pip)
-	
-	var tail_pip = CoinEquipPip.instance()
-	self.CoinGUI.add_child(tail_pip)
-	tail_pip.initialize(0, coin_data.get_tails())
-	tail_pip.rect_position += Vector2(0, (i + 1) * 40)
-	self.coin_pips.append(tail_pip)
 
 
 func approach_plinth():
-	for pip in self.pips + self.coin_pips:
+	for pip in self.pips:
 		pip.approach_plinth()
 	
 	
 func unapproach_plinth():
-	for pip in self.pips + self.coin_pips:
+	for pip in self.pips:
 		pip.unapproach_plinth()
 
 
