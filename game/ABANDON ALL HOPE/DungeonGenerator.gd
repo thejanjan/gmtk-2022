@@ -157,15 +157,22 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 	var valid_rect2s = []
 	
 	if in_room:
-		valid_rect2s.append_array(['OHhh YEAHHH!!!! OOOHH YEAH BABEYY!!!!'])
+		for i in room_coordinates.size():
+			if i == self.player_start_room:
+				continue
+			valid_rect2s.append(room_coordinates[i])
 	if in_hallway:
-		pass
+		for key in hallway_coordinates.keys():
+			if self.player_start_room in key:
+				continue
+			valid_rect2s.append_array(hallway_coordinates[key])
 		
 	# Pick a random vector within a rect2.
-	var rect2 = Random.choice(valid_rect2s)
+	var rect2 = Random.choice(valid_rect2s) as Rect2
+	var vec2 = Random.point_in_rect2(rect2)
 	
 	# Return our vector.
-	return Vector2(0, 0)
+	return vec2
 	
 
 # Delaunay triangulation brings forth the power of the simplex.

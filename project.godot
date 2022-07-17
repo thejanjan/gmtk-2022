@@ -93,6 +93,7 @@ ItemPool="*res://autoload/ItemPool.gd"
 Random="*res://autoload/Random.gd"
 DataClasses="*res://autoload/DataClasses.gd"
 DiceSide="*res://onload/DiceSide.gd"
+BeasTiary="*res://autoload/BEASTiary.gd"
 
 [input]
 
