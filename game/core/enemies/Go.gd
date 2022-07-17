@@ -10,6 +10,7 @@ var spritetex = preload("res://textures/enemies/go/white_go.png")
 func _ready():
 	self.connect("body_entered", self, "_on_body_entered")
 	randomize()
+	GameState.check_tile(self.position, "Enemy");
 	if (randi() % 2) == 1:
 		$Sprite.set_texture(spritetex)
 
