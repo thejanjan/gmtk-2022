@@ -10,13 +10,19 @@ func perform_destroy():
 	AnimPlayer.play("Death")
 
 func _on_Timer_timeout(): 
-	while (xpos == 0) and (ypos == 0):
-		xpos = Random.choice([-1, 0, 1])
-		ypos = Random.choice([-1, 0, 1])
+	generic_move()
 	
-	move_tile(xpos, ypos, 0.5);
-	xpos = 0
-	ypos = 0
+func get_valid_moves():
+	return [
+		Vector2(1, 0),
+		Vector2(1, 1),
+		Vector2(0, 1),
+		Vector2(-1, 1),
+		Vector2(-1, 0),
+		Vector2(-1, -1),
+		Vector2(0, -1),
+		Vector2(1, -1)
+	]
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	self.queue_free()

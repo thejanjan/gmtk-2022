@@ -60,6 +60,8 @@ var position_blocklist = []
 
 var player_start_room = 0
 
+var astar = AStar2D.new()
+
 # Called when the node enters the... oh, you know that already.
 func _ready():
 	randomize()
@@ -81,7 +83,7 @@ func adjust_stats(level):
 	hallway_min_thickness = 4
 	hallway_max_thickness = min(5 + level, 8)
 	
-	room_max_color_id = min((level * 4) - 1, 31)
+	room_max_color_id = min((level * 3) - 1, 31)
 	
 func generate_dungeon():
 	dungeon_floor += 1
@@ -99,6 +101,8 @@ func generate_dungeon():
 	generate_hallways()
 	
 	generate_islands()
+	
+	generate_astar()
 	
 	generate_wall_tiles()
 	
@@ -220,6 +224,59 @@ func generate_wall_tiles():
 		for vec in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
 			if tile_mapper_floor.get_cellv(tile + vec) == TileMap.INVALID_CELL:
 				tile_mapper_wall.set_cellv(tile + vec, 0)
+				
+func generate_astar():
+	# Over all floor tiles, generate our a* map.
+	self.astar.clear()
+	self.astar = AStar2D.new()
+	var size = tile_mapper_floor.get_used_rect().size
+	self.astar.reserve_space(size.x * size.y)
+	
+	# First, do one pass to initialize points.
+	for vec2 in tile_mapper_floor.get_used_cells():
+		var index = vec2.x + (vec2.y * size.y)
+		self.astar.add_point(index, vec2)
+	
+	# Now, do a second pass to form connections.
+	for vec2 in tile_mapper_floor.get_used_cells():
+		var index = vec2.x + (vec2.y * size.y)
+		
+		# Check left.
+		if vec2.x != 0:
+			var adj_vec2 = vec2 + Vector2(-1, 0)
+			var adj_cell = tile_mapper_floor.get_cellv(adj_vec2)
+			if adj_cell != TileMap.INVALID_CELL:
+				# Form a connection between these two.
+				var adj_index = adj_vec2.x + (adj_vec2.y * size.y)
+				self.astar.connect_points(index, adj_index)
+		
+		# Check right.
+		if vec2.x != (self.dungeon_width - 1):
+			var adj_vec2 = vec2 + Vector2(1, 0)
+			var adj_cell = tile_mapper_floor.get_cellv(adj_vec2)
+			if adj_cell != TileMap.INVALID_CELL:
+				# Form a connection between these two.
+				var adj_index = adj_vec2.x + (adj_vec2.y * size.y)
+				self.astar.connect_points(index, adj_index)
+			
+		# Check up.
+		if vec2.y != 0:
+			var adj_vec2 = vec2 + Vector2(0, -1)
+			var adj_cell = tile_mapper_floor.get_cellv(adj_vec2)
+			if adj_cell != TileMap.INVALID_CELL:
+				# Form a connection between these two.
+				var adj_index = adj_vec2.x + (adj_vec2.y * size.y)
+				self.astar.connect_points(index, adj_index)
+			
+		# Check down.
+		if vec2.y != (self.dungeon_height - 1):
+			var adj_vec2 = vec2 + Vector2(0, 1)
+			var adj_cell = tile_mapper_floor.get_cellv(adj_vec2)
+			if adj_cell != TileMap.INVALID_CELL:
+				# Form a connection between these two.
+				var adj_index = adj_vec2.x + (adj_vec2.y * size.y)
+				self.astar.connect_points(index, adj_index)
+		
 				
 func generate_plinths():
 	# PLlinth time baby

@@ -36,6 +36,8 @@ format = 1
 
 [node name="EnemyGenerator" type="YSort" parent="DungeonGenerator" groups=["enemy_gen", "no_delete"]]
 script = ExtResource( 6 )
+base_credits = 15.0
+credit_increment = 10.0
 
 [node name="Music" type="AudioStreamPlayer" parent="DungeonGenerator" groups=["no_delete"]]
 stream = ExtResource( 1 )

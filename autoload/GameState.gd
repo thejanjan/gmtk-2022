@@ -23,7 +23,7 @@ Tile Management
 #If it is used, return an INFINITY VECTOR2
 func check_tile(pos : Vector2, type : String) -> Vector2:
 	var tileMap = get_tree().get_nodes_in_group("floor_tilemap")[0];
-	if tileMap.get_cellv(pos / Vector2(13 * 4, 8 * 4)) == TileMap.INVALID_CELL:
+	if tileMap.get_cellv((pos / Vector2(13 * 4, 8 * 4)) - Vector2(0.5, 0.5)) == TileMap.INVALID_CELL:
 		return Vector2.INF;
 	return pos;
 	# if pos_dict.has(pos):

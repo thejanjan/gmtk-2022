@@ -9,12 +9,25 @@ func perform_destroy():
 	set_collision_mask(0)
 	AnimPlayer.play("Death")
 
-func _on_Timer_timeout():
-	while (xpos == 0) and (ypos == 0):
-		xpos = Random.choice([-1, 0, 1])
-		ypos = Random.choice([-1, 0, 1])
+func _on_Timer_timeout(): 
+	generic_move()
 	
-	move_tile(xpos, ypos, 0.5);
+func get_valid_moves():
+	var base_list = [
+		Vector2(1, 0),
+		Vector2(1, 1),
+		Vector2(0, 1),
+		Vector2(-1, 1),
+		Vector2(-1, 0),
+		Vector2(-1, -1),
+		Vector2(0, -1),
+		Vector2(1, -1)
+	]
+	var ret_list = []
+	for i in range(1, 5):
+		for vec2 in base_list:
+			ret_list.append(vec2 * i)
+	return ret_list
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	self.queue_free()
