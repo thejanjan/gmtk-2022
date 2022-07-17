@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://game/core/GridManager.gd" type="Script" id=1]
 [ext_resource path="res://textures/tiles/black_tile.png" type="Texture" id=2]
 [ext_resource path="res://game/core/player/Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://game/core/TileMapCheckered.gd" type="Script" id=4]
 [ext_resource path="res://textures/tiles/white_tile.png" type="Texture" id=5]
 [ext_resource path="res://game/ABANDON ALL HOPE/DungeonGenerator.gd" type="Script" id=13]
 
@@ -83,4 +82,6 @@ scale = Vector2( 4, 4 )
 tile_set = SubResource( 25 )
 cell_size = Vector2( 13, 8 )
 format = 1
-script = ExtResource( 4 )
+
+[node name="WallTileMap" type="TileMap" parent="DungeonGenerator"]
+format = 1
