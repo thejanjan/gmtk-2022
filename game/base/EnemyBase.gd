@@ -51,12 +51,12 @@ func move_tile(x, y, duration):
 	tween.start()
 	emit_signal("enemy_moved")
 
-func find_player(playerx, playery, enemy) -> Vector2:
-	playerx = playerx % self.tile_width
-	playery = playery % self.tile_height
+func find_player() -> Vector2:
+	var playerx = int($PlayerControl.position.x) - (int($PlayerControl.position.x) % self.tile_width)
+	var playery = int($PlayerControl.position.y) - (int($PlayerControl.position.y) % self.tile_height)
 	
-	var enemyx = enemy.position.x % self.tile_width
-	var enemyy = enemy.position.y % self.tile_height
+	var enemyx = int(self.position.x) - (int(self.position.x) % self.tile_width)
+	var enemyy = int(self.position.y) - (int(self.position.y) % self.tile_height)
 	
 	var tilex = (playerx - enemyx) / self.tile_width
 	var tiley = (playery - enemyy) / self.tile_height
