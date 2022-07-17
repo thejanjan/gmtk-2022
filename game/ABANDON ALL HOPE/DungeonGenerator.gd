@@ -54,7 +54,7 @@ func generate_room():
 		for j in range(room_height):
 			var x = room_position.x + i
 			var y = room_position.y + j
-			place_floor_tile(x, y)
+			place_room_tile(x, y)
 			
 func generate_hallways():
 	# TODO: Graph magic.
@@ -97,8 +97,11 @@ func place_floor_tile(x, y):
 	var tile_id = int(x + y) % int(2)
 	
 	tile_mapper_floor.set_cell(x, y, tile_id)
-	
-# For help debugging.
+
+func place_room_tile(x, y):
+	place_floor_tile(x, y)
+	#tile_mapper_floor.set_cell(x, y, 0)
+
 func place_hallway_tile(x, y):
 	place_floor_tile(x, y)
 	#tile_mapper_floor.set_cell(x, y, 0)
