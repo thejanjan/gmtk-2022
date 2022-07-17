@@ -266,10 +266,16 @@ func generate_environmental():
 		add_child(new_object)
 		var object_pos = self.get_random_spawn_pos(true, true) # rooms and hallways
 		new_object.translate(object_pos * Vector2(13, 8) * 4)
+		# random chance to be facing the other way
 		if randf() < 0.5:
+			# flip_h if possible
 			var sprite = new_object.get_node("Sprite")
 			if sprite:
 				sprite.flip_h = true
+				# adjust hitbox if possible
+				var hitbox = new_object.get_node("CollisionShape2D")
+				if hitbox:
+					hitbox.position.x = -hitbox.position.x
 
 func generate_islands():
 	for i in range(number_of_islands):
