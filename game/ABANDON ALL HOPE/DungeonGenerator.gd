@@ -13,6 +13,8 @@ onready var tile_mapper_floor = $FloorTileMap as TileMap
 export(int) var dungeon_width = 100
 export(int) var dungeon_height = 100
 
+export(int) var number_of_rooms = 10
+
 export(int) var room_min_width = 1
 export(int) var room_max_width = 10
 export(int) var room_min_height = 1
@@ -24,9 +26,9 @@ var grid_of_occupation = [[]]
 # Called when the node enters the... oh, you know that already.
 func _ready():
 	randomize()
-	generate_dungeon(10)
+	generate_dungeon()
 	
-func generate_dungeon(number_of_rooms):
+func generate_dungeon():
 	for i in range(number_of_rooms):
 		generate_room()
 		
