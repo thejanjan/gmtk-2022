@@ -35,12 +35,13 @@ func set_health(hp):
 	self.hp = hp
 	
 func lose_health(damage):
-	GameState.make_text(self, "-" + str(damage), "00ff00")
+	GameState.make_text(self, "-" + str(damage), "f80")
 	if self.hp > 0:
 		self.hp -= damage
 		emit_signal("health_changed", self.hp, self.max_hp)
 	if self.hp <= 0:
 		emit_signal("enemy_killed")
+		GameState.make_cash()
 		self.perform_destroy()
 		
 func perform_destroy():
