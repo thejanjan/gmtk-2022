@@ -6,8 +6,6 @@
 
 extends Node
 
-onready var GameWorld = get_parent()
-onready var Player = preload("res://game/core/player/Player.tscn")
 onready var tile_mapper_floor = $FloorTileMap as TileMap
 
 export(int) var dungeon_width = 100
@@ -19,6 +17,13 @@ export(int) var room_min_width = 1
 export(int) var room_max_width = 10
 export(int) var room_min_height = 1
 export(int) var room_max_height = 10
+
+export(int) var room_max_color_id = 0
+
+export(int) var hallway_min_thickness = 3
+export(int) var hallway_max_thickness = 6
+
+var room_coordinates = []
 
 # Used by the hallway connection system.
 var grid_of_occupation = [[]]
@@ -32,28 +37,87 @@ func generate_dungeon():
 	for i in range(number_of_rooms):
 		generate_room()
 		
+	generate_hallways()
+		
 	# Place the player in the first room.
-	var player = Player.instance()
-	GameWorld.add_child(player)
+	position_player()
 
 func generate_room():
-	var room_position = Vector2(Random.randint(0, dungeon_width), Random.randint(0, dungeon_height))
-	var room_width = Random.randint(room_min_width, room_max_width)
-	var room_height = Random.randint(room_min_height, room_max_height)
+	var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
+	var room_width = Random.randint(room_min_width, room_max_width + 1)
+	var room_height = Random.randint(room_min_height, room_max_height + 1)
 	
+	var color = Random.randint(0, room_max_color_id + 1)
+	
+	room_coordinates.append(Rect2(room_position, Vector2(room_width, room_height)))
+
 	for i in range(room_width):
 		for j in range(room_height):
 			var x = room_position.x + i
 			var y = room_position.y + j
-			place_floor_tile(x, y)
+			place_room_tile(x, y, color)
+			
+func generate_hallways():
+	# TODO: Graph magic.
+	for i in range(number_of_rooms-1):
+		var thickness = Random.randint(hallway_min_thickness, hallway_max_thickness + 1)
+		var horizontal_first = (Random.randint(0, 2) == 1)
+		generate_hallway(i, i+1, thickness, horizontal_first)
 	
-	# TODO: Add room to graph.
+func generate_hallway(room_id_start, room_id_end, thickness, horizontal_first):
+	var position_start = room_coordinates[room_id_start].position
+	var position_end = room_coordinates[room_id_end].position
+	var color = Random.randint(0, room_max_color_id + 1)
 	
-func place_floor_tile(x, y):
+	if horizontal_first:
+		var position_elbow = position_start
+		position_elbow.x = position_end.x
+		generate_hallway_horizontal(position_start, position_elbow, thickness, color)
+		generate_hallway_vertical(position_elbow, position_end, thickness, color)
+	else:
+		var position_elbow = position_start
+		position_elbow.y = position_end.y
+		generate_hallway_vertical(position_start, position_elbow, thickness, color)
+		generate_hallway_horizontal(position_elbow, position_end, thickness, color)
+		
+		
+func generate_hallway_horizontal(position_start, position_end, thickness, color):
+	var startx = min(position_start.x, position_end.x)
+	var endx = max(position_start.x, position_end.x)
+	for x in range(startx, endx):
+		for y in range(position_start.y, position_start.y + thickness):
+			place_hallway_tile(x, y, color)
+			
+func generate_hallway_vertical(position_start, position_end, thickness, color):
+	var starty = min(position_start.y, position_end.y)
+	var endy = max(position_start.y, position_end.y)
+	for x in range(position_start.x, position_start.x + thickness):
+		for y in range(starty, endy):
+			place_hallway_tile(x, y, color)
+	
+func place_floor_tile(x, y, color):
 	# Checkerboard pattern!
 	var tile_id = int(x + y) % int(2)
+	tile_id += color * 2
 	
 	tile_mapper_floor.set_cell(x, y, tile_id)
+
+func place_room_tile(x, y, color):
+	place_floor_tile(x, y, color)
+	#tile_mapper_floor.set_cell(x, y, 0)
+
+func place_hallway_tile(x, y, color):
+	place_floor_tile(x, y, color)
+	#tile_mapper_floor.set_cell(x, y, 0)
+	
+func position_player():
+	var room_rect = room_coordinates[0] as Rect2
+	var room_center = room_rect.position + (room_rect.size / 2) + Vector2(0.5, 0.5)
+	var player = GameState.get_player()
+	if player:
+		player.translate(room_center * Vector2(13, 8) * 4)
+	else:
+		print("???")
 
 # Delaunay triangulation brings forth the power of the simplex.
 # Do you know what else holds the power of the simplex?
