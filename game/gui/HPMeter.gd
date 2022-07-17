@@ -16,9 +16,11 @@ func _ready():
 		pips.append(new_pip)
 		if i >= cached_hp:
 			new_pip.hide_now()
-
+	GameState.get_player().connect("player_hurt", self, "update_hp_pips")
 	
-func update_hp_pips(hp: int):
+func update_hp_pips():
+	var hp = GameState.HP
+	print(hp)
 	if hp > 9:
 		hp = 9
 	elif hp < 0:

@@ -12,6 +12,7 @@ signal collision
 # Declare member variables here. Examples:
 export var max_hp = 10
 var hp = 10
+var prickly := false
 
 # The code to obtain these values hasn't been written yet
 var playerx = 0 
@@ -84,6 +85,9 @@ func get_move_score(x = 0, y = 0) -> int:
 	# Get the connection and return the cost.
 	return astar.get_id_path(end_id, start_id).size()
 
+func finish_move(_obj, _key):
+	prickly = false
+
 func move_tile(x, y, duration):
 	if not agro:
 		var move_score = self.get_move_score()
@@ -100,6 +104,8 @@ func move_tile(x, y, duration):
 			duration, Tween.TRANS_CUBIC, Tween.EASE_OUT
 		)
 		tween.start()
+		prickly = true
+		tween.connect("tween_completed", self, "finish_move")
 		emit_signal("enemy_moved")
 
 func find_player() -> Vector2:

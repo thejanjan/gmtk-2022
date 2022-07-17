@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://game/base/PlayerProjectionBase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/core/DiceViewport.gd" type="Script" id=2]
@@ -15,6 +15,61 @@ viewport_path = NodePath("PlayerSprite/PlayerViewport")
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 14, 2 )
 
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -24 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "hurt"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 2 ),
+"transitions": PoolRealArray( 1, 0.366022, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.0156863, 0.0156863, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate:a")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.5, 1.0, 0.5, 1.0, 0.5, 1.0, 0.5, 1.0, 0.5, 1.0 ]
+}
+
 [node name="PlayerControl" type="KinematicBody2D" groups=["Player"]]
 collision_layer = 2
 script = ExtResource( 4 )
@@ -24,6 +79,9 @@ position = Vector2( 0, -24 )
 scale = Vector2( 4, 4 )
 texture = SubResource( 3 )
 script = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="PlayerViewport" type="Viewport" parent="PlayerSprite"]
 size = Vector2( 450, 450 )
@@ -71,3 +129,13 @@ initial_velocity = 82.57
 initial_velocity_random = 0.53
 angular_velocity_random = 1.0
 scale_amount = 3.0
+
+[node name="InvincibilityTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../PlayerSprite")
+anims/RESET = SubResource( 5 )
+anims/hurt = SubResource( 6 )
