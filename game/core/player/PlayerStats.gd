@@ -11,3 +11,10 @@ var _bounciness = 1;
 
 # Pip stacks.
 var _pip_stacks = 0;
+
+# Stats where the higher they are, the less of them the player experiences.
+# used to draw the correct particles.
+var _inverted_stats = [
+	"_friction",
+	"_acceleration",
+]

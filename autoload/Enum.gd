@@ -34,7 +34,9 @@ enum EnemyFlavor {
 	QUEEN,
 	BATTLESHIP_S,
 	BATTLESHIP_M,
-	BATTLESHIP_L
+	BATTLESHIP_L,
+	GO,
+	REVERSI
 }
 
 enum ItemRarity {

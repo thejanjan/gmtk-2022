@@ -50,7 +50,49 @@ var EnemyDB = [
 		[1, 4],
 		2.0,
 		"res://game/core/enemies/Battleship_Small.tscn"
-	)
+	),
+	_EnemyData.new(
+		Enum.EnemyFlavor.BISHOP,
+		[1, 4],
+		2.0,
+		"res://game/core/enemies/Bishop.tscn"
+	),
+	_EnemyData.new(
+		Enum.EnemyFlavor.GO,
+		[1, 4],
+		2.0,
+		"res://game/core/enemies/Go.tscn"
+	),
+	_EnemyData.new(
+		Enum.EnemyFlavor.KING,
+		[1, 4],
+		2.0,
+		"res://game/core/enemies/King.tscn"
+	),
+	_EnemyData.new(
+		Enum.EnemyFlavor.KNIGHT,
+		[1, 4],
+		2.0,
+		"res://game/core/enemies/Knight.tscn"
+	),
+	_EnemyData.new(
+		Enum.EnemyFlavor.QUEEN,
+		[1, 4],
+		2.0,
+		"res://game/core/enemies/Queen.tscn"
+	),
+	_EnemyData.new(
+		Enum.EnemyFlavor.REVERSI,
+		[1, 4],
+		2.0,
+		"res://game/core/enemies/Reversi.tscn"
+	),
+	_EnemyData.new(
+		Enum.EnemyFlavor.ROOK,
+		[1, 4],
+		2.0,
+		"res://game/core/enemies/Rook.tscn"
+	),
 ]
 
 
