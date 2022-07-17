@@ -91,7 +91,7 @@ var ItemDB = {
 		0.6,
 		false,
 		'res://game/core/equipment/PipDamage.tscn',
-		'res://textures/items/item_weird_die.png'
+		'res://textures/items/item_generic_die.png'
 
 	),
 	Enum.ItemType.FAST: _ItemData.new(
