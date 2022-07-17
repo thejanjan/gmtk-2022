@@ -369,22 +369,29 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 	var attempts = 0
 	while true:
 		attempts += 1
+		if attempts > 1000:
+			break
 		rect2 = Random.choice(valid_rect2s) as Rect2
+		# don't fucking die
 		if attempts < 10:
 			vec2 = Random.point_in_rect2(rect2, 1)
 		else:
 			vec2 = Random.point_in_rect2(rect2, 0)
-		if attempts > 1000:
-			break
+		# um
+		# spawn failure conditions:
 		if vec2 == Vector2.INF:
 			continue
-		if vec2 in position_blocklist and attempts < 100:
-			continue
+		# don't create objects right next to each other
+                if attempts < 200:
+			for b in position_blocklist:
+				if vec2.distance_squared_to(b) < 4:
+					continue
+		# don't spawn on invalid cells
 		if tile_mapper_floor.get_cellv(vec2) == TileMap.INVALID_CELL:
 			continue
 		if attempts < 100:
 			var success = true
-			for offvec in [Vector2.LEFT, Vector2.UP, Vector2.RIGHT, Vector2.DOWN]:
+			for offvec in [Vector2.ZERO, Vector2.LEFT, Vector2.UP, Vector2.RIGHT, Vector2.DOWN]:
 				if tile_mapper_floor.get_cellv(vec2 + offvec) == TileMap.INVALID_CELL:
 					success = false
 					break
@@ -392,8 +399,7 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 				break
 	
 	# Return our vector.
-	for around in [Vector2(0, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(1, 0), Vector2(0, 1)]:
-		position_blocklist.append(vec2 + around)
+	position_blocklist.append(vec2)
 	return vec2
 	
 
