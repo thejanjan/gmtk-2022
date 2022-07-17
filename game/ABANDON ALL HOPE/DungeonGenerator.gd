@@ -158,11 +158,13 @@ func generate_room():
 				place_room_tile(x, y, color)
 			
 func generate_hallways():
-	# TODO: Graph magic.
-	for i in range(get_number_of_generated_rooms() - 1):
+	var hallway_pairs = prims_algorithm()
+	
+	#for i in range(get_number_of_generated_rooms() - 1):
+	for hallway_pair in hallway_pairs:
 		var thickness = Random.randint(hallway_min_thickness, hallway_max_thickness + 1)
 		var horizontal_first = (Random.randint(0, 2) == 1)
-		generate_hallway(i, i + 1, thickness, horizontal_first)
+		generate_hallway(hallway_pair[0], hallway_pair[1], thickness, horizontal_first)
 	
 func generate_hallway(room_id_start, room_id_end, thickness, horizontal_first):
 	var position_start = get_room_center_tilepos(room_id_start)
@@ -424,10 +426,47 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 	return vec2
 	
 
+func prims_algorithm():
+	var node_pairs = []
+
+	var remaining_nodes = []
+	for i in range(0, get_number_of_generated_rooms()):
+		remaining_nodes.append(i)
+	
+	var tree_nodes = []
+	
+	# Start the tree at node 0.
+	var node_0 = remaining_nodes.pop_front()
+	tree_nodes.append(node_0)
+	
+	while remaining_nodes.size() != 0:
+		var lowest_cost = 9999999
+		var lowest_cost_node_pair = [-1, -1]
+		for tree_node in tree_nodes:
+			for remaining_node in remaining_nodes:
+				var cost = room_coordinates[tree_node].position.distance_squared_to(room_coordinates[remaining_node].position)
+				if cost < lowest_cost:
+					lowest_cost = cost
+					lowest_cost_node_pair = [tree_node, remaining_node]
+		
+		var tree_node = lowest_cost_node_pair[0]
+		if lowest_cost_node_pair[0] != -1:
+			tree_nodes.append(tree_node)
+			node_pairs.append(lowest_cost_node_pair)
+			var remaining_node = lowest_cost_node_pair[1]
+			
+			for i in range(0, remaining_nodes.size()):
+				if remaining_nodes[i] == remaining_node:
+					remaining_nodes.pop_at(i)
+					break
+			#remaining_nodes.remove(remaining_node)
+	
+	return node_pairs
+
 # Delaunay triangulation brings forth the power of the simplex.
 # Do you know what else holds the power of the simplex?
 # Yes, that's right.
 # Herpes simplex virus.
 func triangulate():
+	# Speaking of herpes, I ran out of time to program this.
 	pass
-
