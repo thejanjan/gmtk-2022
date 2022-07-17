@@ -16,9 +16,10 @@ onready var Doorway = preload("res://game/core/Doorway.tscn")
 
 # [[proporational chance, resource path]]
 onready var environmental = [
-	[0.5, preload("res://game/core/environmental/Shrubbery.tscn")],
+	[0.4, preload("res://game/core/environmental/Shrubbery.tscn")],
 	[1.2, preload("res://game/core/environmental/Urn.tscn")],
-	[1, preload("res://game/core/environmental/Column.tscn")],
+	[0.7, preload("res://game/core/environmental/Column.tscn")],
+	[0.7, preload("res://game/core/environmental/Streetlamp.tscn")],
 ]
 
 onready var tile_mapper_floor = $FloorTileMap as TileMap
@@ -263,6 +264,10 @@ func generate_environmental():
 		add_child(new_object)
 		var object_pos = self.get_random_spawn_pos(true, true) # rooms and hallways
 		new_object.translate(object_pos * Vector2(13, 8) * 4)
+		if randf() < 0.5:
+			var sprite = new_object.get_node("Sprite")
+			if sprite:
+				sprite.flip_h = true
 
 func generate_islands():
 	for i in range(number_of_islands):
