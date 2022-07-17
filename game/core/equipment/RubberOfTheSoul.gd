@@ -2,7 +2,19 @@ class_name RubberOfTheSoul
 extends Equipment
 
 func enter():
-	tempStatChange("_speed", 5, 15)
-	tempStatChange("_acceleration", 1000, 15)
-	tempStatChange("_friction", 1000, 15)
-	tempStatChange("_bounciness", 100, 15)
+	self.apply_stats(false)
+	
+func apply_stats(invert: bool):
+	if not invert:
+		_statChange("_speed", 5.0)
+		_statChange("_acceleration", 1000.0)
+		_statChange("_friction", 1000.0)
+		_statChange("_bounciness", 100.0)
+	else:
+		_statChange("_speed", 1.0 / 5.0)
+		_statChange("_acceleration", 1.0 / 1000.0)
+		_statChange("_friction", 1.0 / 1000.0)
+		_statChange("_bounciness", 1.0 / 100.0)
+	
+func exit():
+	self.apply_stats(true)

@@ -25,6 +25,15 @@ enum ItemType {
 	BANANA_PEEL
 }
 
+enum EnemyFlavor {
+	PAWN,
+	KNIGHT,
+	BISHOP,
+	ROOK,
+	KING,
+	QUEEn
+}
+
 enum ItemRarity {
 	# item weights defined here
 	COMMON = 25,

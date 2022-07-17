@@ -6,8 +6,13 @@
 
 extends Node
 
+signal rooms_generated
+signal player_spawned
+
 onready var tile_mapper_floor = $FloorTileMap as TileMap
 onready var tile_mapper_wall = $WallTileMap as TileMap
+
+export(int) var dungeon_floor = 1
 
 export(int) var dungeon_width = 100
 export(int) var dungeon_height = 100
@@ -27,6 +32,8 @@ export(int) var hallway_max_thickness = 6
 var room_coordinates = []
 var hallway_coordinates = {}
 
+var position_blocklist = []
+
 var player_start_room = 0
 
 # Called when the node enters the... oh, you know that already.
@@ -41,9 +48,13 @@ func generate_dungeon():
 	generate_hallways()
 	
 	generate_wall_tiles()
+	
+	emit_signal("rooms_generated")
 		
 	# Place the player in the first room.
 	position_player()
+	
+	emit_signal("player_spawned")
 
 func generate_room():
 	var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
@@ -173,10 +184,19 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 			valid_rect2s.append_array(hallway_coordinates[key])
 		
 	# Pick a random vector within a rect2.
-	var rect2 = Random.choice(valid_rect2s) as Rect2
-	var vec2 = Random.point_in_rect2(rect2)
+	var rect2 = null
+	var vec2 = null
+	
+	# Don't spawn multiple things in the same spot.
+	while true:
+		rect2 = Random.choice(valid_rect2s) as Rect2
+		vec2 = Random.point_in_rect2(rect2)
+		if vec2 in position_blocklist:
+			continue
+		break
 	
 	# Return our vector.
+	position_blocklist.append(vec2)
 	return vec2
 	
 
