@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://game/core/GridManager.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -12,6 +12,9 @@
 [ext_resource path="res://game/core/enemies/Rook.tscn" type="PackedScene" id=10]
 [ext_resource path="res://game/core/enemies/Bishop.tscn" type="PackedScene" id=11]
 [ext_resource path="res://game/core/enemies/Knight.tscn" type="PackedScene" id=12]
+[ext_resource path="res://game/ABANDON ALL HOPE/DungeonGenerator.gd" type="Script" id=13]
+
+[sub_resource type="TileSet" id=25]
 
 [sub_resource type="ConvexPolygonShape2D" id=5]
 points = PoolVector2Array( 48, 88, 16, 88, 16, 16, 48, 16 )
@@ -210,8 +213,6 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 88, 0, 88 )
 } ]
 0/z_index = 0
 
-[sub_resource type="TileSet" id=25]
-
 [node name="World" type="YSort"]
 script = ExtResource( 1 )
 
@@ -226,7 +227,15 @@ __meta__ = {
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 579.245, 307.313 )
 
-[node name="TileManager" type="TileMap" parent="."]
+[node name="DungeonGenerator" type="Node2D" parent="."]
+script = ExtResource( 13 )
+
+[node name="FloorTileMap" type="TileMap" parent="DungeonGenerator"]
+tile_set = SubResource( 25 )
+format = 1
+script = ExtResource( 4 )
+
+[node name="WallTileMap" type="TileMap" parent="."]
 tile_set = SubResource( 4 )
 format = 1
 tile_data = PoolIntArray( 131076, 0, 1, 131077, 0, 196610, 131078, 0, 196610, 131079, 0, 196610, 131080, 0, 196610, 131081, 0, 196610, 131082, 0, 2, 131083, 0, 196610, 131084, 0, 196611, 196612, 0, 65536, 196618, 0, 131072, 262148, 0, 65536, 327684, 0, 65536, 327686, 0, 0, 393220, 0, 131073, 393221, 0, 196610, 393222, 0, 131074, 393223, 0, 196610, 393224, 0, 196610, 393225, 0, 196610, 393226, 0, 196610, 393227, 0, 196610, 393228, 0, 196611 )
@@ -234,11 +243,6 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="FloorTileMap" type="TileMap" parent="TileManager"]
-tile_set = SubResource( 25 )
-format = 1
-script = ExtResource( 4 )
 
 [node name="Pawn" parent="." instance=ExtResource( 6 )]
 position = Vector2( 413, 243 )
