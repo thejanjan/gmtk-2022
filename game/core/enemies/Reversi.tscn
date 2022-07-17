@@ -10,14 +10,14 @@
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 1 ), ExtResource( 7 ), ExtResource( 5 ) ],
-"loop": true,
-"name": "Black To White",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "White To Black",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 7 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "Black To White",
 "speed": 5.0
 } ]
 
