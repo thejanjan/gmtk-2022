@@ -18,7 +18,6 @@ func _ready():
 			row.append(0)
 		self.game_grid.append(row)
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

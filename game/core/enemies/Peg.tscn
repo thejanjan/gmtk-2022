@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://game/core/enemies/Peg.gd" type="Script" id=1]
+[ext_resource path="res://textures/enemies/battleship/red_peg.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 3.5, 5.5 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Death"
+length = 2.0
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Sprite:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 1.1, 222.334, -1000, -0.6, 73.9537, 0.7, 107.856 ),
+"times": PoolRealArray( 0, 1 )
+}
+
+[node name="Peg" type="RigidBody2D"]
+mode = 1
+script = ExtResource( 1 )
+max_hp = 1
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 1, 0 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2( 2, 2 )
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Death = SubResource( 2 )

@@ -1,6 +1,8 @@
 class_name Equipment
 extends State
 
+onready var trail = preload("res://game/core/equipment/helpers/Trail.tscn")
+
 # Try to keep all the actual behavior in here so that it's easier to add variants
 var pip = null
 var timers = {}
@@ -44,21 +46,14 @@ func damageNearbyEnemy(furthest_distance = 50000):
 		print(pip);
 
 func createTrail(size, length, color):
-	var scene = preload("res://game/core/equipment/helpers/Trail.tscn")
-	var instance = scene.instance()
+	var instance = self.trail.instance()
 	instance.setup(size, length, color)
 	var player = get_player()
 	player.get_parent().add_child(instance)
 	instance.position = player.position
 
 func changeConcreteSound(res):
-	var speech_player = get_player().get_node("ConcreteStream")
-	var audio_file = res
-	if File.new().file_exists(audio_file):
-		var sfx = load(audio_file)
-		speech_player.stream = sfx
-		speech_player.play()
-	changedConcreteSound = true
+	get_player().change_audio_to(res)
 
 # Probably shouldn't use this directly, since it has no behavior for undoing the change
 # Done with multipliers instead of absolute values so that changes can stack properly

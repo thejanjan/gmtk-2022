@@ -6,8 +6,15 @@
 
 extends Node
 
+signal rooms_generated
+signal player_spawned
+
+onready var Plinth = preload("res://game/core/Plinth.tscn")
+
 onready var tile_mapper_floor = $FloorTileMap as TileMap
 onready var tile_mapper_wall = $WallTileMap as TileMap
+
+export(int) var dungeon_floor = 1
 
 export(int) var dungeon_width = 100
 export(int) var dungeon_height = 100
@@ -24,8 +31,13 @@ export(int) var room_max_color_id = 0
 export(int) var hallway_min_thickness = 3
 export(int) var hallway_max_thickness = 6
 
+# Set this to true to force room generation to stop.
+var stop_generating_rooms = false
+
 var room_coordinates = []
 var hallway_coordinates = {}
+
+var position_blocklist = []
 
 var player_start_room = 0
 
@@ -35,34 +47,65 @@ func _ready():
 	generate_dungeon()
 	
 func generate_dungeon():
-	for i in range(number_of_rooms):
-		generate_room()
+	stop_generating_rooms = false
+	
+	for _i in range(number_of_rooms):
+		if stop_generating_rooms == false:
+			generate_room()
 		
 	generate_hallways()
 	
 	generate_wall_tiles()
+	
+	emit_signal("rooms_generated")
+	
+	generate_plinths()
 		
 	# Place the player in the first room.
 	position_player()
+	
+	emit_signal("player_spawned")
 
 func generate_room():
-	var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
-	var room_width = Random.randint(room_min_width, room_max_width + 1)
-	var room_height = Random.randint(room_min_height, room_max_height + 1)
+	var room_undecided = true
+	var room_rect
+	var room_width
+	var room_height
 	
-	var color = Random.randint(0, room_max_color_id + 1)
-	
-	room_coordinates.append(Rect2(room_position, Vector2(room_width, room_height)))
-
-	for i in range(room_width):
-		for j in range(room_height):
-			var x = room_position.x + i
-			var y = room_position.y + j
-			place_room_tile(x, y, color)
+	# Keep looping until the room intersects no other rooms or a max iteration count is passed.
+	var iterations = 0
+	var iterations_max = 10
+	while room_undecided and iterations < iterations_max:
+		var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
+		room_width = Random.randint(room_min_width, room_max_width + 1)
+		room_height = Random.randint(room_min_height, room_max_height + 1)
+		var room_size = Vector2(room_width, room_height)
+		room_rect = Rect2(room_position, room_size)
+		
+		room_undecided = false
+		for other_room_rect in room_coordinates:
+			if other_room_rect.intersects(room_rect):
+				room_undecided = true
+				break
+				
+		iterations += 1
+		
+	if iterations == iterations_max:
+		stop_generating_rooms = true
+	else:
+		var color = Random.randint(0, room_max_color_id + 1)
+		
+		room_coordinates.append(room_rect)
+		
+		var top_left = get_room_top_left_tilepos(room_coordinates.size() - 1)
+		
+		for x in range(top_left.x, top_left.x + room_width):
+			for y in range(top_left.y, top_left.y + room_height):
+				place_room_tile(x, y, color)
 			
 func generate_hallways():
 	# TODO: Graph magic.
-	for i in range(number_of_rooms - 1):
+	for i in range(get_number_of_generated_rooms() - 1):
 		var thickness = Random.randint(hallway_min_thickness, hallway_max_thickness + 1)
 		var horizontal_first = (Random.randint(0, 2) == 1)
 		generate_hallway(i, i + 1, thickness, horizontal_first)
@@ -73,16 +116,24 @@ func generate_hallway(room_id_start, room_id_end, thickness, horizontal_first):
 	var color = Random.randint(0, room_max_color_id + 1)
 	var hallways = []
 	
+	var position_elbow = position_start
 	if horizontal_first:
-		var position_elbow = position_start
 		position_elbow.x = position_end.x
 		hallways.append(generate_hallway_horizontal(position_start, position_elbow, thickness, color))
 		hallways.append(generate_hallway_vertical(position_elbow, position_end, thickness, color))
 	else:
-		var position_elbow = position_start
 		position_elbow.y = position_end.y
 		hallways.append(generate_hallway_vertical(position_start, position_elbow, thickness, color))
 		hallways.append(generate_hallway_horizontal(position_elbow, position_end, thickness, color))
+	
+	# Fill in the elbow.
+	var startx = position_elbow.x - thickness/2
+	var endx = startx + thickness
+	var starty = position_elbow.y - thickness/2
+	var endy = starty + thickness
+	for x in range(startx, endx):
+		for y in range(starty, endy):
+			place_hallway_tile(x, y, color)
 	
 	# Assign the hallways to this room ID pair.
 	self.hallway_coordinates[[room_id_start, room_id_end]] = hallways
@@ -113,6 +164,14 @@ func generate_wall_tiles():
 		for vec in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
 			if tile_mapper_floor.get_cellv(tile + vec) == TileMap.INVALID_CELL:
 				tile_mapper_wall.set_cellv(tile + vec, 0)
+				
+func generate_plinths():
+	# PLlinth time baby
+	for i in range(min(floor(1.0 + (float(self.dungeon_floor) / 2)), 3)):
+		var new_plinth = Plinth.instance()
+		add_child(new_plinth)
+		var plinth_pos = self.get_random_spawn_pos(true, false)
+		new_plinth.translate(plinth_pos * Vector2(13, 8) * 4)
 	
 func place_floor_tile(x, y, color):
 	
@@ -133,13 +192,24 @@ func place_hallway_tile(x, y, color):
 	#tile_mapper_floor.set_cell(x, y, 0)
 
 func get_room_center_tilepos(room_id):
-	var room_rect = room_coordinates[room_id] as Rect2
-	return room_rect.position + (room_rect.size / 2)
+	return room_coordinates[room_id].position
+	#var room_rect = room_coordinates[room_id] as Rect2
+	#return room_rect.position + (room_rect.size / 2)
 
 func get_room_center(room_id):
 	return get_room_center_tilepos(room_id) + Vector2(0.5, 0.5)
 	
+func get_room_top_left_tilepos(room_id):
+	var room_rect = room_coordinates[room_id] as Rect2
+	return room_rect.position - room_rect.size/2
+	
+func get_number_of_generated_rooms():
+	return room_coordinates.size()
+	
 func position_player():
+	if get_number_of_generated_rooms() == 0:
+		print("tried to position player when no rooms were generated")
+	
 	var room_center = get_room_center(self.player_start_room)
 	var player = GameState.get_player()
 	if player:
@@ -168,10 +238,19 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 			valid_rect2s.append_array(hallway_coordinates[key])
 		
 	# Pick a random vector within a rect2.
-	var rect2 = Random.choice(valid_rect2s) as Rect2
-	var vec2 = Random.point_in_rect2(rect2)
+	var rect2 = null
+	var vec2 = null
+	
+	# Don't spawn multiple things in the same spot.
+	while true:
+		rect2 = Random.choice(valid_rect2s) as Rect2
+		vec2 = Random.point_in_rect2(rect2)
+		if vec2 in position_blocklist:
+			continue
+		break
 	
 	# Return our vector.
+	position_blocklist.append(vec2)
 	return vec2
 	
 
@@ -181,3 +260,4 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 # Herpes simplex virus.
 func triangulate():
 	pass
+

@@ -13,10 +13,18 @@ signal collision
 export var max_hp = 10
 var hp = 10
 
+# The code to obtain these values hasn't been written yet
+var playerx = 0 
+var playery = -21
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.connect("body_entered", self, "_on_body_entered")
 	randomize()
+	GameState.check_tile(self.position, "Enemy");
+
+func init(pos : Vector2):
+	self.position = pos;
 
 """
 Health modifiers
@@ -35,6 +43,7 @@ func lose_health(damage):
 		self.perform_destroy()
 		
 func perform_destroy():
+	GameState.remove_space(self.position);
 	self.queue_free()
 	
 """
@@ -42,24 +51,26 @@ Movement
 """
 
 func move_tile(x, y, duration):
-	var tween = self.make_tween()
-	tween.interpolate_property(
-		self, "position", self.position,
-		self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4),
-		duration, Tween.TRANS_LINEAR, Tween.EASE_OUT
-	)
-	tween.start()
-	emit_signal("enemy_moved")
+	if GameState.check_tile(self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4), "Enemy") != Vector2.INF:
+		GameState.remove_space(self.position);
+		var tween = self.make_tween()
+		tween.interpolate_property(
+			self, "position", self.position,
+			self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4),
+			duration, Tween.TRANS_LINEAR, Tween.EASE_OUT
+		)
+		tween.start()
+		emit_signal("enemy_moved")
 
-func find_player(playerx, playery, enemy) -> Vector2:
-	playerx = playerx % self.tile_width
-	playery = playery % self.tile_height
+func find_player() -> Vector2:
+	playerx = int(playerx) - (int(playerx) % self.tile_width)
+	playery = int(playery) - (int(playery) % self.tile_height)
 	
-	var enemyx = enemy.position.x % self.tile_width
-	var enemyy = enemy.position.y % self.tile_height
+	var enemyx = int(self.position.x) - (int(self.position.x) % self.tile_width)
+	var enemyy = int(self.position.y) - (int(self.position.y) % self.tile_height)
 	
-	var tilex = (playerx - enemyx) / self.tile_width
-	var tiley = (playery - enemyy) / self.tile_height
+	var tilex = (playerx - enemyx) / self.tile_width / 4
+	var tiley = (playery - enemyy) / self.tile_height / 4
 	
 	return Vector2(tilex, tiley) # returns number of tiles away from player
 	

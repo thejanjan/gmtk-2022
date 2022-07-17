@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://game/core/Plinth.gd" type="Script" id=1]
-[ext_resource path="res://textures/items/DJUNGELSKOG.png" type="Texture" id=2]
+[ext_resource path="res://textures/items/unknown.png" type="Texture" id=2]
 [ext_resource path="res://textures/environmental/pedestal/pedestal.png" type="Texture" id=3]
 [ext_resource path="res://game/gui/GameTheme.tres" type="Theme" id=4]
 
@@ -52,6 +52,115 @@ tracks/0/keys = {
 "values": [ Vector2( 0, -10 ), Vector2( 0, -8 ) ]
 }
 
+[sub_resource type="Animation" id=7]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:anchor_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:anchor_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "purchase_fail"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:anchor_left")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.15, 0.25, 0.35, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -0.05, 0.05, -0.05, 0.05, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "purchase_succeed"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.14902, 1, 0, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:anchor_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.277 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+
 [node name="Plinth" type="Area2D" groups=["plinths"]]
 scale = Vector2( 4, 4 )
 collision_layer = 8
@@ -69,6 +178,7 @@ texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../ItemSprite")
+autoplay = "plinth_item_hover"
 anims/RESET = SubResource( 2 )
 anims/plinth_item_hover = SubResource( 3 )
 
@@ -86,11 +196,17 @@ theme = ExtResource( 4 )
 
 [node name="Label" type="Label" parent="CenterContainer"]
 visible = false
-margin_left = 26.0
+margin_left = 23.0
 margin_top = 14.0
-margin_right = 38.0
+margin_right = 41.0
 margin_bottom = 25.0
-text = "$9"
+text = "$10"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer"]
+root_node = NodePath("../Label")
+anims/RESET = SubResource( 7 )
+anims/purchase_fail = SubResource( 5 )
+anims/purchase_succeed = SubResource( 6 )
 
 [connection signal="body_entered" from="." to="." method="_on_Plinth_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_Plinth_body_exited"]
