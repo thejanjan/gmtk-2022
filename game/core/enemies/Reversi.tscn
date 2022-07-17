@@ -43,8 +43,8 @@ animations = [ {
 "speed": 8.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 23.125, 18.5 )
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 12.0
 
 [node name="Reversi" type="RigidBody2D" groups=["enemy"]]
 mode = 1
@@ -59,8 +59,8 @@ frames = SubResource( 2 )
 animation = "Black To White"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.125, -7 )
-shape = SubResource( 1 )
+rotation = 1.5708
+shape = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 script = ExtResource( 4 )

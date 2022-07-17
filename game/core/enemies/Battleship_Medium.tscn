@@ -5,8 +5,9 @@
 [ext_resource path="res://game/core/enemies/EnemyHP.tscn" type="PackedScene" id=3]
 [ext_resource path="res://textures/enemies/battleship/hship_3.png" type="Texture" id=4]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 19.5, 6.5 )
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 22.0
+height = 108.0
 
 [sub_resource type="Animation" id=2]
 resource_name = "Death"
@@ -25,18 +26,20 @@ tracks/0/keys = {
 [node name="Battleship_Medium" type="RigidBody2D"]
 script = ExtResource( 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.5, 4.5 )
-shape = SubResource( 1 )
-
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 4, 4 )
 texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 22 )
+rotation = 1.5708
+shape = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 script = ExtResource( 2 )
 
 [node name="EnemyHP" parent="." instance=ExtResource( 3 )]
-position = Vector2( 0, 18 )
+position = Vector2( 0, 52.8022 )
 width = 20
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

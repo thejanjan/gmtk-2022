@@ -5,8 +5,8 @@
 [ext_resource path="res://game/core/enemies/DeathTimer.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=5]
-radius = 2.48236
-height = 5.17857
+radius = 2.5
+height = 5.0
 
 [sub_resource type="Animation" id=2]
 resource_name = "Death"

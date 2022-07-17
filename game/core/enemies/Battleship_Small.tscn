@@ -5,8 +5,9 @@
 [ext_resource path="res://game/core/enemies/MoveTimer.gd" type="Script" id=3]
 [ext_resource path="res://game/core/enemies/Battleship_Small.gd" type="Script" id=4]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 13.5, 8 )
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 21.0
+height = 58.0
 
 [sub_resource type="Animation" id=2]
 resource_name = "Death"
@@ -26,17 +27,20 @@ tracks/0/keys = {
 mode = 1
 script = ExtResource( 4 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
-
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 2, 7 )
+rotation = 1.5708
+shape = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 script = ExtResource( 3 )
 
 [node name="EnemyHP" parent="." instance=ExtResource( 2 )]
-position = Vector2( 0, 12 )
+position = Vector2( 0, 34.5137 )
 scale = Vector2( 0.5, 0.5 )
 width = 20
 
