@@ -126,6 +126,9 @@ func _physics_process(delta):
 					GameState.HP -= 1
 					InvincibilityTimer.start()
 					emit_signal("player_hurt")
+					
+					if GameState.HP <= 0:
+						get_tree().reload_current_scene()
 
 	
 	
