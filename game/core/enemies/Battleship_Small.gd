@@ -28,10 +28,6 @@ func _ready():
 	#Get and store player for future use so we don't call this every second or whatever
 	player = GameState.get_player();
 
-func _process(delta):
-	if self.global_position.distance_squared_to(player.get_global_position()) < AttackRangeSquared:
-		print("PLAYER IN RANGE REEEE");
-
 func _on_Timer_timeout():
 	#Just in case
 	if (player == null):
@@ -46,7 +42,7 @@ func _on_Timer_timeout():
 		var attempts = 0;
 		while shots > 0:
 			attempts += 1;
-			var location = Vector2(rand_range(-130, 130), rand_range(-80, 80)) + player.get_position();
+			var location = Vector2(rand_range(-130, 130), rand_range(-80, 80));
 			location = GameState.check_tile(location, "Peg");
 			if location != Vector2.INF:
 				var peg = PegScene.instance();
