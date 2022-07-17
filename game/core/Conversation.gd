@@ -19,22 +19,22 @@ var messages = [
 		"name": "SNAKE GOD",
 		"words": "Ohhhh, and what do we have here. CHAOS GOD?"\
 			   + " I don't remember inviting YOU to board games at the bar with usss.",
-		"audio": "res://audio/voice/ck_inviting_you.ogg"
+		"audio": preload("res://audio/voice/ck_inviting_you.ogg")
 	},
 	{
 		"name": "CHAOS GOD",
 		"words": "Well, I'm here now, and I'm about to make it everybody's problem!",
-		"audio": "res://audio/voice/everybodys_problem.ogg"
+		"audio": preload("res://audio/voice/everybodys_problem.ogg")
 	},
 	{
 		"name": "SNAKE GOD",
 		"words": "NO! I will NOT let you mess up our gamess!!",
-		"audio": "res://audio/voice/ck_mess_up_our_games.ogg"
+		"audio": preload("res://audio/voice/ck_mess_up_our_games.ogg")
 	},
 	{
 		"name": "CHAOS GOD",
 		"words": "[LAUGHS MANIACALLY]",
-		"audio": "res://audio/voice/laugh.ogg"
+		"audio": preload("res://audio/voice/laugh.ogg")
 	}
 ]
 onready var clickto = $ClickTo
@@ -70,15 +70,8 @@ func add_next_message():
 
 	# play the associated audio
 	if message["audio"]:
-		var file = File.new()
-		file.open(message["audio"], File.READ)
-		var buffer = file.get_buffer(file.get_len())
-		var stream = AudioStreamOGGVorbis.new()
-		stream.data = buffer
-		player.stream = stream
+		player.stream = message['audio']
 		player.play()
-		# close the file
-		file.close()
 
 	# update state?
 	if len(messages) == 0:
