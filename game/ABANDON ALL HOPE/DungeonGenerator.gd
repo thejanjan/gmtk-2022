@@ -372,9 +372,11 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 			vec2 = Random.point_in_rect2(rect2, 1)
 		else:
 			vec2 = Random.point_in_rect2(rect2, 0)
+		if attempts > 1000:
+			break
 		if vec2 == Vector2.INF:
 			continue
-		if vec2 in position_blocklist:
+		if vec2 in position_blocklist and attempts < 100:
 			continue
 		if tile_mapper_floor.get_cellv(vec2) == TileMap.INVALID_CELL:
 			continue
