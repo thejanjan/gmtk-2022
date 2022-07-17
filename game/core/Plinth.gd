@@ -6,6 +6,7 @@ export(Enum.ItemType) var item_type = Enum.ItemType.NIL
 
 onready var _item_sprite = $ItemSprite
 onready var _label = $CenterContainer/Label
+onready var _label_anim = $CenterContainer/AnimationPlayer
 
 var _player_inside: bool = false
 
@@ -21,9 +22,19 @@ func _ready():
 	update_label()
 	
 func _unhandled_input(event):
+	# player interaction
 	if _player_inside and event.is_action_pressed("interact"):
-		var received_equipment = GameState.get_player().swap_current_equipment(item_type)
-		set_item_type(received_equipment)
+		# check if they have enough caaaaaaash
+		if GameState.cash >= cost:
+			GameState.cash -= cost
+			set_cost(0)
+			_label_anim.play("purchase_succeed")
+			var received_equipment = GameState.get_player().swap_current_equipment(item_type)
+			set_item_type(received_equipment)
+		else:
+			# poor person spotted :(
+			_label_anim.play("purchase_fail")
+
 
 func set_item_type(new_item_type: int):
 	item_type = new_item_type
