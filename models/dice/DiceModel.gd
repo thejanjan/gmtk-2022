@@ -13,6 +13,7 @@ var the_dice_side = Enum.DiceSide.ONE
 signal jump_start;
 signal jump_end;
 signal side_swapped(side);
+signal set_cooldown(timer)
 
 const positional_transforms = {
 	Enum.DiceSide.ONE:   Quat(Vector3(0, 0, 0)),
@@ -49,6 +50,7 @@ func _physics_process(delta):
 			var item_id = GameState.get_player().SideEquipment.get(the_dice_side)
 			var item_data = Database.get_item_data(item_id)
 			debounce = item_data.get_cooldown() * 60.0
+			emit_signal("set_cooldown", item_data.get_cooldown())
 		var jump_attempt = Input.is_action_pressed("move_roll")
 		if jump_attempt and debounce < 0:
 			self.linear_velocity = Vector3(0, 0, 0)
