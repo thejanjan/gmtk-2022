@@ -307,7 +307,7 @@ func generate_environmental():
 	var average_objects_per_room = 2
 	
 	# populate environmental chances
-	var total = 0
+	var total = 0.0
 	var environmental_norm = []
 	for e in environmental:
 		total += e[0]
@@ -315,15 +315,21 @@ func generate_environmental():
 	
 	# generate objects
 	for i in range(get_number_of_generated_rooms() * average_objects_per_room):
-		var choice = rand_range(0, total)
+		var running_weight = rand_range(0.0, total)
 		# no functional programming so I have to go through and find the chosen one
 		var new_object_class = null
 		var on_edge = false
-		for e in environmental:
-			new_object_class = e[1]
-			#on_edge = e[2]
-			if e[0] > choice:
+		
+		for j in range(environmental.size()):
+			var e = environmental[j]
+			if running_weight <= e[0]:
+				new_object_class = e[1]
+				#on_edge = e[2]
 				break
+			else:
+				running_weight -= e[0]
+					
+			
 		var new_object = new_object_class.instance()
 		add_child(new_object)
 		var object_pos = self.get_random_spawn_pos(false, true, on_edge) # rooms and hallways
