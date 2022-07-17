@@ -70,31 +70,33 @@ func generate_hallways():
 func generate_hallway(room_id_start, room_id_end, thickness, horizontal_first):
 	var position_start = room_positions[room_id_start]
 	var position_end = room_positions[room_id_end]
+	var color = Random.randint(0, room_max_color_id + 1)
+	
 	if horizontal_first:
 		var position_elbow = position_start
 		position_elbow.x = position_end.x
-		generate_hallway_horizontal(position_start, position_elbow, thickness)
-		generate_hallway_vertical(position_elbow, position_end, thickness)
+		generate_hallway_horizontal(position_start, position_elbow, thickness, color)
+		generate_hallway_vertical(position_elbow, position_end, thickness, color)
 	else:
 		var position_elbow = position_start
 		position_elbow.y = position_end.y
-		generate_hallway_vertical(position_start, position_elbow, thickness)
-		generate_hallway_horizontal(position_elbow, position_end, thickness)
+		generate_hallway_vertical(position_start, position_elbow, thickness, color)
+		generate_hallway_horizontal(position_elbow, position_end, thickness, color)
 		
 		
-func generate_hallway_horizontal(position_start, position_end, thickness):
+func generate_hallway_horizontal(position_start, position_end, thickness, color):
 	var startx = min(position_start.x, position_end.x)
 	var endx = max(position_start.x, position_end.x)
 	for x in range(startx, endx):
 		for y in range(position_start.y, position_start.y + thickness):
-			place_hallway_tile(x, y)
+			place_hallway_tile(x, y, color)
 			
-func generate_hallway_vertical(position_start, position_end, thickness):
+func generate_hallway_vertical(position_start, position_end, thickness, color):
 	var starty = min(position_start.y, position_end.y)
 	var endy = max(position_start.y, position_end.y)
 	for x in range(position_start.x, position_start.x + thickness):
 		for y in range(starty, endy):
-			place_hallway_tile(x, y)
+			place_hallway_tile(x, y, color)
 	
 func place_floor_tile(x, y, color):
 	# Checkerboard pattern!
@@ -107,8 +109,8 @@ func place_room_tile(x, y, color):
 	place_floor_tile(x, y, color)
 	#tile_mapper_floor.set_cell(x, y, 0)
 
-func place_hallway_tile(x, y):
-	place_floor_tile(x, y, 0)
+func place_hallway_tile(x, y, color):
+	place_floor_tile(x, y, color)
 	#tile_mapper_floor.set_cell(x, y, 0)
 
 # Delaunay triangulation brings forth the power of the simplex.

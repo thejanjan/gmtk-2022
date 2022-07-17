@@ -44,12 +44,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game/core/equipment/RubberOfTheSoul.gd"
 }, {
-"base": "Node2D",
+"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://game/core/State.gd"
 }, {
-"base": "Node2D",
+"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://game/core/StateMachine.gd"
