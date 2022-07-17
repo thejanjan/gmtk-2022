@@ -5,7 +5,7 @@ signal initialize_equips(equip_dict)
 signal pip_stacks_updated
 
 const PlayerStats = preload("res://game/core/player/PlayerStats.gd")
-onready var ConcreteStream: AudioStreamPlayer = $ConcreteStream;
+onready var ActiveMoveSound: AudioStreamPlayer = $ConcreteStream;
 var concrete_volume = -80
 
 var _stats = PlayerStats.new()
@@ -76,10 +76,10 @@ func _physics_process(delta):
 	# TODO : make a custom audiostreamplayer that does this for us
 	if totalspeed <= 1 or jumping:
 		concrete_volume -= 4;
-		ConcreteStream.volume_db = concrete_volume;
+		ActiveMoveSound.volume_db = concrete_volume;
 		if concrete_volume < -40:
 			concrete_volume = -40
-			ConcreteStream.playing = false;
+			ActiveMoveSound.playing = false;
 	else:
 		var minvol = -20;			
 		var maxvol = 0;			
@@ -87,9 +87,9 @@ func _physics_process(delta):
 		concrete_volume += 8
 		if concrete_volume > target_volume:
 			concrete_volume = target_volume
-		ConcreteStream.volume_db = concrete_volume
-		if not ConcreteStream.playing:
-			ConcreteStream.playing = true;
+		ActiveMoveSound.volume_db = concrete_volume
+		if not ActiveMoveSound.playing:
+			ActiveMoveSound.playing = true;
 
 	# Slide or bounce
 	if _stats._bounciness <= 1:
@@ -118,6 +118,11 @@ func _handle_acceleration(accel: Vector2):
 	var rigid_body = self.get_rigid_body()
 	# rigid_body.add_force(Vector3(accel.x, 0, accel.y), Vector3.UP)
 	rigid_body.handle_speed(velocity)
+	
+func change_audio_to(node_name: String):
+	"""Changes the trailing audio."""
+	ActiveMoveSound.playing = false
+	ActiveMoveSound = self.find_node(node_name)
 
 """
 Useful getters

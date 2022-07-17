@@ -13,14 +13,32 @@ var characters = {
 	"CHAOS GOD": Color("#ff9a75")
 }
 var messages = [
-	{"name": "SNAKE GOD", "words": "Ooooh, and what do we have here. I don't remember inviting YOU, CHAOS GOD, to Board Games At The Bar."},
-	{"name": "CHAOS GOD", "words": "Well, I'm here now, and I'm about to make it everybody's problem!"},
-	{"name": "SNAKE GOD", "words": "No! I will NOT let you interfere with our game!!"},
-	{"name": "CHAOS GOD", "words": "[LAUGH MANICALLY]"}
+	{
+		"name": "SNAKE GOD",
+		"words": "Ohhhh, and what do we have here. CHAOS GOD?"\
+			   + " I don't remember inviting YOU to board games at the bar with usss.",
+		"audio": "res://audio/voice/ck_inviting_you.ogg"
+	},
+	{
+		"name": "CHAOS GOD",
+		"words": "Well, I'm here now, and I'm about to make it everybody's problem!",
+		"audio": "res://audio/voice/everybodys_problem.ogg"
+	},
+	{
+		"name": "SNAKE GOD",
+		"words": "NO! I will NOT let you mess up our gamess!!",
+		"audio": "res://audio/voice/ck_mess_up_our_games.ogg"
+	},
+	{
+		"name": "CHAOS GOD",
+		"words": "[LAUGHS MANIACALLY]",
+		"audio": "res://audio/voice/laugh.ogg"
+	}
 ]
 onready var clickto = $ClickTo
 onready var display = $MarginContainer
 onready var textholder = $MarginContainer/TextHolder
+onready var player = $AudioStreamPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -48,6 +66,18 @@ func add_next_message():
 	# show/hide its next indicator
 	new_textbox.display_next(len(messages) > 0)
 
+	# play the associated audio
+	if message["audio"]:
+		var file = File.new()
+		file.open(message["audio"], File.READ)
+		var buffer = file.get_buffer(file.get_len())
+		var stream = AudioStreamOGGVorbis.new()
+		stream.data = buffer
+		player.stream = stream
+		player.play()
+		# close the file
+		file.close()
+
 	# update state?
 	if len(messages) == 0:
 		current_state = State.OUT_OF_MESSAGES
@@ -55,9 +85,10 @@ func add_next_message():
 func finish():
 	display.hide()
 	current_state = State.FINISHED
+	player.stop()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("cutscene_continue"):
 		match current_state:
 			State.WAITING:

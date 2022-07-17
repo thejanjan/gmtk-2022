@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ck_inviting_you.ogg-4c196ceebdc718f071837bb1efedcc84.oggstr"
+
+[deps]
+
+source_file="res://audio/voice/ck_inviting_you.ogg"
+dest_files=[ "res://.import/ck_inviting_you.ogg-4c196ceebdc718f071837bb1efedcc84.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

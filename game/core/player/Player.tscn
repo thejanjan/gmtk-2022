@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://game/base/PlayerProjectionBase.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/core/DiceViewport.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://game/core/player/PlayerControl.gd" type="Script" id=4]
 [ext_resource path="res://game/core/player/CoinManager.gd" type="Script" id=5]
 [ext_resource path="res://game/core/player/PlayerSprite.gd" type="Script" id=6]
+[ext_resource path="res://audio/lancersplat.wav" type="AudioStream" id=7]
 [ext_resource path="res://audio/concrete.ogg" type="AudioStream" id=8]
 
 [sub_resource type="ViewportTexture" id=3]
@@ -19,7 +20,7 @@ collision_layer = 2
 script = ExtResource( 4 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
-position = Vector2( 0, -21 )
+position = Vector2( 0, -24 )
 scale = Vector2( 4, 4 )
 texture = SubResource( 3 )
 script = ExtResource( 6 )
@@ -33,7 +34,6 @@ script = ExtResource( 2 )
 [node name="PlayerBase" parent="PlayerSprite/PlayerViewport" instance=ExtResource( 1 )]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 8 )
 shape = SubResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -48,5 +48,26 @@ script = ExtResource( 3 )
 stream = ExtResource( 8 )
 pitch_scale = 0.65
 
+[node name="OilSplat" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+pitch_scale = 0.65
+
 [node name="CoinManager" type="Node2D" parent="."]
+position = Vector2( 0, 1 )
 script = ExtResource( 5 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 0, -50 )
+emitting = false
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource( 7 )
+emission_shape = 1
+emission_sphere_radius = 8.05
+spread = 180.0
+gravity = Vector2( 0, 10 )
+initial_velocity = 82.57
+initial_velocity_random = 0.53
+angular_velocity_random = 1.0
+scale_amount = 3.0
