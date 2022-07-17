@@ -57,10 +57,9 @@ func unapproach_plinth():
 	
 # TODO: move this plinth registry bullshit somewhere way better
 func register_plinths() -> void:
-	print("registering plinths")
+	print("registering plinths with GUI")
 	var plinths = get_tree().get_nodes_in_group('plinths')
 	for plinth in plinths:
-		print("registered plinth")
 		plinth.connect("body_entered", self, "approach_plinth")
 		plinth.connect("body_exited", self, "unapproach_plinth")
 
