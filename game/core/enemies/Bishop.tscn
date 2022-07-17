@@ -6,7 +6,7 @@
 [ext_resource path="res://game/core/enemies/MoveTimer.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 18, 34.5 )
+extents = Vector2( 18, 32.25 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "Death"
@@ -34,7 +34,7 @@ scale = Vector2( 4, 4 )
 texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -38.5 )
+position = Vector2( 0, -14.75 )
 shape = SubResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]

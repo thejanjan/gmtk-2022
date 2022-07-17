@@ -10,7 +10,6 @@ var current_state = State.NORMAL
 func handle_player_collision(collision: KinematicCollision2D):
 	if current_state == State.NORMAL:
 		self.apply_central_impulse(collision.remainder * 250)
-		print(collision.remainder)
 		break_urn()
 
 func break_urn():
