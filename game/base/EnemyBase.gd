@@ -52,8 +52,11 @@ func perform_destroy():
 Movement
 """
 
+func check_move(x, y):
+	return GameState.check_tile(self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4), "Enemy") != Vector2.INF
+
 func move_tile(x, y, duration):
-	if GameState.check_tile(self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4), "Enemy") != Vector2.INF:
+	if check_move(x, y):
 		GameState.remove_space(self.position);
 		var tween = self.make_tween()
 		tween.interpolate_property(
