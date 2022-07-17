@@ -25,9 +25,6 @@ tracks/0/keys = {
 [node name="Battleship_Small" type="RigidBody2D"]
 mode = 1
 script = ExtResource( 4 )
-max_hp = null
-PegsFired = null
-AttackRangeSquared = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
