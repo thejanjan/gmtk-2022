@@ -1,3 +1,4 @@
+tool
 extends Node
 
 """
@@ -17,10 +18,10 @@ class _ItemData:
 	
 	func _init(name: String, 
 						 rarity: int, 
-						 node: String,
-						 description: String = "None",
-						 in_pool: bool = true, 
-						 texture_path: String = ""
+						 description: String,
+						 in_pool: bool = true,
+						 node: String = "res://game/core/equipment/PipDamage.tscn",
+						 texture_path: String = "res://textures/items/unknown.png"
 						 ):
 		self.name = name
 		self.description = description
@@ -28,9 +29,7 @@ class _ItemData:
 		self.node = node
 		self.in_pool = in_pool
 		self.resource = load(self.node)
-		if texture_path != "":
-			self.texture = load(texture_path)
-			print(self.texture)
+		self.texture = load(texture_path)
 		
 	"""
 	Getters
@@ -69,42 +68,50 @@ var ItemDB = {
 	Enum.ItemType.NIL: _ItemData.new(
 		'Nil',
 		Enum.ItemRarity.COMMON,
-		'res://game/core/equipment/PipDamage.tscn',
-		"Empty",
-		false,
-		'res://textures/items/unknown.png'
+		"if you're reading this, brush your teeth",
+		false
 	),
 	Enum.ItemType.BASIC_DAMAGE: _ItemData.new(
 		'Devour',
 		Enum.ItemRarity.COMMON,
-		'res://game/core/equipment/PipDamage.tscn',
 		"Does damage based on your roll",
 		false,
-		'res://textures/items/unknown.png'
+		'res://textures/items/DJUNGELSKOG.png',
+		'res://game/core/equipment/PipDamage.tscn'
 	),
 	Enum.ItemType.FAST: _ItemData.new(
 		"I'm too scared to actually make the die a ball",
 		Enum.ItemRarity.COMMON,
+		"Aerodynamic form improves speed",
+		true,
 		'res://game/core/equipment/Fast.tscn'
 	),
 	Enum.ItemType.OIL_SLICK: _ItemData.new(
 		"Oil Slick",
 		Enum.ItemRarity.COMMON,
+		"Party like it's 2010",
+		true,
 		'res://game/core/equipment/OilSlick.tscn'
 	),
 	Enum.ItemType.RUBBER_OF_THE_SOUL: _ItemData.new(
 		"Rubber of the Soul",
 		Enum.ItemRarity.COMMON,
+		"Set my heart a-boinging",
+		true,
 		'res://game/core/equipment/RubberOfTheSoul.tscn'
 	),
 	Enum.ItemType.STUNT_DOUBLER: _ItemData.new(
 		"Stunt Doubler",
 		Enum.ItemRarity.COMMON,
+		"A Stunt Double adds to your roll!",
+		true,
 		'res://game/core/equipment/StuntDoubler.tscn'
 	),
 	Enum.ItemType.BANANA_PEEL: _ItemData.new(
 		"Banana Peel",
 		Enum.ItemRarity.COMMON,
+		"WHOA-",
+		true,
 		'res://game/core/equipment/BananaPeel.tscn'
 	)
 }
@@ -113,6 +120,5 @@ var ItemDB = {
 """
 DB accessors
 """
-
 func get_item_data(item_type: int) -> _ItemData:
 	return ItemDB.get(item_type)
