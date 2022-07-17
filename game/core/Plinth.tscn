@@ -92,8 +92,5 @@ margin_right = 38.0
 margin_bottom = 25.0
 text = "$9"
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-
 [connection signal="body_entered" from="." to="." method="_on_Plinth_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_Plinth_body_exited"]
