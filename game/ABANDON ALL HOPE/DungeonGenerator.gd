@@ -29,6 +29,9 @@ export(int) var room_max_color_id = 0
 export(int) var hallway_min_thickness = 3
 export(int) var hallway_max_thickness = 6
 
+# Set this to true to force room generation to stop.
+var stop_generating_rooms = false
+
 var room_coordinates = []
 var hallway_coordinates = {}
 
@@ -42,8 +45,11 @@ func _ready():
 	generate_dungeon()
 	
 func generate_dungeon():
+	stop_generating_rooms = false
+	
 	for _i in range(number_of_rooms):
-		generate_room()
+		if stop_generating_rooms == false:
+			generate_room()
 		
 	generate_hallways()
 	
@@ -62,8 +68,10 @@ func generate_room():
 	var room_width
 	var room_height
 	
-	# Keep looping until the room intersects no other rooms.
-	while room_undecided:
+	# Keep looping until the room intersects no other rooms or a max iteration count is passed.
+	var iterations = 0
+	var iterations_max = 10
+	while room_undecided and iterations < iterations_max:
 		var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
 		room_width = Random.randint(room_min_width, room_max_width + 1)
 		room_height = Random.randint(room_min_height, room_max_height + 1)
@@ -75,20 +83,25 @@ func generate_room():
 			if other_room_rect.intersects(room_rect):
 				room_undecided = true
 				break
-	
-	var color = Random.randint(0, room_max_color_id + 1)
-	
-	room_coordinates.append(room_rect)
-	
-	var top_left = get_room_top_left_tilepos(room_coordinates.size() - 1)
-	
-	for x in range(top_left.x, top_left.x + room_width):
-		for y in range(top_left.y, top_left.y + room_height):
-			place_room_tile(x, y, color)
+				
+		iterations += 1
+		
+	if iterations == iterations_max:
+		stop_generating_rooms = true
+	else:
+		var color = Random.randint(0, room_max_color_id + 1)
+		
+		room_coordinates.append(room_rect)
+		
+		var top_left = get_room_top_left_tilepos(room_coordinates.size() - 1)
+		
+		for x in range(top_left.x, top_left.x + room_width):
+			for y in range(top_left.y, top_left.y + room_height):
+				place_room_tile(x, y, color)
 			
 func generate_hallways():
 	# TODO: Graph magic.
-	for i in range(number_of_rooms - 1):
+	for i in range(get_number_of_generated_rooms() - 1):
 		var thickness = Random.randint(hallway_min_thickness, hallway_max_thickness + 1)
 		var horizontal_first = (Random.randint(0, 2) == 1)
 		generate_hallway(i, i + 1, thickness, horizontal_first)
@@ -99,16 +112,24 @@ func generate_hallway(room_id_start, room_id_end, thickness, horizontal_first):
 	var color = Random.randint(0, room_max_color_id + 1)
 	var hallways = []
 	
+	var position_elbow = position_start
 	if horizontal_first:
-		var position_elbow = position_start
 		position_elbow.x = position_end.x
 		hallways.append(generate_hallway_horizontal(position_start, position_elbow, thickness, color))
 		hallways.append(generate_hallway_vertical(position_elbow, position_end, thickness, color))
 	else:
-		var position_elbow = position_start
 		position_elbow.y = position_end.y
 		hallways.append(generate_hallway_vertical(position_start, position_elbow, thickness, color))
 		hallways.append(generate_hallway_horizontal(position_elbow, position_end, thickness, color))
+	
+	# Fill in the elbow.
+	var startx = position_elbow.x - thickness/2
+	var endx = startx + thickness
+	var starty = position_elbow.y - thickness/2
+	var endy = starty + thickness
+	for x in range(startx, endx):
+		for y in range(starty, endy):
+			place_hallway_tile(x, y, color)
 	
 	# Assign the hallways to this room ID pair.
 	self.hallway_coordinates[[room_id_start, room_id_end]] = hallways
@@ -170,7 +191,13 @@ func get_room_top_left_tilepos(room_id):
 	var room_rect = room_coordinates[room_id] as Rect2
 	return room_rect.position - room_rect.size/2
 	
+func get_number_of_generated_rooms():
+	return room_coordinates.size()
+	
 func position_player():
+	if get_number_of_generated_rooms() == 0:
+		print("tried to position player when no rooms were generated")
+	
 	var room_center = get_room_center(self.player_start_room)
 	var player = GameState.get_player()
 	if player:
