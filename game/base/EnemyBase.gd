@@ -13,6 +13,10 @@ signal collision
 export var max_hp = 10
 var hp = 10
 
+# The code to obtain these values hasn't been written yet
+var playerx = 0 
+var playery = -21
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.connect("body_entered", self, "_on_body_entered")
@@ -52,14 +56,14 @@ func move_tile(x, y, duration):
 	emit_signal("enemy_moved")
 
 func find_player() -> Vector2:
-	var playerx = int($PlayerControl.position.x) - (int($PlayerControl.position.x) % self.tile_width)
-	var playery = int($PlayerControl.position.y) - (int($PlayerControl.position.y) % self.tile_height)
+	playerx = int(playerx) - (int(playerx) % self.tile_width)
+	playery = int(playery) - (int(playery) % self.tile_height)
 	
 	var enemyx = int(self.position.x) - (int(self.position.x) % self.tile_width)
 	var enemyy = int(self.position.y) - (int(self.position.y) % self.tile_height)
 	
-	var tilex = (playerx - enemyx) / self.tile_width
-	var tiley = (playery - enemyy) / self.tile_height
+	var tilex = (playerx - enemyx) / self.tile_width / 4
+	var tiley = (playery - enemyy) / self.tile_height / 4
 	
 	return Vector2(tilex, tiley) # returns number of tiles away from player
 	
