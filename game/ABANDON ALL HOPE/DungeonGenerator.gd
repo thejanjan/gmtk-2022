@@ -11,6 +11,13 @@ signal player_spawned
 
 onready var Plinth = preload("res://game/core/Plinth.tscn")
 
+# [[proporational chance, resource path]]
+onready var environmental = [
+	[0.7, preload("res://game/core/environmental/Shrubbery.tscn")],
+	[1, preload("res://game/core/environmental/Urn.tscn")],
+	[1.2, preload("res://game/core/environmental/Column.tscn")],
+]
+
 onready var tile_mapper_floor = $FloorTileMap as TileMap
 onready var tile_mapper_wall = $WallTileMap as TileMap
 
@@ -71,6 +78,7 @@ func generate_dungeon():
 	emit_signal("rooms_generated")
 	
 	generate_plinths()
+	generate_environmental()
 		
 	# Place the player in the first room.
 	position_player()
@@ -187,6 +195,35 @@ func generate_plinths():
 		var plinth_pos = self.get_random_spawn_pos(true, false)
 		new_plinth.translate(plinth_pos * Vector2(13, 8) * 4)
 
+# Surround yourself in secrecy... disguise your true intent.
+# Convince your friends to join the fun, but oh, do not forget:
+# Be careful what you look for; be careful what you see.
+# Avert your eyes, or you will blind yourself as well as me.
+func generate_environmental():
+	# magic numbers
+	var average_objects_per_room = 2
+	
+	# populate environmental chances
+	var total = 0
+	var environmental_norm = []
+	for e in environmental:
+		total += e[0]
+		environmental_norm.push_back([total, e[1]])
+	
+	# generate objects
+	for i in range(get_number_of_generated_rooms() * average_objects_per_room):
+		var choice = rand_range(0, total)
+		# no functional programming so I have to go through and find the chosen one
+		var new_object_class = null
+		for e in environmental:
+			new_object_class = e[1]
+			if e[0] > choice:
+				break
+		var new_object = new_object_class.instance()
+		add_child(new_object)
+		var object_pos = self.get_random_spawn_pos(true, true) # rooms and hallways
+		new_object.translate(object_pos * Vector2(13, 8) * 4)
+
 func generate_islands():
 	for i in range(number_of_islands):
 		var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
@@ -200,7 +237,7 @@ func generate_islands():
 				if randf() < island_tile_fail_chance:
 					continue
 				place_floor_tile(x, y, color, pick_col)
-	
+
 func place_floor_tile(x, y, color, only_col = null):
 	var tile = tile_mapper_floor.get_cell(x, y)
 	if tile == TileMap.INVALID_CELL:
@@ -284,7 +321,8 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 		break
 	
 	# Return our vector.
-	position_blocklist.append(vec2)
+	for around in [Vector2(0, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(1, 0), Vector2(0, 1)]:
+		position_blocklist.append(vec2 + around)
 	return vec2
 	
 
