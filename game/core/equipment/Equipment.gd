@@ -9,6 +9,12 @@ var timers = {}
 func get_reset_pip_stacks() -> bool:
 	return true
 
+func exit():
+	# Stops autostop timers
+	for k in timers.keys():
+		var i = timers[k]
+		if i[2]:
+			self.stop_timer(k)
 
 func damageNearbyEnemy(furthest_distance = 50000):
 	#PAIN
@@ -41,26 +47,33 @@ func _statChange(stat, multiplier):
 	stats.set(stat, stats.get(stat) * multiplier)
 	print("Set {0} from {1} to {2}".format([stat, og, stats.get(stat)]))
 
-func tempStatChange(stat, multiplier, secondDuration):
+func tempStatChange(stat, multiplier, secondDuration, autostop=false):
 	_statChange(stat, multiplier)
-	yield(get_tree().create_timer(secondDuration), "timeout")
-	_statChange(stat, 1.0/float(multiplier))
+	self.start_timer(
+		stat + "_change",
+		secondDuration,
+		funcref(self, "_statChange"),
+		["_speed", 1.0 / multiplier],
+		autostop
+	)
 
 
 """
 Timer Logic
 """
 
-func start_timer(timer_key, duration: float, callback: FuncRef, extra_args: Array = []):
+func start_timer(timer_key, duration: float, callback: FuncRef, extra_args: Array = [], autostop=false):
 	"""
 	Starts a timer.
+	
+	Autostop performs the callback when the state changes.
 	"""
 	# Set the timer key.
 	if timer_key in self.timers.keys():
 		# Do not run timers of the same key!
 		push_error("Do not run timers of the same key!")
 	
-	self.timers[timer_key] = [callback, extra_args]
+	self.timers[timer_key] = [callback, extra_args, autostop]
 	
 	# Create a timer.
 	var timer = get_tree().create_timer(duration)
