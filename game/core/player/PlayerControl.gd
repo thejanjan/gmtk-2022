@@ -31,7 +31,7 @@ var SideEquipment = {
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("New")
-	_stats._speed = 300;
+	_stats._speed = 1000;
 	_stats._damage = 1;
 	_stats._friction = 3;
 	_stats._acceleration = 6;

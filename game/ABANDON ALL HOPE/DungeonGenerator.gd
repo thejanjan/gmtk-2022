@@ -6,6 +6,8 @@
 
 extends Node
 
+onready var GameWorld = get_parent()
+onready var Player = preload("res://game/core/player/Player.tscn")
 onready var tile_mapper_floor = $FloorTileMap as TileMap
 
 export(int) var dungeon_width = 100
@@ -21,11 +23,16 @@ var grid_of_occupation = [[]]
 
 # Called when the node enters the... oh, you know that already.
 func _ready():
+	randomize()
 	generate_dungeon(10)
 	
 func generate_dungeon(number_of_rooms):
 	for i in range(number_of_rooms):
 		generate_room()
+		
+	# Place the player in the first room.
+	var player = Player.instance()
+	GameWorld.add_child(player)
 
 func generate_room():
 	var room_position = Vector2(Random.randint(0, dungeon_width), Random.randint(0, dungeon_height))
