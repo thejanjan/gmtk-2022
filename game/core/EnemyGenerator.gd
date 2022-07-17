@@ -28,8 +28,12 @@ func spawn_enemies():
 		self.add_child(enemy)
 		
 		# Get an position :)
-		var spawn_pos = DungeonGenerator.get_random_spawn_pos(true, true) + Vector2(0.5, 0.5)
-		enemy.translate(spawn_pos * Vector2(13, 8) * 4)
+		while true:
+			var spawn_pos = DungeonGenerator.get_random_spawn_pos(true, true) + Vector2(0.5, 0.5)
+			spawn_pos = GameState.check_tile(spawn_pos, "Enemy");
+			if spawn_pos != Vector2.INF:
+				enemy.translate(spawn_pos * Vector2(13, 8) * 4)
+				break;
 		
 		# Detract credits
 		credits -= enemy_data.get_enemy_cost()
