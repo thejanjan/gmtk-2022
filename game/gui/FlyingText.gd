@@ -2,7 +2,7 @@ extends RichTextLabel
 class_name FlyingText
 
 var draw_text = 'Smile!'
-var color = 'FF0000'
+var color = 'fff'
 
 var lifetime = 3.0
 
@@ -15,12 +15,12 @@ func set_text(txt):
 	
 	
 func set_color(col):
-	self.color = color
+	self.color = col
 
 
 func empower():
 	self.velocity += Vector2(float(Random.randint(-20, 20)) / 10, -randf() * 5)
-	self.set_bbcode("[center][color=#" + self.color + "]" + self.draw_text + "[/color][/center]")
+	self.set_bbcode("[center][color=#%s]%s[/color][/center]" % [self.color, self.draw_text])
 	
 	
 func _process(delta):

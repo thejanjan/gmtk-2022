@@ -96,9 +96,9 @@ func _physics_process(delta):
 
 	# Slide or bounce
 	if _stats._bounciness <= 1:
-		velocity = move_and_slide(velocity)
+		velocity = move_and_slide(velocity, Vector2.ZERO, false, 4, .785398, false)
 	else:
-		var col = move_and_collide(velocity)
+		var col = move_and_collide(velocity, false)
 		if col != null:
 			velocity = velocity.bounce(col.normal)
 			velocity.x *= (_stats._bounciness/100.0)
@@ -112,7 +112,9 @@ func _physics_process(delta):
 	
 	for i in get_slide_count():
 			var collision = get_slide_collision(i)
-			# print("I collided with ", collision.collider.name)
+			print("I collided with ", collision.collider.name)
+			if collision.collider.has_method("handle_player_collision"):
+				collision.collider.handle_player_collision(collision)
 	# self.translate()
 	
 	
