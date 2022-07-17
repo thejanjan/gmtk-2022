@@ -10,6 +10,8 @@ func randint(start: int, end: int) -> int:
 	
 func choice(list: Array):
 	# Returns a random element from a list.
+	if not list:
+		return null
 	var index = randi() % list.size()
 	return list[index]
 	

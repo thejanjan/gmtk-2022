@@ -18,6 +18,8 @@ var prickly := false
 var playerx = 0 
 var playery = -21
 
+var moneys = 0
+
 var agro = false
 
 # Called when the node enters the scene tree for the first time.
@@ -25,10 +27,6 @@ func _ready():
 	self.connect("body_entered", self, "_on_body_entered")
 	randomize()
 	GameState.check_tile(self.position, "Enemy");
-	
-	var timer = $Timer
-	if timer != null:
-		timer.move_delay = BeasTiary.EnemyMoveDuration
 	set_health(self.max_hp)
 
 func init(pos : Vector2):
@@ -50,7 +48,7 @@ func lose_health(damage):
 		emit_signal("health_changed", self.hp, self.max_hp)
 	if self.hp <= 0:
 		emit_signal("enemy_killed")
-		GameState.make_cash(Random.randint(2, 4))
+		GameState.make_cash(self.moneys + Random.randint(0, 2))
 		self.perform_destroy()
 		
 func perform_destroy():

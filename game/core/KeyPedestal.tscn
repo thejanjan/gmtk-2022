@@ -6,7 +6,7 @@
 [ext_resource path="res://audio/ding.ogg" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 29, 63.25 )
+extents = Vector2( 79, 82.5 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "Collect"
@@ -81,7 +81,7 @@ position = Vector2( 0, -2 )
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -56.25 )
+position = Vector2( 0, -44.5 )
 shape = SubResource( 1 )
 
 [node name="Pedestal" type="Sprite" parent="."]

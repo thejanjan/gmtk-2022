@@ -125,11 +125,9 @@ func _physics_process(delta):
 					GameState.make_text(self, "@!#?@!", "f21")
 					GameState.HP -= 1
 					InvincibilityTimer.start()
+					$Hurt.play()
 					emit_signal("player_hurt")
 
-	
-	
-	
 func _handle_acceleration(accel: Vector2):
 	"""Handles acceleration."""
 	var rigid_body = self.get_rigid_body()

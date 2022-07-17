@@ -26,6 +26,8 @@ func enter():
 			nearest_enemy_objs.append(enemy)
 	
 	for i in range(min(self.pip, nearest_enemy_objs.size())):
+		if nearest_enemy_distance[i] > 800:
+			return
 		nearest_enemy_objs[i].lose_health(1)
 
 	$AudioStreamPlayer.play()

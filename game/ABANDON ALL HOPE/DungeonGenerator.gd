@@ -70,8 +70,8 @@ func _ready():
 	
 func adjust_stats(level):
 	# Adjusts the stats for a level.
-	dungeon_width = 20 + (level * 30)
-	dungeon_height = 20 + (level * 30)
+	dungeon_width = 20 + (level * 20)
+	dungeon_height = 20 + (level * 20)
 
 	number_of_rooms = 3 + (level * 2)
 
@@ -285,9 +285,10 @@ func generate_plinths():
 		add_child(new_plinth)
 		var plinth_pos = self.get_random_spawn_pos(true, false)
 		new_plinth.translate(plinth_pos * Vector2(13, 8) * 4)
+		new_plinth.set_cost(10 * self.dungeon_floor)
 		
 func generate_key_pedestals():
-	for i in range(min(2 + self.dungeon_floor, 7)):
+	for i in range(min(2 + self.dungeon_floor, 25)):
 		var new_plinth = KeyPedestal.instance()
 		add_child(new_plinth)
 		var plinth_pos = self.get_random_spawn_pos(true, false)
@@ -325,7 +326,7 @@ func generate_environmental():
 				break
 		var new_object = new_object_class.instance()
 		add_child(new_object)
-		var object_pos = self.get_random_spawn_pos(true, true, on_edge) # rooms and hallways
+		var object_pos = self.get_random_spawn_pos(false, true, on_edge) # rooms and hallways
 		new_object.translate(object_pos * Vector2(13, 8) * 4)
 		# random chance to be facing the other way
 		if randf() < 0.5:
@@ -424,8 +425,6 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false, on_ed
 			valid_rect2s.append(room_coordinates[i])
 	if in_hallway:
 		for key in hallway_coordinates.keys():
-			if self.player_start_room in key:
-				continue
 			valid_rect2s.append_array(hallway_coordinates[key])
 		
 	# Pick a random vector within a rect2.

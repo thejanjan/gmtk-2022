@@ -31,6 +31,8 @@ func spawn_enemies():
 		var spawn_pos = DungeonGenerator.get_random_spawn_pos(true, true) + Vector2(0.5, 0.5)
 		enemy.translate(spawn_pos * Vector2(13, 8) * 4)
 		
+		enemy.moneys = int(enemy_data.get_enemy_cost()) / 2
+		
 		# Detract credits
 		credits -= enemy_data.get_enemy_cost()
 	

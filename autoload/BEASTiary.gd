@@ -85,12 +85,12 @@ var EnemyDB = [
 		40.0,
 		"res://game/core/enemies/Queen.tscn"
 	),
-	_EnemyData.new(
-		Enum.EnemyFlavor.REVERSI,
-		[3, 5],
-		5.0,
-		"res://game/core/enemies/Reversi.tscn"
-	),
+	# _EnemyData.new(
+	# 	Enum.EnemyFlavor.REVERSI,
+	# 	[3, 5],
+	# 	5.0,
+	# 	"res://game/core/enemies/Reversi.tscn"
+	# ),
 	_EnemyData.new(
 		Enum.EnemyFlavor.ROOK,
 		[2, null],
