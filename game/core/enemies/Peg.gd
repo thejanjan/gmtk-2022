@@ -18,7 +18,7 @@ func _ready():
 func init(start_pos : Vector2):
 	self.position = start_pos;
 
-func handle_player_collision():
+func handle_player_collision(_collision):
 	$Timer.die();
 
 func _on_Timer_timeout():

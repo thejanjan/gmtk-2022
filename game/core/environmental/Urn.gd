@@ -7,8 +7,10 @@ enum State {
 
 var current_state = State.NORMAL
 
-func _on_body_entered(body: Node):
-	if current_state == State.NORMAL and str(body.get_path()).ends_with("/Player"):
+func handle_player_collision(collision: KinematicCollision2D):
+	if current_state == State.NORMAL:
+		self.apply_central_impulse(collision.remainder * 250)
+		print(collision.remainder)
 		break_urn()
 
 func break_urn():
@@ -19,5 +21,4 @@ func break_urn():
 
 # use the timer to deactivate physics a moment after breaking
 func _on_timer():
-	self.mode = MODE_KINEMATIC
 	$CollisionShape2D.disabled = true

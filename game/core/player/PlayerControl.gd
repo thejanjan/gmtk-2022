@@ -111,7 +111,7 @@ func _physics_process(delta):
 			var collision = get_slide_collision(i)
 			print("I collided with ", collision.collider.name)
 			if collision.collider.has_method("handle_player_collision"):
-				collision.collider.handle_player_collision()
+				collision.collider.handle_player_collision(collision)
 	# self.translate()
 	
 	

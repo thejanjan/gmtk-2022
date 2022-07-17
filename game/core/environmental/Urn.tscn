@@ -34,11 +34,8 @@ animations = [ {
 
 [node name="Urn" type="RigidBody2D"]
 mode = 2
-mass = 50.0
+mass = 3.0
 gravity_scale = 0.0
-contacts_reported = 4
-contact_monitor = true
-can_sleep = false
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -50,13 +47,9 @@ scale = Vector2( 4, 4 )
 frames = SubResource( 6 )
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 1.097
 one_shot = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_entered" from="." to="." method="_on_collision"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer"]
-[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
