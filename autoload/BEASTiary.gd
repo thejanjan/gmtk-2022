@@ -44,6 +44,12 @@ var EnemyDB = [
 		[1, 4],
 		2.0,
 		"res://game/core/enemies/Pawn.tscn"
+	),
+	_EnemyData.new(
+		Enum.EnemyFlavor.BATTLESHIP_S,
+		[1, 4],
+		2.0,
+		"res://game/core/enemies/Battleship_Small.tscn"
 	)
 ]
 

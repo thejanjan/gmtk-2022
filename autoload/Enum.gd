@@ -31,7 +31,10 @@ enum EnemyFlavor {
 	BISHOP,
 	ROOK,
 	KING,
-	QUEEn
+	QUEEN,
+	BATTLESHIP_S,
+	BATTLESHIP_M,
+	BATTLESHIP_L
 }
 
 enum ItemRarity {
