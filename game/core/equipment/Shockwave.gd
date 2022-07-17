@@ -6,7 +6,8 @@ func enter():
 	
 	for enemy in get_tree().get_nodes_in_group("enemy"):
 		var p_to_enemy = pos.distance_squared_to(enemy.get_position());
-		if p_to_enemy < 100000 and enemy.hp > 0:
+		
+		if p_to_enemy < 10000000 and enemy.hp > 0:
 			valid_enemies.append(enemy)
 	
 	for i in range(self.pip):

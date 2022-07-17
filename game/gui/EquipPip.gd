@@ -21,7 +21,9 @@ enum OpenRequests {
 func initialize(pip, item_id):
 	self.pip = pip
 	self.item_id = item_id
-	PipSprite.texture = AtlasTex.duplicate()
+	var item_data = Database.get_item_data(self.item_id)
+	PipSprite.texture = AtlasTexture.new()
+	PipSprite.texture.atlas = item_data.get_icon_tex().duplicate()
 	self.set_tex_region()
 	TexAnimPlayer.play("Deactivate")
 	TexAnimPlayer.seek(1.0, true)
@@ -33,6 +35,7 @@ func set_item(item_id):
 	self.item_id = item_id
 	var item_data = Database.get_item_data(self.item_id)
 	self.TextLabel.text = item_data.get_name()
+	PipSprite.texture.atlas = item_data.get_icon_tex().duplicate()
 
 
 func set_tex_region(active: bool = false):
