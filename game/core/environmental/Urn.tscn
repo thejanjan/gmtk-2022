@@ -42,7 +42,7 @@ script = ExtResource( 2 )
 position = Vector2( 0, 4 )
 shape = SubResource( 1 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = SubResource( 6 )
 

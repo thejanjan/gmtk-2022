@@ -15,7 +15,7 @@ func handle_player_collision(collision: KinematicCollision2D):
 
 func break_urn():
 	current_state = State.BROKEN
-	$AnimatedSprite.playing = true
+	$Sprite.playing = true
 	$Timer.start()
 	$AudioStreamPlayer.play()
 
