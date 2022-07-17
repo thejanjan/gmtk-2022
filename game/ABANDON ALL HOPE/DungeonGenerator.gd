@@ -35,7 +35,7 @@ func _ready():
 	generate_dungeon()
 	
 func generate_dungeon():
-	for i in range(number_of_rooms):
+	for _i in range(number_of_rooms):
 		generate_room()
 		
 	generate_hallways()
