@@ -2,6 +2,7 @@ class_name Equipment
 extends State
 
 onready var trail = preload("res://game/core/equipment/helpers/Trail.tscn")
+onready var swoosh = preload("res://game/core/equipment/helpers/Swoosh.tscn")
 
 # Try to keep all the actual behavior in here so that it's easier to add variants
 var pip = null
@@ -47,6 +48,13 @@ func damageNearbyEnemy(furthest_distance = 50000, damage_override = null):
 		else:
 			close_enemy.lose_health(damage_override);
 		print(pip);
+		# Draw a lil guy
+		var instance = self.swoosh.instance()
+		player.get_parent().add_child(instance)
+		instance.position = player.position
+		instance.rotation_degrees = instance.position.angle_to_point(close_enemy.position) * 180 / PI - 90
+		instance.scale.x = 2
+		instance.scale.y = furthest_distance / 2777
 
 func createTrail(size, length, color):
 	var instance = self.trail.instance()
