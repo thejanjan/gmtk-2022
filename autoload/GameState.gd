@@ -20,6 +20,8 @@ Tile Management
 #If it is used, return an INFINITY VECTOR2
 func check_tile(pos : Vector2, type : String) -> Vector2:
 	var tileMap = get_node("DungeonGenerator/FloorTileMap");
+	if (tileMap == null):
+		return Vector2.INF;
 	pos = tileMap.position_to_tile(pos);
 	if pos_dict.has(pos):
 		return Vector2.INF;

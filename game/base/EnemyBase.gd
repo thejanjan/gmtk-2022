@@ -21,6 +21,10 @@ var playery = -21
 func _ready():
 	self.connect("body_entered", self, "_on_body_entered")
 	randomize()
+	GameState.check_tile(self.position, "Enemy");
+
+func init(pos : Vector2):
+	self.position = pos;
 
 """
 Health modifiers
@@ -39,6 +43,7 @@ func lose_health(damage):
 		self.perform_destroy()
 		
 func perform_destroy():
+	GameState.remove_space(self.position);
 	self.queue_free()
 	
 """
@@ -46,14 +51,16 @@ Movement
 """
 
 func move_tile(x, y, duration):
-	var tween = self.make_tween()
-	tween.interpolate_property(
-		self, "position", self.position,
-		self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4),
-		duration, Tween.TRANS_LINEAR, Tween.EASE_OUT
-	)
-	tween.start()
-	emit_signal("enemy_moved")
+	if GameState.check_tile(self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4), "Enemy") != Vector2.INF:
+		GameState.remove_space(self.position);
+		var tween = self.make_tween()
+		tween.interpolate_property(
+			self, "position", self.position,
+			self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4),
+			duration, Tween.TRANS_LINEAR, Tween.EASE_OUT
+		)
+		tween.start()
+		emit_signal("enemy_moved")
 
 func find_player() -> Vector2:
 	playerx = int(playerx) - (int(playerx) % self.tile_width)

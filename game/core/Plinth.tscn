@@ -69,6 +69,7 @@ texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../ItemSprite")
+autoplay = "plinth_item_hover"
 anims/RESET = SubResource( 2 )
 anims/plinth_item_hover = SubResource( 3 )
 

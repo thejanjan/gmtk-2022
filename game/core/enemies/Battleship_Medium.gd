@@ -1,9 +1,9 @@
 extends EnemyBase
 
-var vertical = preload("res://textures/enemies/battleship/vship_2.png");
+var vertical = preload("res://textures/enemies/battleship/vship_3.png");
 onready var PegScene = preload("res://game/core/enemies/Peg.tscn");
 onready var AnimPlayer = $AnimationPlayer
-export var PegsFired = 2;
+export var PegsFired = 4;
 export var AttackRangeSquared = 22500;
 var player;
 var place_position;

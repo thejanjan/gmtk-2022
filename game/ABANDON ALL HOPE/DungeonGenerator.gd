@@ -6,8 +6,13 @@
 
 extends Node
 
+signal rooms_generated
+signal player_spawned
+
 onready var tile_mapper_floor = $FloorTileMap as TileMap
 onready var tile_mapper_wall = $WallTileMap as TileMap
+
+export(int) var dungeon_floor = 1
 
 export(int) var dungeon_width = 100
 export(int) var dungeon_height = 100
@@ -27,6 +32,8 @@ export(int) var hallway_max_thickness = 6
 var room_coordinates = []
 var hallway_coordinates = {}
 
+var position_blocklist = []
+
 var player_start_room = 0
 
 # Called when the node enters the... oh, you know that already.
@@ -35,29 +42,48 @@ func _ready():
 	generate_dungeon()
 	
 func generate_dungeon():
-	for i in range(number_of_rooms):
+	for _i in range(number_of_rooms):
 		generate_room()
 		
 	generate_hallways()
 	
 	generate_wall_tiles()
+	
+	emit_signal("rooms_generated")
 		
 	# Place the player in the first room.
 	position_player()
+	
+	emit_signal("player_spawned")
 
 func generate_room():
-	var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
-	var room_width = Random.randint(room_min_width, room_max_width + 1)
-	var room_height = Random.randint(room_min_height, room_max_height + 1)
+	var room_undecided = true
+	var room_rect
+	var room_width
+	var room_height
+	
+	# Keep looping until the room intersects no other rooms.
+	while room_undecided:
+		var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
+		room_width = Random.randint(room_min_width, room_max_width + 1)
+		room_height = Random.randint(room_min_height, room_max_height + 1)
+		var room_size = Vector2(room_width, room_height)
+		room_rect = Rect2(room_position, room_size)
+		
+		room_undecided = false
+		for other_room_rect in room_coordinates:
+			if other_room_rect.intersects(room_rect):
+				room_undecided = true
+				break
 	
 	var color = Random.randint(0, room_max_color_id + 1)
 	
-	room_coordinates.append(Rect2(room_position, Vector2(room_width, room_height)))
-
-	for i in range(room_width):
-		for j in range(room_height):
-			var x = room_position.x + i
-			var y = room_position.y + j
+	room_coordinates.append(room_rect)
+	
+	var top_left = get_room_top_left_tilepos(room_coordinates.size() - 1)
+	
+	for x in range(top_left.x, top_left.x + room_width):
+		for y in range(top_left.y, top_left.y + room_height):
 			place_room_tile(x, y, color)
 			
 func generate_hallways():
@@ -133,11 +159,16 @@ func place_hallway_tile(x, y, color):
 	#tile_mapper_floor.set_cell(x, y, 0)
 
 func get_room_center_tilepos(room_id):
-	var room_rect = room_coordinates[room_id] as Rect2
-	return room_rect.position + (room_rect.size / 2)
+	return room_coordinates[room_id].position
+	#var room_rect = room_coordinates[room_id] as Rect2
+	#return room_rect.position + (room_rect.size / 2)
 
 func get_room_center(room_id):
 	return get_room_center_tilepos(room_id) + Vector2(0.5, 0.5)
+	
+func get_room_top_left_tilepos(room_id):
+	var room_rect = room_coordinates[room_id] as Rect2
+	return room_rect.position - room_rect.size/2
 	
 func position_player():
 	var room_center = get_room_center(self.player_start_room)
@@ -168,10 +199,19 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 			valid_rect2s.append_array(hallway_coordinates[key])
 		
 	# Pick a random vector within a rect2.
-	var rect2 = Random.choice(valid_rect2s) as Rect2
-	var vec2 = Random.point_in_rect2(rect2)
+	var rect2 = null
+	var vec2 = null
+	
+	# Don't spawn multiple things in the same spot.
+	while true:
+		rect2 = Random.choice(valid_rect2s) as Rect2
+		vec2 = Random.point_in_rect2(rect2)
+		if vec2 in position_blocklist:
+			continue
+		break
 	
 	# Return our vector.
+	position_blocklist.append(vec2)
 	return vec2
 	
 
