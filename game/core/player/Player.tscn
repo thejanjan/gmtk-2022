@@ -32,6 +32,7 @@ render_target_v_flip = true
 script = ExtResource( 2 )
 
 [node name="PlayerBase" parent="PlayerSprite/PlayerViewport" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.0315, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 4 )

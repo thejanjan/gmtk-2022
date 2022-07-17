@@ -14,6 +14,11 @@ func choice(list: Array):
 	return list[index]
 
 
-func point_in_rect2(rect2: Rect2) -> Vector2:
+func point_in_rect2(rect2: Rect2, border: int = 0) -> Vector2:
 	# Returns a random point in arect2.
-	return rect2.position + Vector2(randint(0, rect2.size.x), randint(0, rect2.size.y))
+	if rect2.size.x - border < 0:
+		return Vector2.INF
+	if rect2.size.y - border < 0:
+		return Vector2.INF
+	
+	return rect2.position + Vector2(randint(border, rect2.size.x - border), randint(border, rect2.size.y - border))

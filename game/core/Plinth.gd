@@ -23,7 +23,7 @@ func _ready():
 	
 func _unhandled_input(event):
 	# player interaction
-	if _player_inside and event.is_action_pressed("interact"):
+	if _player_inside and event.is_action_pressed("interact") and not GameState.controls_locked:
 		# check if they have enough caaaaaaash
 		if GameState.cash >= cost:
 			GameState.cash -= cost

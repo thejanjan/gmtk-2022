@@ -8,13 +8,16 @@ extends Node
 
 signal rooms_generated
 signal player_spawned
+signal enter_floor(dungeon_floor)
 
 onready var Plinth = preload("res://game/core/Plinth.tscn")
+onready var KeyPedestal = preload("res://game/core/KeyPedestal.tscn")
+onready var Doorway = preload("res://game/core/Doorway.tscn")
 
 onready var tile_mapper_floor = $FloorTileMap as TileMap
 onready var tile_mapper_wall = $WallTileMap as TileMap
 
-export(int) var dungeon_floor = 1
+export(int) var dungeon_floor = 0
 
 export(int) var dungeon_width = 100
 export(int) var dungeon_height = 100
@@ -45,7 +48,6 @@ var stop_generating_rooms = false
 
 var room_coordinates = []
 var hallway_coordinates = {}
-
 var position_blocklist = []
 
 var player_start_room = 0
@@ -53,9 +55,15 @@ var player_start_room = 0
 # Called when the node enters the... oh, you know that already.
 func _ready():
 	randomize()
+	$Music.play()
 	generate_dungeon()
 	
 func generate_dungeon():
+	dungeon_floor += 1
+	room_coordinates = []
+	hallway_coordinates = {}
+	position_blocklist = []
+	
 	stop_generating_rooms = false
 	
 	for _i in range(number_of_rooms):
@@ -71,14 +79,18 @@ func generate_dungeon():
 	emit_signal("rooms_generated")
 	
 	generate_plinths()
+	
+	generate_key_pedestals()
 		
 	# Place the player in the first room.
 	position_player()
 	
 	emit_signal("player_spawned")
 	
+	emit_signal("enter_floor", dungeon_floor)
+	
 	# Start the song.
-	$Music.play()
+	update_music()
 
 func generate_room():
 	var room_undecided = true
@@ -186,6 +198,17 @@ func generate_plinths():
 		add_child(new_plinth)
 		var plinth_pos = self.get_random_spawn_pos(true, false)
 		new_plinth.translate(plinth_pos * Vector2(13, 8) * 4)
+		
+func generate_key_pedestals():
+	for i in range(min(2 + self.dungeon_floor, 7)):
+		var new_plinth = KeyPedestal.instance()
+		add_child(new_plinth)
+		var plinth_pos = self.get_random_spawn_pos(true, false)
+		new_plinth.translate(plinth_pos * Vector2(13, 8) * 4)
+	var new_plinth = Doorway.instance()
+	add_child(new_plinth)
+	var plinth_pos = self.get_random_spawn_pos(true, false)
+	new_plinth.translate(plinth_pos * Vector2(13, 8) * 4)
 
 func generate_islands():
 	for i in range(number_of_islands):
@@ -200,6 +223,14 @@ func generate_islands():
 				if randf() < island_tile_fail_chance:
 					continue
 				place_floor_tile(x, y, color, pick_col)
+
+func update_music():
+	if dungeon_floor == 3:
+		$Music.stream = load("res://audio/song_NIRVANA.ogg")
+		$Music.play()
+	if dungeon_floor == 5:
+		$Music.stream = load("res://audio/song_KING.ogg")
+		$Music.play()
 	
 func place_floor_tile(x, y, color, only_col = null):
 	var tile = tile_mapper_floor.get_cell(x, y)
@@ -243,9 +274,9 @@ func position_player():
 		print("tried to position player when no rooms were generated")
 	
 	var room_center = get_room_center(self.player_start_room)
-	var player = GameState.get_player()
+	var player = GameState.get_player() as Node2D
 	if player:
-		player.translate(room_center * Vector2(13, 8) * 4)
+		player.position = room_center * Vector2(13, 8) * 4
 	else:
 		print("???")
 		
@@ -276,12 +307,20 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 	# Don't spawn multiple things in the same spot.
 	while true:
 		rect2 = Random.choice(valid_rect2s) as Rect2
-		vec2 = Random.point_in_rect2(rect2)
+		vec2 = Random.point_in_rect2(rect2, 1)
+		if vec2 == Vector2.INF:
+			continue
 		if vec2 in position_blocklist:
 			continue
 		if tile_mapper_floor.get_cellv(vec2) == TileMap.INVALID_CELL:
 			continue
-		break
+		var success = true
+		for offvec in [Vector2.LEFT, Vector2.UP, Vector2.RIGHT, Vector2.DOWN]:
+			if tile_mapper_floor.get_cellv(vec2 + offvec) == TileMap.INVALID_CELL:
+				success = false
+				break
+		if success:
+			break
 	
 	# Return our vector.
 	position_blocklist.append(vec2)

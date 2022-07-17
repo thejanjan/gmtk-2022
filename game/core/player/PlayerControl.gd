@@ -49,8 +49,11 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	# Movement
-	var h_move = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
-	var v_move = int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
+	var h_move = 0
+	var v_move = 0
+	if not GameState.controls_locked:
+		h_move = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
+		v_move = int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed("move_up"))
 	
 	for x in [[0, h_move], [1, v_move]]: # Equivalent to "for i, move in enumerate([h_move, v_move])"
 		var i = x[0];

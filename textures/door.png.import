@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pedestal.png-20f3103ac4c98d9a85f11f796a04c261.stex"
+path="res://.import/door.png-6bba13150eb8ba972a9fef3861be8872.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/pedestal.png"
-dest_files=[ "res://.import/pedestal.png-20f3103ac4c98d9a85f11f796a04c261.stex" ]
+source_file="res://textures/door.png"
+dest_files=[ "res://.import/door.png-6bba13150eb8ba972a9fef3861be8872.stex" ]
 
 [params]
 

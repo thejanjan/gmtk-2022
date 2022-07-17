@@ -8,11 +8,11 @@
 [ext_resource path="res://game/core/EnemyGenerator.gd" type="Script" id=6]
 [ext_resource path="res://game/ABANDON ALL HOPE/DungeonGenerator.gd" type="Script" id=13]
 
-[node name="World" type="YSort"]
+[node name="World" type="YSort" groups=["no_delete", "world"]]
 
-[node name="Player" parent="." instance=ExtResource( 3 )]
+[node name="Player" parent="." groups=["no_delete"] instance=ExtResource( 3 )]
 
-[node name="DungeonGenerator" type="YSort" parent="."]
+[node name="DungeonGenerator" type="YSort" parent="." groups=["dungeon", "no_delete"]]
 script = ExtResource( 13 )
 dungeon_width = 60
 dungeon_height = 60
@@ -20,7 +20,7 @@ room_min_width = 5
 room_min_height = 5
 room_max_color_id = 2
 
-[node name="FloorTileMap" type="TileMap" parent="DungeonGenerator" groups=["floor_tilemap"]]
+[node name="FloorTileMap" type="TileMap" parent="DungeonGenerator" groups=["floor_tilemap", "no_delete", "tilemap"]]
 scale = Vector2( 4, 4 )
 z_index = -5
 tile_set = ExtResource( 2 )
@@ -28,14 +28,14 @@ cell_size = Vector2( 13, 8 )
 format = 1
 script = ExtResource( 4 )
 
-[node name="WallTileMap" type="TileMap" parent="DungeonGenerator"]
+[node name="WallTileMap" type="TileMap" parent="DungeonGenerator" groups=["no_delete", "tilemap"]]
 scale = Vector2( 4, 4 )
 tile_set = ExtResource( 5 )
 cell_size = Vector2( 13, 8 )
 format = 1
 
-[node name="EnemyGenerator" type="YSort" parent="DungeonGenerator"]
+[node name="EnemyGenerator" type="YSort" parent="DungeonGenerator" groups=["enemy_gen", "no_delete"]]
 script = ExtResource( 6 )
 
-[node name="Music" type="AudioStreamPlayer" parent="DungeonGenerator"]
+[node name="Music" type="AudioStreamPlayer" parent="DungeonGenerator" groups=["no_delete"]]
 stream = ExtResource( 1 )

@@ -52,7 +52,7 @@ func _physics_process(delta):
 			debounce = item_data.get_cooldown() * 60.0
 			emit_signal("set_cooldown", item_data.get_cooldown())
 		var jump_attempt = Input.is_action_pressed("move_roll")
-		if jump_attempt and debounce < 0:
+		if jump_attempt and debounce < 0 and not GameState.controls_locked:
 			self.linear_velocity = Vector3(0, 0, 0)
 			self.apply_impulse(Vector3(0, 0, 0), Vector3(0, JUMP_VELOCITY, 0))
 			jumping = 20

@@ -121,9 +121,6 @@ margin_right = 9.0
 margin_bottom = -31.0
 rect_scale = Vector2( 4, 4 )
 texture = ExtResource( 2 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
@@ -144,8 +141,6 @@ rect_scale = Vector2( 4, 4 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource( 3 )
-visible_characters = 0
-percent_visible = 0.0
 text = "Devour"
 scroll_active = false
 
