@@ -3,6 +3,8 @@ extends Node
 
 func randint(start: int, end: int) -> int:
 	# Returns a random integer from start to end.
+	if start == end:
+		return start
 	return start + (randi() % (end - start))
 	
 	
