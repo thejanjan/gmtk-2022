@@ -70,7 +70,9 @@ var ItemDB = {
 		'Nil',
 		Enum.ItemRarity.COMMON,
 		'res://game/core/equipment/PipDamage.tscn',
-		"Empty"
+		"Empty",
+		false,
+		'res://textures/items/unknown.png'
 	),
 	Enum.ItemType.BASIC_DAMAGE: _ItemData.new(
 		'Devour',
@@ -78,7 +80,7 @@ var ItemDB = {
 		'res://game/core/equipment/PipDamage.tscn',
 		"Does damage based on your roll",
 		false,
-		'res://textures/items/DJUNGELSKOG.png'
+		'res://textures/items/unknown.png'
 	),
 	Enum.ItemType.FAST: _ItemData.new(
 		"I'm too scared to actually make the die a ball",

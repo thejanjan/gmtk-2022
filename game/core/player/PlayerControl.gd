@@ -154,3 +154,19 @@ func on_new_dice(side):
 
 func pip_stacks_updated(pip_count: int):
 	self.get_rigid_body().set_pip_bonus_count(pip_count)
+
+"""
+Inventory managment
+"""
+# Takes a new item ID and equips it in the given side
+func swap_equipment(side, item_id):
+	var old_equipment = SideEquipment[side]
+	SideEquipment[side] = item_id
+	emit_signal("initialize_equips", SideEquipment)
+	
+	return old_equipment
+
+# Swaps the active equipment
+func swap_current_equipment(item_id):
+	var active_pip = get_active_pip()
+	return swap_equipment(active_pip, item_id)
