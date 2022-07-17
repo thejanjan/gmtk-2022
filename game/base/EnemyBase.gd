@@ -19,6 +19,9 @@ func _ready():
 	randomize()
 	GameState.check_tile(self.position, "Enemy");
 
+func init(pos : Vector2):
+	self.position = pos;
+
 """
 Health modifiers
 """

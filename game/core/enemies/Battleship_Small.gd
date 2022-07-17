@@ -37,7 +37,7 @@ func _on_Timer_timeout():
 		player = GameState.get_player();
 	
 	if (tileMap == null):
-		tileMap = get_node("DungeonGenerator/FloorTileMap");
+		tileMap = get_tree().root.get_node("DungeonGenerator/FloorTileMap");
 		
 	if place_position.distance_squared_to(player.get_position()) < AttackRangeSquared:
 		var shots = PegsFired;
@@ -52,5 +52,5 @@ func _on_Timer_timeout():
 				add_child(peg);
 				shots -= 1;
 			#Hey what if the area around the player is full? You think about that? Huh? Did you???? Bitch
-			if attempts > 20:[]
+			if attempts > 20:
 				break;

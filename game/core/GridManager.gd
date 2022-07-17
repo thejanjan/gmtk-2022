@@ -17,7 +17,10 @@ func _ready():
 		for l in range(height):
 			row.append(0)
 		self.game_grid.append(row)
-
+	var ship = load("res://game/core/enemies/Battleship_Small.tscn");
+	var battleship = ship.instance();
+	battleship.init(Vector2(50, 50));
+	add_child(battleship);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
