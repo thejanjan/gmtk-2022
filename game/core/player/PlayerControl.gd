@@ -20,12 +20,12 @@ onready var PlayerSprite = $PlayerSprite
 onready var ESM = $EquipmentStateMachine
 
 var SideEquipment = {
-	Enum.DiceSide.ONE : Enum.ItemType.SHOCKWAVE,
-	Enum.DiceSide.TWO : Enum.ItemType.SHOCKWAVE,
-	Enum.DiceSide.THREE : Enum.ItemType.SHOCKWAVE,
-	Enum.DiceSide.FOUR : Enum.ItemType.SHOCKWAVE,
-	Enum.DiceSide.FIVE : Enum.ItemType.SHOCKWAVE,
-	Enum.DiceSide.SIX : Enum.ItemType.SHOCKWAVE
+	Enum.DiceSide.ONE : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.TWO : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.THREE : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.FOUR : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.FIVE : Enum.ItemType.BASIC_DAMAGE,
+	Enum.DiceSide.SIX : Enum.ItemType.BASIC_DAMAGE
 }
 
 # Called when the node enters the scene tree for the first time.
