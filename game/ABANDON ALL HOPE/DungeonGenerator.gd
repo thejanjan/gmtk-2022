@@ -9,6 +9,8 @@ extends Node
 signal rooms_generated
 signal player_spawned
 
+onready var Plinth = preload("res://game/core/Plinth.tscn")
+
 onready var tile_mapper_floor = $FloorTileMap as TileMap
 onready var tile_mapper_wall = $WallTileMap as TileMap
 
@@ -50,6 +52,8 @@ func generate_dungeon():
 	generate_wall_tiles()
 	
 	emit_signal("rooms_generated")
+	
+	generate_plinths()
 		
 	# Place the player in the first room.
 	position_player()
@@ -139,6 +143,14 @@ func generate_wall_tiles():
 		for vec in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
 			if tile_mapper_floor.get_cellv(tile + vec) == TileMap.INVALID_CELL:
 				tile_mapper_wall.set_cellv(tile + vec, 0)
+				
+func generate_plinths():
+	# PLlinth time baby
+	for i in range(min(floor(1.0 + (float(self.dungeon_floor) / 2)), 3)):
+		var new_plinth = Plinth.instance()
+		add_child(new_plinth)
+		var plinth_pos = self.get_random_spawn_pos(true, false)
+		new_plinth.translate(plinth_pos * Vector2(13, 8) * 4)
 	
 func place_floor_tile(x, y, color):
 	
