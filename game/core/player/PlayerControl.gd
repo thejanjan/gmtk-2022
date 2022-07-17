@@ -5,6 +5,7 @@ signal initialize_equips(equip_dict)
 signal pip_stacks_updated
 
 const PlayerStats = preload("res://game/core/player/PlayerStats.gd")
+const EnemyBase = preload("res://game/base/EnemyBase.gd")
 onready var ActiveMoveSound: AudioStreamPlayer = $ConcreteStream;
 var concrete_volume = -80
 
@@ -18,6 +19,8 @@ var last_accel = Vector2(0.0, 0.0);
 
 onready var PlayerSprite = $PlayerSprite
 onready var ESM = $EquipmentStateMachine
+onready var InvincibilityTimer = $InvincibilityTimer
+onready var SpriteAnimator = $AnimationPlayer
 
 var SideEquipment = {
 	Enum.DiceSide.ONE : Enum.ItemType.BASIC_DAMAGE,
@@ -112,10 +115,17 @@ func _physics_process(delta):
 	
 	for i in get_slide_count():
 			var collision = get_slide_collision(i)
-			print("I collided with ", collision.collider.name)
 			if collision.collider.has_method("handle_player_collision"):
 				collision.collider.handle_player_collision(collision)
-	# self.translate()
+			if collision.collider is EnemyBase:
+				if InvincibilityTimer.time_left == 0 and collision.collider.prickly:
+					# yeowch! take damage and start the invuln timer
+					SpriteAnimator.play("hurt")
+					GameState.make_text(self, "@!#?@!", "f21")
+					GameState.HP -= 1
+					InvincibilityTimer.start()
+
+	
 	
 	
 func _handle_acceleration(accel: Vector2):

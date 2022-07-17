@@ -12,6 +12,7 @@ signal collision
 # Declare member variables here. Examples:
 export var max_hp = 10
 var hp = 10
+var prickly := false
 
 # The code to obtain these values hasn't been written yet
 var playerx = 0 
@@ -55,6 +56,9 @@ Movement
 func check_move(x, y):
 	return GameState.check_tile(self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4), "Enemy") != Vector2.INF
 
+func finish_move(_obj, _key):
+	prickly = false
+
 func move_tile(x, y, duration):
 	if check_move(x, y):
 		GameState.remove_space(self.position);
@@ -65,6 +69,8 @@ func move_tile(x, y, duration):
 			duration, Tween.TRANS_LINEAR, Tween.EASE_OUT
 		)
 		tween.start()
+		prickly = true
+		tween.connect("tween_completed", self, "finish_move")
 		emit_signal("enemy_moved")
 
 func find_player() -> Vector2:
