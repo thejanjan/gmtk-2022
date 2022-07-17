@@ -6,6 +6,7 @@ func enter():
 	
 func apply_stats(invert: bool):
 	if not invert:
+		GameState.get_player().velocity = Vector2(0, 0)
 		_statChange("_speed", 5.0)
 		_statChange("_acceleration", 1000.0)
 		_statChange("_friction", 1000.0)

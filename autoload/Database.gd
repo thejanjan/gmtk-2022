@@ -82,7 +82,7 @@ var ItemDB = {
 		'Takedown',
 		Enum.ItemRarity.COMMON,
 		"Does damage based on your roll",
-		1.0,
+		0.6,
 		false,
 		'res://game/core/equipment/PipDamage.tscn',
 		'res://textures/items/item_weird_die.png'
@@ -99,18 +99,18 @@ var ItemDB = {
 	),
 	Enum.ItemType.OIL_SLICK: _ItemData.new(
 		"Oil Slick",
-		Enum.ItemRarity.RARE,
+		Enum.ItemRarity.SUPERFLUOUS,
 		"Party like it's 2010",
-		8.0,
+		4.0,
 		true,
 		'res://game/core/equipment/OilSlick.tscn',
 		'res://textures/items/item_tar_die.png'
 	),
 	Enum.ItemType.RUBBER_OF_THE_SOUL: _ItemData.new(
 		"Rubber of the Soul",
-		Enum.ItemRarity.RARE,
+		Enum.ItemRarity.SUPERFLUOUS,
 		"Set my heart a-boinging",
-		8.0,
+		4.0,
 		true,
 		'res://game/core/equipment/RubberOfTheSoul.tscn',
 		'res://textures/items/item_weird_die.png'
@@ -129,7 +129,7 @@ var ItemDB = {
 		Enum.ItemRarity.COMMON,
 		"Whoa-",
 		1.0,
-		true,
+		false,
 		'res://game/core/equipment/BananaPeel.tscn',
 		'res://textures/items/item_banana_die.png'
 	),
@@ -137,25 +137,25 @@ var ItemDB = {
 		"Triple Takedown",
 		Enum.ItemRarity.RARE,
 		"Show them what you've got",
-		2.5,
+		1.5,
 		true,
 		'res://game/core/equipment/TripleDamage.tscn',
-		'res://textures/items/item_banana_die.png'
+		'res://textures/items/item_fire_die.png'
 	),
 	Enum.ItemType.CHECKMATE: _ItemData.new(
 		"Checkmate",
 		Enum.ItemRarity.RARE,
 		"Obliterate a chess piece",
-		2.0,
+		1.0,
 		true,
 		'res://game/core/equipment/Checkmate.tscn',
-		'res://textures/items/item_banana_die.png'
+		'res://textures/items/item_checkmate_die.png'
 	),
 	Enum.ItemType.SHOCKWAVE: _ItemData.new(
 		"Shockwave",
 		Enum.ItemRarity.COMMON,
 		"Hit em all",
-		0.7,
+		0.4,
 		true,
 		'res://game/core/equipment/Shockwave.tscn',
 		'res://textures/items/item_banana_die.png'

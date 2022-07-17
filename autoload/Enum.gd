@@ -45,7 +45,7 @@ enum EnemyFlavor {
 
 enum ItemRarity {
 	# item weights defined here
-	COMMON = 25,
-	RARE = 5,
-	SUPERFLUOUS = 1,
+	COMMON = 24,
+	RARE = 8,
+	SUPERFLUOUS = 2,
 }

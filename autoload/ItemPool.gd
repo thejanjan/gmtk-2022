@@ -8,6 +8,7 @@ class Element:
 		self._item_id = item_id
 		self._weight = weight
 
+var _weighted_item_datas = [];
 var _items = [];
 var _total_weight = 0;
 
@@ -22,6 +23,8 @@ func _ready():
 func add_item(item_data, weight):
 	_items.append(Element.new(item_data, weight))
 	_total_weight += weight;
+	for i in range(weight):
+		_weighted_item_datas.append(item_data)
 
 func remove_item(index):
 	var item = _items.pop_at(index)
@@ -41,6 +44,7 @@ func pop_random_item_id():
 	return item_id_when_pool_is_empty()
 	
 func pop_random_item():
+	return Random.choice(_weighted_item_datas)
 	return _item_schema[pop_random_item_id()]
 
 func item_id_when_pool_is_empty():
