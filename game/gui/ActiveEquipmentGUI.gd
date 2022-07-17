@@ -22,6 +22,7 @@ func _ready():
 	var player = GameState.get_player()
 	player.connect("on_new_dice", self, "new_equip")
 	player.connect("initialize_equips", self, "initialize_equips")
+	self.initialize_equips(player.SideEquipment)
 	
 	# Equip the starter dice.
 	self.pips[active_dice].equip_pip(true)

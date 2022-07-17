@@ -106,8 +106,8 @@ tracks/0/keys = {
 }
 
 [node name="CoinEquipPip" type="Control"]
-margin_left = 1.38831
-margin_right = 41.3883
+margin_left = 0.0011539
+margin_right = 40.0011
 margin_bottom = 40.0
 script = ExtResource( 1 )
 __meta__ = {
