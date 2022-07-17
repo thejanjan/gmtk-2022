@@ -4,6 +4,7 @@ extends State
 # Try to keep all the actual behavior in here so that it's easier to add variants
 var pip = null
 var timers = {}
+var changedConcreteSound = false
 
 # Does this equipment reset pip stacks?
 func get_reset_pip_stacks() -> bool:
@@ -15,6 +16,9 @@ func exit():
 		var i = timers[k]
 		if i[2]:
 			self.stop_timer(k)
+	# Resets changed sounds
+	if changedConcreteSound:
+	 changeConcreteSound("res://audio/concrete.ogg")
 
 func damageNearbyEnemy(furthest_distance = 50000):
 	#PAIN
@@ -39,6 +43,23 @@ func damageNearbyEnemy(furthest_distance = 50000):
 		close_enemy.lose_health(self.pip + 1);
 		print(pip);
 
+func createTrail(size, length, color):
+	var scene = preload("res://game/core/equipment/helpers/Trail.tscn")
+	var instance = scene.instance()
+	instance.setup(size, length, color)
+	var player = get_player()
+	player.get_parent().add_child(instance)
+	instance.position = player.position
+
+func changeConcreteSound(res):
+	var speech_player = get_player().get_node("ConcreteStream")
+	var audio_file = res
+	if File.new().file_exists(audio_file):
+		var sfx = load(audio_file)
+		speech_player.stream = sfx
+		speech_player.play()
+	changedConcreteSound = true
+
 # Probably shouldn't use this directly, since it has no behavior for undoing the change
 # Done with multipliers instead of absolute values so that changes can stack properly
 func _statChange(stat, multiplier):
@@ -53,7 +74,7 @@ func tempStatChange(stat, multiplier, secondDuration, autostop=false):
 		stat + "_change",
 		secondDuration,
 		funcref(self, "_statChange"),
-		["_speed", 1.0 / multiplier],
+		[stat, 1.0 / multiplier],
 		autostop
 	)
 

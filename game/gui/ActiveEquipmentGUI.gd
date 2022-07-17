@@ -45,12 +45,12 @@ func _add_coin(coin_data: DataClasses.CoinData):
 	self.coin_pips.append(tail_pip)
 
 
-func approach_plinth():
+func approach_plinth(_body):
 	for pip in self.pips + self.coin_pips:
 		pip.approach_plinth()
 	
 	
-func unapproach_plinth():
+func unapproach_plinth(_body):
 	for pip in self.pips + self.coin_pips:
 		pip.unapproach_plinth()
 	

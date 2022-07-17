@@ -1,27 +1,80 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://game/core/Plinth.gd" type="Script" id=1]
+[ext_resource path="res://textures/items/DJUNGELSKOG.png" type="Texture" id=2]
 [ext_resource path="res://textures/environmental/pedestal/pedestal.png" type="Texture" id=3]
+[ext_resource path="res://game/gui/GameTheme.tres" type="Theme" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 65.0
 height = 30.0
 
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 513.715, 255.765 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "plinth_item_hover"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -10 ), Vector2( 0, -8 ) ]
+}
+
 [node name="Plinth" type="Area2D" groups=["plinths"]]
-position = Vector2( 513.715, 299.765 )
 scale = Vector2( 4, 4 )
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 1 )
+item_type = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -0.12056 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../ItemSprite")
+anims/RESET = SubResource( 2 )
+anims/plinth_item_hover = SubResource( 3 )
+
 [node name="ItemSprite" type="Sprite" parent="."]
+position = Vector2( 513.715, 255.765 )
+texture = ExtResource( 2 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchor_left = 0.5
@@ -29,12 +82,15 @@ anchor_right = 0.5
 margin_left = -32.5
 margin_right = 32.5
 margin_bottom = 40.0
+theme = ExtResource( 4 )
 
 [node name="Label" type="Label" parent="CenterContainer"]
-margin_top = 13.0
-margin_right = 65.0
-margin_bottom = 27.0
-text = "Skill Issue"
+visible = false
+margin_left = 26.0
+margin_top = 14.0
+margin_right = 38.0
+margin_bottom = 25.0
+text = "$9"
 
 [connection signal="body_entered" from="." to="." method="_on_Plinth_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_Plinth_body_exited"]

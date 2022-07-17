@@ -21,17 +21,17 @@ onready var ESM = $EquipmentStateMachine
 
 var SideEquipment = {
 	Enum.DiceSide.ONE : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.TWO : Enum.ItemType.FAST,
-	Enum.DiceSide.THREE : Enum.ItemType.FAST,
-	Enum.DiceSide.FOUR : Enum.ItemType.FAST,
-	Enum.DiceSide.FIVE : Enum.ItemType.BASIC_DAMAGE,
-	Enum.DiceSide.SIX : Enum.ItemType.BASIC_DAMAGE
+	Enum.DiceSide.TWO : Enum.ItemType.OIL_SLICK,
+	Enum.DiceSide.THREE : Enum.ItemType.OIL_SLICK,
+	Enum.DiceSide.FOUR : Enum.ItemType.OIL_SLICK,
+	Enum.DiceSide.FIVE : Enum.ItemType.OIL_SLICK,
+	Enum.DiceSide.SIX : Enum.ItemType.OIL_SLICK
 }
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("New")
-	_stats._speed = 1000;
+	_stats._speed = 500;
 	_stats._damage = 1;
 	_stats._friction = 3;
 	_stats._acceleration = 6;
