@@ -181,3 +181,4 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 # Herpes simplex virus.
 func triangulate():
 	pass
+

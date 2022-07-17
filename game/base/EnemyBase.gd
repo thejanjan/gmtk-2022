@@ -17,6 +17,7 @@ var hp = 10
 func _ready():
 	self.connect("body_entered", self, "_on_body_entered")
 	randomize()
+	GameState.check_tile(self.position, "Enemy");
 
 """
 Health modifiers
@@ -35,6 +36,7 @@ func lose_health(damage):
 		self.perform_destroy()
 		
 func perform_destroy():
+	GameState.remove_space(self.position);
 	self.queue_free()
 	
 """
@@ -42,21 +44,23 @@ Movement
 """
 
 func move_tile(x, y, duration):
-	var tween = self.make_tween()
-	tween.interpolate_property(
-		self, "position", self.position,
-		self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4),
-		duration, Tween.TRANS_LINEAR, Tween.EASE_OUT
-	)
-	tween.start()
-	emit_signal("enemy_moved")
+	if GameState.check_tile(self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4), "Enemy") != Vector2.INF:
+		GameState.remove_space(self.position);
+		var tween = self.make_tween()
+		tween.interpolate_property(
+			self, "position", self.position,
+			self.position + Vector2(x * self.tile_width * 4, y * self.tile_height * 4),
+			duration, Tween.TRANS_LINEAR, Tween.EASE_OUT
+		)
+		tween.start()
+		emit_signal("enemy_moved")
 
-func find_player(playerx, playery, enemy) -> Vector2:
-	playerx = playerx % self.tile_width
-	playery = playery % self.tile_height
+func find_player() -> Vector2:
+	var playerx = int($PlayerControl.position.x) - (int($PlayerControl.position.x) % self.tile_width)
+	var playery = int($PlayerControl.position.y) - (int($PlayerControl.position.y) % self.tile_height)
 	
-	var enemyx = enemy.position.x % self.tile_width
-	var enemyy = enemy.position.y % self.tile_height
+	var enemyx = int(self.position.x) - (int(self.position.x) % self.tile_width)
+	var enemyy = int(self.position.y) - (int(self.position.y) % self.tile_height)
 	
 	var tilex = (playerx - enemyx) / self.tile_width
 	var tiley = (playery - enemyy) / self.tile_height
