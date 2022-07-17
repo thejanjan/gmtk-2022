@@ -13,9 +13,9 @@ onready var Plinth = preload("res://game/core/Plinth.tscn")
 
 # [[proporational chance, resource path]]
 onready var environmental = [
-	[0.7, preload("res://game/core/environmental/Shrubbery.tscn")],
-	[1, preload("res://game/core/environmental/Urn.tscn")],
-	[1.2, preload("res://game/core/environmental/Column.tscn")],
+	[0.5, preload("res://game/core/environmental/Shrubbery.tscn")],
+	[1.2, preload("res://game/core/environmental/Urn.tscn")],
+	[1, preload("res://game/core/environmental/Column.tscn")],
 ]
 
 onready var tile_mapper_floor = $FloorTileMap as TileMap

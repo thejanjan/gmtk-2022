@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://textures/environmental/decoration/urn.png" type="Texture" id=1]
 [ext_resource path="res://game/core/environmental/Urn.gd" type="Script" id=2]
+[ext_resource path="res://audio/urn_break.ogg" type="AudioStream" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 28.0
@@ -52,6 +53,10 @@ frames = SubResource( 6 )
 wait_time = 1.097
 one_shot = true
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="." to="." method="_on_collision"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer"]
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]

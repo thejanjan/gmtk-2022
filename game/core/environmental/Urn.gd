@@ -15,6 +15,7 @@ func break_urn():
 	current_state = State.BROKEN
 	$AnimatedSprite.playing = true
 	$Timer.start()
+	$AudioStreamPlayer.play()
 
 # use the timer to deactivate physics a moment after breaking
 func _on_timer():
