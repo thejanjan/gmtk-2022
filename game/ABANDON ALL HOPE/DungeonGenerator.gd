@@ -57,13 +57,28 @@ func generate_dungeon():
 	emit_signal("player_spawned")
 
 func generate_room():
-	var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
-	var room_width = Random.randint(room_min_width, room_max_width + 1)
-	var room_height = Random.randint(room_min_height, room_max_height + 1)
+	var room_undecided = true
+	var room_rect
+	var room_width
+	var room_height
+	
+	# Keep looping until the room intersects no other rooms.
+	while room_undecided:
+		var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
+		room_width = Random.randint(room_min_width, room_max_width + 1)
+		room_height = Random.randint(room_min_height, room_max_height + 1)
+		var room_size = Vector2(room_width, room_height)
+		room_rect = Rect2(room_position, room_size)
+		
+		room_undecided = false
+		for other_room_rect in room_coordinates:
+			if other_room_rect.intersects(room_rect):
+				room_undecided = true
+				break
 	
 	var color = Random.randint(0, room_max_color_id + 1)
 	
-	room_coordinates.append(Rect2(room_position, Vector2(room_width, room_height)))
+	room_coordinates.append(room_rect)
 	
 	var top_left = get_room_top_left_tilepos(room_coordinates.size() - 1)
 	
