@@ -11,7 +11,7 @@
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 
-[node name="DungeonGenerator" type="Node2D" parent="."]
+[node name="DungeonGenerator" type="YSort" parent="."]
 script = ExtResource( 13 )
 dungeon_width = 60
 dungeon_height = 60
@@ -21,6 +21,7 @@ room_max_color_id = 31
 
 [node name="FloorTileMap" type="TileMap" parent="DungeonGenerator" groups=["floor_tilemap"]]
 scale = Vector2( 4, 4 )
+z_index = -5
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 13, 8 )
 format = 1
@@ -32,5 +33,5 @@ tile_set = ExtResource( 5 )
 cell_size = Vector2( 13, 8 )
 format = 1
 
-[node name="EnemyGenerator" type="Node2D" parent="DungeonGenerator"]
+[node name="EnemyGenerator" type="YSort" parent="DungeonGenerator"]
 script = ExtResource( 6 )

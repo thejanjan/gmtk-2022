@@ -19,7 +19,7 @@ collision_layer = 2
 script = ExtResource( 4 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
-position = Vector2( 0, -21 )
+position = Vector2( 0, -24 )
 scale = Vector2( 4, 4 )
 texture = SubResource( 3 )
 script = ExtResource( 6 )
@@ -33,7 +33,6 @@ script = ExtResource( 2 )
 [node name="PlayerBase" parent="PlayerSprite/PlayerViewport" instance=ExtResource( 1 )]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 8 )
 shape = SubResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -49,4 +48,5 @@ stream = ExtResource( 8 )
 pitch_scale = 0.65
 
 [node name="CoinManager" type="Node2D" parent="."]
+position = Vector2( 0, 1 )
 script = ExtResource( 5 )

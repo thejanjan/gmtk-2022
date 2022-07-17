@@ -1,6 +1,8 @@
 class_name Equipment
 extends State
 
+onready var trail = preload("res://game/core/equipment/helpers/Trail.tscn")
+
 # Try to keep all the actual behavior in here so that it's easier to add variants
 var pip = null
 var timers = {}
@@ -44,8 +46,7 @@ func damageNearbyEnemy(furthest_distance = 50000):
 		print(pip);
 
 func createTrail(size, length, color):
-	var scene = preload("res://game/core/equipment/helpers/Trail.tscn")
-	var instance = scene.instance()
+	var instance = self.trail.instance()
 	instance.setup(size, length, color)
 	var player = get_player()
 	player.get_parent().add_child(instance)
