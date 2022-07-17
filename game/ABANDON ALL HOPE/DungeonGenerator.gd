@@ -26,6 +26,15 @@ export(int) var room_max_width = 10
 export(int) var room_min_height = 1
 export(int) var room_max_height = 10
 
+export(int) var number_of_islands = 70
+
+export(int) var island_min_width = 2
+export(int) var island_max_width = 4
+export(int) var island_min_height = 2
+export(int) var island_max_height = 4
+
+export(float) var island_tile_fail_chance = 0.15
+
 export(int) var room_max_color_id = 0
 
 export(int) var hallway_min_thickness = 3
@@ -54,6 +63,8 @@ func generate_dungeon():
 			generate_room()
 		
 	generate_hallways()
+	
+	generate_islands()
 	
 	generate_wall_tiles()
 	
@@ -175,13 +186,31 @@ func generate_plinths():
 		add_child(new_plinth)
 		var plinth_pos = self.get_random_spawn_pos(true, false)
 		new_plinth.translate(plinth_pos * Vector2(13, 8) * 4)
+
+func generate_islands():
+	for i in range(number_of_islands):
+		var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
+		var room_width = Random.randint(island_min_width, island_max_width + 1)
+		var room_height = Random.randint(island_min_height, island_max_height + 1)
+		var room_size = Vector2(room_width, room_height)
+		var color = Random.randint(0, room_max_color_id + 1)
+		var pick_col = Random.choice([0, 1])
+		for x in range(room_position.x, room_position.x + room_width):
+			for y in range(room_position.y, room_position.y + room_height):
+				if randf() < island_tile_fail_chance:
+					continue
+				place_floor_tile(x, y, color, pick_col)
 	
-func place_floor_tile(x, y, color):
-	
+func place_floor_tile(x, y, color, only_col = null):
 	var tile = tile_mapper_floor.get_cell(x, y)
 	if tile == TileMap.INVALID_CELL:
 		# Checkerboard pattern!
 		var tile_id = int(x + y) % int(2)
+		
+		if only_col != null:
+			if tile_id != only_col:
+				return
+		
 		tile_id += color * 2
 		
 		tile_mapper_floor.set_cell(x, y, tile_id)
