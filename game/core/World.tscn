@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://game/core/GridManager.gd" type="Script" id=1]
 [ext_resource path="res://textures/tiles/GroundTilesetAtlas.tres" type="TileSet" id=2]
 [ext_resource path="res://game/core/player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://textures/tiles/WallTileset.tres" type="TileSet" id=4]
 [ext_resource path="res://game/ABANDON ALL HOPE/DungeonGenerator.gd" type="Script" id=13]
 
 [node name="World" type="YSort"]
@@ -20,11 +21,15 @@ hallway_max_thickness = 4
 
 [node name="FloorTileMap" type="TileMap" parent="DungeonGenerator"]
 scale = Vector2( 4, 4 )
+z_index = -5
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 13, 8 )
 format = 1
 
 [node name="WallTileMap" type="TileMap" parent="DungeonGenerator"]
+scale = Vector2( 4, 4 )
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 13, 8 )
 format = 1
 
 [node name="PlayerControl" parent="." instance=ExtResource( 3 )]
