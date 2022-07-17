@@ -65,8 +65,24 @@ func _ready():
 	$Music.play()
 	generate_dungeon()
 	
+func adjust_stats(level):
+	# Adjusts the stats for a level.
+	dungeon_width = 20 + (level * 30)
+	dungeon_height = 20 + (level * 30)
+
+	number_of_rooms = 3 + (level * 2)
+
+	room_min_width = 3
+	room_max_width = min(5 + level, 9)
+	room_min_height = 3
+	room_max_height = min(5 + level, 9)
+	
+	hallway_min_thickness = 4
+	hallway_max_thickness = min(5 + level, 8)
+	
 func generate_dungeon():
 	dungeon_floor += 1
+	adjust_stats(dungeon_floor)
 	room_coordinates = []
 	hallway_coordinates = {}
 	position_blocklist = []
@@ -343,22 +359,28 @@ func get_random_spawn_pos(in_room: bool = false, in_hallway: bool = false) -> Ve
 	var vec2 = null
 	
 	# Don't spawn multiple things in the same spot.
+	var attempts = 0
 	while true:
+		attempts += 1
 		rect2 = Random.choice(valid_rect2s) as Rect2
-		vec2 = Random.point_in_rect2(rect2, 1)
+		if attempts < 10:
+			vec2 = Random.point_in_rect2(rect2, 1)
+		else:
+			vec2 = Random.point_in_rect2(rect2, 0)
 		if vec2 == Vector2.INF:
 			continue
 		if vec2 in position_blocklist:
 			continue
 		if tile_mapper_floor.get_cellv(vec2) == TileMap.INVALID_CELL:
 			continue
-		var success = true
-		for offvec in [Vector2.LEFT, Vector2.UP, Vector2.RIGHT, Vector2.DOWN]:
-			if tile_mapper_floor.get_cellv(vec2 + offvec) == TileMap.INVALID_CELL:
-				success = false
+		if attempts < 100:
+			var success = true
+			for offvec in [Vector2.LEFT, Vector2.UP, Vector2.RIGHT, Vector2.DOWN]:
+				if tile_mapper_floor.get_cellv(vec2 + offvec) == TileMap.INVALID_CELL:
+					success = false
+					break
+			if success:
 				break
-		if success:
-			break
 	
 	# Return our vector.
 	for around in [Vector2(0, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(1, 0), Vector2(0, 1)]:
