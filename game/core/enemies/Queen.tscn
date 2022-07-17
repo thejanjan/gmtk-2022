@@ -27,6 +27,7 @@ tracks/0/keys = {
 mode = 1
 gravity_scale = 0.0
 script = ExtResource( 4 )
+max_hp = 50
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 2, -52 )
@@ -40,6 +41,7 @@ shape = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 script = ExtResource( 3 )
+move_delay = 3.0
 
 [node name="EnemyHPNode" parent="." instance=ExtResource( 1 )]
 position = Vector2( 0, 125 )

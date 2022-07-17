@@ -12,6 +12,16 @@ func choice(list: Array):
 	# Returns a random element from a list.
 	var index = randi() % list.size()
 	return list[index]
+	
+	
+func shuffle(list: Array) -> Array:
+	# Returns a shuffled array.
+	var ret_array = []
+	while list:
+		var item = choice(list)
+		ret_array.append(item)
+		list.erase(item)
+	return ret_array
 
 
 func point_in_rect2(rect2: Rect2, border: int = 0) -> Vector2:

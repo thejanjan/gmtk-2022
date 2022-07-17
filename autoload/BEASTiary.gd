@@ -5,6 +5,10 @@ BESAT MODE
 """
 
 
+var EnemyMoveDuration = 1.0
+var EnemyVisualMoveDuration = 0.25
+
+
 class _EnemyData:
 	
 	var enemy_flavor = null
@@ -48,49 +52,49 @@ var EnemyDB = [
 	_EnemyData.new(
 		Enum.EnemyFlavor.BATTLESHIP_S,
 		[3, null],
-		2.0,
+		4.0,
 		"res://game/core/enemies/Battleship_Small.tscn"
 	),
 	_EnemyData.new(
 		Enum.EnemyFlavor.BISHOP,
 		[1, 3],
-		4.0,
+		3.0,
 		"res://game/core/enemies/Bishop.tscn"
 	),
 	_EnemyData.new(
 		Enum.EnemyFlavor.GO,
 		[4, null],
-		2.0,
+		8.0,
 		"res://game/core/enemies/Go.tscn"
 	),
 	_EnemyData.new(
 		Enum.EnemyFlavor.KING,
 		[2, 3],
-		2.0,
+		7.0,
 		"res://game/core/enemies/King.tscn"
 	),
 	_EnemyData.new(
 		Enum.EnemyFlavor.KNIGHT,
 		[2, 5],
-		2.0,
+		5.0,
 		"res://game/core/enemies/Knight.tscn"
 	),
 	_EnemyData.new(
 		Enum.EnemyFlavor.QUEEN,
 		[3, null],
-		2.0,
+		40.0,
 		"res://game/core/enemies/Queen.tscn"
 	),
 	_EnemyData.new(
 		Enum.EnemyFlavor.REVERSI,
 		[5, 4],
-		2.0,
+		5.0,
 		"res://game/core/enemies/Reversi.tscn"
 	),
 	_EnemyData.new(
 		Enum.EnemyFlavor.ROOK,
 		[2, null],
-		2.0,
+		6.0,
 		"res://game/core/enemies/Rook.tscn"
 	),
 	_EnemyData.new(

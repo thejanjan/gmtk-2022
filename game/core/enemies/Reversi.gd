@@ -25,4 +25,12 @@ func _on_Timer_timeout():
 			whiteup = 0
 		$CollisionShape2D.scale = Vector2(5,5)
 	else:
-		move_tile(xpos, ypos, 0.5);
+		generic_move()
+
+func get_valid_moves():
+	return [
+		Vector2(1, 0),
+		Vector2(0, 1),
+		Vector2(-1, 0),
+		Vector2(0, -1)
+	]

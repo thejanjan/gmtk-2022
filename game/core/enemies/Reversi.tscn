@@ -51,6 +51,7 @@ mode = 1
 mass = 18.2
 gravity_scale = 0.0
 script = ExtResource( 3 )
+max_hp = 35
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 2, -36 )

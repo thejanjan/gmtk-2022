@@ -6,6 +6,17 @@ var ypos = 0
 var playerdistance = Vector2(0,0)
 var spritetex = preload("res://textures/enemies/go/white_go.png")
 
+var valid_moves = [
+	Vector2(1, 0),
+	Vector2(1, 1),
+	Vector2(0, 1),
+	Vector2(-1, 1),
+	Vector2(-1, 0),
+	Vector2(-1, -1),
+	Vector2(0, -1),
+	Vector2(1, -1)
+]
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.connect("body_entered", self, "_on_body_entered")
@@ -20,28 +31,31 @@ func perform_destroy():
 	AnimPlayer.play("Death")
 
 func _on_Timer_timeout(): 
-	if (playerdistance.x == 0) and (playerdistance.y == 0):
-		playerdistance = find_player()
-	
-	if (playerdistance.x < 0):
-		xpos = -1
-		playerdistance.x += 1
-	elif (playerdistance.x > 0):
-		xpos = 1
-		playerdistance.x -= 1
+	if not agro:
+		var move_order = Random.shuffle(valid_moves.duplicate())
+		while move_order:
+			var move = move_order.pop_back()
+			if check_move(move.x, move.y):
+				# This move is safe, we can perform it.
+				move_tile(move.x, move.y, BeasTiary.EnemyVisualMoveDuration)
+				return
+		# No moves existed, do nothing.
+		pass
 	else:
-		xpos = 0
-	
-	if (playerdistance.y < 0):
-		ypos = -1
-		playerdistance.y += 1
-	elif (playerdistance.y > 0):
-		ypos = 1
-		playerdistance.y -= 1
-	else:
-		ypos = 0
-	
-	move_tile(xpos, ypos, 0.5)
+		# We have agro, chance the player down.
+		var best_move_score = 100000
+		var best_move = null
+		for move in valid_moves:
+			if not check_move(move.x, move.y):
+				continue
+			var move_score = get_move_score(move.x, move.y)
+			if move_score < best_move_score and move_score >= 2:
+				best_move_score = move_score
+				best_move = move
+		
+		if best_move != null:
+			# Perform the optimal move.
+			move_tile(best_move.x, best_move.y, BeasTiary.EnemyVisualMoveDuration)
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	self.queue_free()

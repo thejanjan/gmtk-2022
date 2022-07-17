@@ -39,6 +39,7 @@ shape = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 script = ExtResource( 4 )
+move_delay = 1.0
 
 [node name="EnemyHP" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1, 1 )

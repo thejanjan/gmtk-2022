@@ -22,7 +22,7 @@ func perform_destroy():
 func _on_Timer_timeout(): 
 	xpos = Random.choice([-1, 0, 1])
 	
-	move_tile(xpos, ypos, 0.5);
+	move_tile(xpos, ypos, 0.9);
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	self.queue_free()
