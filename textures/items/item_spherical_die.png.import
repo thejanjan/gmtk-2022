@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_weird_die.png-d5a2a18e34513f2e691edc4c3fcc6d55.stex"
+path="res://.import/item_spherical_die.png-d45478ae9cb2fa1bd75ad5786dbb30b4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/equipment/icons/icon_weird_die.png"
-dest_files=[ "res://.import/icon_weird_die.png-d5a2a18e34513f2e691edc4c3fcc6d55.stex" ]
+source_file="res://textures/items/item_spherical_die.png"
+dest_files=[ "res://.import/item_spherical_die.png-d45478ae9cb2fa1bd75ad5786dbb30b4.stex" ]
 
 [params]
 

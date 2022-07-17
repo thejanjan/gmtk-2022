@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_stack_die.png-cf79d5d9b24521f973d95907ec6d589d.stex"
+path="res://.import/swoosh.png-9457542edefb28a8090ecb8d2170b1e9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/equipment/icons/icon_stack_die.png"
-dest_files=[ "res://.import/icon_stack_die.png-cf79d5d9b24521f973d95907ec6d589d.stex" ]
+source_file="res://textures/attacks/swoosh.png"
+dest_files=[ "res://.import/swoosh.png-9457542edefb28a8090ecb8d2170b1e9.stex" ]
 
 [params]
 

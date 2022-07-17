@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_tar_die.png-8628c8915021eea16cc6db146fdcf0a1.stex"
+path="res://.import/item_fire_die.png-802561c180f3511976eb0b4887dfc773.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/equipment/icons/icon_tar_die.png"
-dest_files=[ "res://.import/icon_tar_die.png-8628c8915021eea16cc6db146fdcf0a1.stex" ]
+source_file="res://textures/items/item_fire_die.png"
+dest_files=[ "res://.import/item_fire_die.png-802561c180f3511976eb0b4887dfc773.stex" ]
 
 [params]
 

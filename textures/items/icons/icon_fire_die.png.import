@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/item_heart_die.png-b2e25370efa10beb5fa80537641c063b.stex"
+path="res://.import/icon_fire_die.png-aa05f28a7e9eb88c63fe574515349b8c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/equipment/items/item_heart_die.png"
-dest_files=[ "res://.import/item_heart_die.png-b2e25370efa10beb5fa80537641c063b.stex" ]
+source_file="res://textures/items/icons/icon_fire_die.png"
+dest_files=[ "res://.import/icon_fire_die.png-aa05f28a7e9eb88c63fe574515349b8c.stex" ]
 
 [params]
 

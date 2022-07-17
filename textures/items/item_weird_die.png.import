@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_moon_die.png-70753c07f626082f797f3a4c35798383.stex"
+path="res://.import/item_weird_die.png-57bc69641a97d4627077eb729c6b085b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/equipment/icons/icon_moon_die.png"
-dest_files=[ "res://.import/icon_moon_die.png-70753c07f626082f797f3a4c35798383.stex" ]
+source_file="res://textures/items/item_weird_die.png"
+dest_files=[ "res://.import/item_weird_die.png-57bc69641a97d4627077eb729c6b085b.stex" ]
 
 [params]
 
