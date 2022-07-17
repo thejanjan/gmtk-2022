@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://game/core/Plinth.gd" type="Script" id=1]
 [ext_resource path="res://textures/items/unknown.png" type="Texture" id=2]
@@ -6,8 +6,12 @@
 [ext_resource path="res://game/gui/GameTheme.tres" type="Theme" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 30.5
-height = 14.259
+radius = 65.0
+height = 53.1493
+
+[sub_resource type="CapsuleShape2D" id=8]
+radius = 8.2988
+height = 7.03455
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -21,7 +25,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 513.715, 255.765 ) ]
+"values": [ Vector2( 0, -10 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:rotation_degrees")
@@ -178,13 +182,25 @@ scale = Vector2( 4, 4 )
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 1 )
-cost = 80000
+cost = 10
 item_type = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -2.5 )
+[node name="StationCollisionShape" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="InteractionCollisionShape" type="CollisionShape2D" parent="InteractionArea"]
+rotation = 1.5708
+shape = SubResource( 8 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -5 )
@@ -197,7 +213,7 @@ anims/RESET = SubResource( 2 )
 anims/plinth_item_hover = SubResource( 3 )
 
 [node name="ItemSprite" type="Sprite" parent="."]
-position = Vector2( 513.715, 255.765 )
+position = Vector2( 0, -10 )
 texture = ExtResource( 2 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -210,14 +226,10 @@ theme = ExtResource( 4 )
 
 [node name="Label" type="Label" parent="CenterContainer"]
 modulate = Color( 0.14902, 1, 0, 1 )
-anchor_top = 0.277
-anchor_bottom = 0.277
-margin_left = 14.0
+margin_left = 32.0
 margin_top = 14.0
-margin_right = 50.0
+margin_right = 32.0
 margin_bottom = 25.0
-text = "$80000"
-percent_visible = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer"]
 root_node = NodePath("../Label")
@@ -227,3 +239,4 @@ anims/purchase_succeed = SubResource( 6 )
 
 [connection signal="body_entered" from="." to="." method="_on_Plinth_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_Plinth_body_exited"]
+[connection signal="body_entered" from="InteractionArea" to="." method="_on_InteractionArea_body_entered"]
