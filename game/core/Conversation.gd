@@ -7,6 +7,8 @@ enum State {
 	FINISHED
 }
 
+signal finished
+
 var current_state = State.WAITING
 var characters = {
 	"SNAKE GOD": Color("#7eff89"),
@@ -83,9 +85,10 @@ func add_next_message():
 		current_state = State.OUT_OF_MESSAGES
 
 func finish():
+	player.stop()
 	display.hide()
 	current_state = State.FINISHED
-	player.stop()
+	emit_signal('finished')
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

@@ -7,9 +7,16 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
-
 func _ready():
 	$AudioStreamPlayer.play()
+
+func _on_Conversation_finished():
+	$AudioStreamPlayer.stop()
+	for n in get_children():
+		remove_child(n)
+		n.queue_free()
+	get_tree().change_scene(\"res://game/core/Game.tscn\")
+	queue_free()
 "
 
 [node name="Control" type="Control"]
@@ -30,3 +37,5 @@ stretch_mode = 7
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 volume_db = -16.104
+
+[connection signal="finished" from="Conversation" to="." method="_on_Conversation_finished"]

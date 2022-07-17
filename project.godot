@@ -87,7 +87,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Gmtk-2022"
-run/main_scene="res://game/core/Game.tscn"
+run/main_scene="res://game/core/IntroCutscene.tscn"
 config/icon="res://icon.png"
 
 [autoload]
