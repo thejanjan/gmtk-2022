@@ -81,6 +81,8 @@ func adjust_stats(level):
 	hallway_min_thickness = 4
 	hallway_max_thickness = min(5 + level, 8)
 	
+	room_max_color_id = min((level * 4) - 1, 31)
+	
 func generate_dungeon():
 	dungeon_floor += 1
 	adjust_stats(dungeon_floor)
