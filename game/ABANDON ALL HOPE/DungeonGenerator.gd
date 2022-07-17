@@ -23,8 +23,7 @@ export(int) var room_max_color_id = 0
 export(int) var hallway_min_thickness = 3
 export(int) var hallway_max_thickness = 6
 
-var room_positions = []
-var room_centers = []
+var room_coordinates = []
 
 # Used by the hallway connection system.
 var grid_of_occupation = [[]]
@@ -41,7 +40,7 @@ func generate_dungeon():
 	generate_hallways()
 		
 	# Place the player in the first room.
-	GameState.get_player().translate(room_centers[0] * Vector2(13, 8) * 4)
+	position_player()
 
 func generate_room():
 	var room_position = Vector2(Random.randint(0, dungeon_width + 1), Random.randint(0, dungeon_height + 1))
@@ -50,9 +49,8 @@ func generate_room():
 	
 	var color = Random.randint(0, room_max_color_id + 1)
 	
-	room_positions.append(room_position)
-	room_centers.append((room_position + Vector2(room_width / 2, room_height / 2) + Vector2(0.5, 0.5)))
-	
+	room_coordinates.append(Rect2(room_position, Vector2(room_width, room_height)))
+
 	for i in range(room_width):
 		for j in range(room_height):
 			var x = room_position.x + i
@@ -67,8 +65,8 @@ func generate_hallways():
 		generate_hallway(i, i+1, thickness, horizontal_first)
 	
 func generate_hallway(room_id_start, room_id_end, thickness, horizontal_first):
-	var position_start = room_positions[room_id_start]
-	var position_end = room_positions[room_id_end]
+	var position_start = room_coordinates[room_id_start].position
+	var position_end = room_coordinates[room_id_end].position
 	var color = Random.randint(0, room_max_color_id + 1)
 	
 	if horizontal_first:
@@ -111,6 +109,15 @@ func place_room_tile(x, y, color):
 func place_hallway_tile(x, y, color):
 	place_floor_tile(x, y, color)
 	#tile_mapper_floor.set_cell(x, y, 0)
+	
+func position_player():
+	var room_rect = room_coordinates[0] as Rect2
+	var room_center = room_rect.position + (room_rect.size / 2) + Vector2(0.5, 0.5)
+	var player = GameState.get_player()
+	if player:
+		player.translate(room_center * Vector2(13, 8) * 4)
+	else:
+		print("???")
 
 # Delaunay triangulation brings forth the power of the simplex.
 # Do you know what else holds the power of the simplex?
