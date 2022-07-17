@@ -2,14 +2,16 @@ extends EnemyBase
 
 onready var AnimPlayer = $AnimationPlayer
 
-func perform_destroy():
-	set_collision_layer(0)
-	set_collision_mask(0)
-	AnimPlayer.play("Death")
+var move_list = [Vector2(-1, 0), Vector2(1, 0), Vector2(0, 1), Vector2(0, -1)]
+var direction = Random.choice(move_list)
 
-func _on_Timer_timeout():
-	if self.hp > 0:
-		move_tile(-1, 0, 0.4);
+func _on_Timer_timeout(): 
+	if not check_move(direction.x, direction.y):
+		direction = Random.choice(move_list)
+	generic_move()
+	
+func get_valid_moves():
+	return [direction]
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	self.queue_free()

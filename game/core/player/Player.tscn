@@ -16,30 +16,97 @@ viewport_path = NodePath("PlayerSprite/PlayerViewport")
 extents = Vector2( 14, 2 )
 
 [sub_resource type="Animation" id=5]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
+resource_name = "Spawn"
+length = 4.0
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("PlayerSprite/PlayerViewport/PlayerBase:rotation_degrees:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, -24 ) ]
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:modulate")
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("PlayerSprite/PlayerViewport/PlayerBase:rotation_degrees:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 0,
-"values": [  ]
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("PlayerSprite/PlayerViewport/PlayerBase:rotation_degrees:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("PlayerSprite/PlayerViewport/PlayerBase:translation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("PlayerSprite/PlayerViewport/PlayerBase:translation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( 120, -0.25, 0, 0.1, -121.109, 0, -2.1, -1.8031, 0.25, 0 ),
+"times": PoolRealArray( 0, 4 )
+}
+tracks/5/type = "bezier"
+tracks/5/path = NodePath("PlayerSprite/PlayerViewport/PlayerBase:translation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/6/type = "bezier"
+tracks/6/path = NodePath("PlayerSprite/PlayerViewport/CSGCylinder:translation:x")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/7/type = "bezier"
+tracks/7/path = NodePath("PlayerSprite/PlayerViewport/CSGCylinder:translation:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"points": PoolRealArray( 200, -0.25, 0, 0.1, -171.942, 40, -0.25, 0, 0.25, 0, 40, -0.25, 0, 0.25, 0, 200, 0, -177.498, 0.25, 0 ),
+"times": PoolRealArray( 0, 1, 3, 4 )
+}
+tracks/8/type = "bezier"
+tracks/8/path = NodePath("PlayerSprite/PlayerViewport/CSGCylinder:translation:z")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
 }
 
 [sub_resource type="Animation" id=6]

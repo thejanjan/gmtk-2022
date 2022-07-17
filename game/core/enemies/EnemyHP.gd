@@ -14,6 +14,7 @@ func _ready():
 	var width = round(pow(enemy.get_max_hp(), 0.7))
 	self.set_width(width + 6)
 	self.enemy.connect("health_changed", self, "update_hp")	
+	self.update_hp(enemy.max_hp, enemy.max_hp)
 
 func set_width(width: int):
 	"""Sets the width of the HP bar."""

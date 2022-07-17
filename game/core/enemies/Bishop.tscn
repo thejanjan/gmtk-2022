@@ -28,6 +28,7 @@ mode = 1
 mass = 18.2
 gravity_scale = 0.0
 script = ExtResource( 1 )
+max_hp = 8
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 2, -36 )

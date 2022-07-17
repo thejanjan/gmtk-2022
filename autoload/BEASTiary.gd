@@ -45,8 +45,8 @@ class _EnemyData:
 var EnemyDB = [
 	_EnemyData.new(
 		Enum.EnemyFlavor.PAWN,
-		[1, null],
-		1.0,
+		[1, 3],
+		2.0,
 		"res://game/core/enemies/Pawn.tscn"
 	),
 	_EnemyData.new(
@@ -57,8 +57,8 @@ var EnemyDB = [
 	),
 	_EnemyData.new(
 		Enum.EnemyFlavor.BISHOP,
-		[1, 3],
-		3.0,
+		[2, 4],
+		5.0,
 		"res://game/core/enemies/Bishop.tscn"
 	),
 	_EnemyData.new(
@@ -87,7 +87,7 @@ var EnemyDB = [
 	),
 	_EnemyData.new(
 		Enum.EnemyFlavor.REVERSI,
-		[5, 4],
+		[3, 5],
 		5.0,
 		"res://game/core/enemies/Reversi.tscn"
 	),

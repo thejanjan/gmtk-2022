@@ -31,16 +31,24 @@ func set_item_type(new_item_type: int):
 	item_type = new_item_type
 	var item_data = Database.get_item_data(item_type)
 	_item_sprite.set_texture(item_data.get_texture())
+	$Description.text = item_data.get_description()
 
 func set_cost(new_cost: int):
 	cost = new_cost
 	update_label()
 
 func update_label() -> void:
-		_label.text = "$%d" % cost
+	_label.text = "$%d" % cost
 
 
 func try_purchase() -> void:
+	var player_pos = GameState.get_player().position as Vector2
+	var our_pos = self.position
+	var dist = player_pos.distance_to(our_pos)
+	if dist > 100:
+		# sanity check
+		return
+	
 	# check if they have enough caaaaaaash
 	if GameState.cash >= cost:
 		GameState.cash -= cost
@@ -56,10 +64,13 @@ func try_purchase() -> void:
 
 func _on_Plinth_body_entered(_body:Node):
 	_player_inside = true
+	$Description.visible = true
 
 
 func _on_Plinth_body_exited(_body:Node):
 	_player_inside = false
+	$Description.visible = false
+
 
 func _on_InteractionArea_body_entered(_body:Node):
 	# player interaction:

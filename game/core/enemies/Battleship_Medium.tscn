@@ -23,7 +23,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 )
 }
 
-[node name="Battleship_Medium" type="RigidBody2D"]
+[node name="Battleship_Medium" type="RigidBody2D" groups=["enemy"]]
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]

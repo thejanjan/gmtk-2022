@@ -15,13 +15,9 @@ func _on_Timer_timeout():
 func get_valid_moves():
 	var base_list = [
 		Vector2(1, 0),
-		Vector2(1, 1),
 		Vector2(0, 1),
-		Vector2(-1, 1),
 		Vector2(-1, 0),
-		Vector2(-1, -1),
-		Vector2(0, -1),
-		Vector2(1, -1)
+		Vector2(0, -1)
 	]
 	var ret_list = []
 	for i in range(1, 5):

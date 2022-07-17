@@ -172,6 +172,15 @@ collision_mask = 2
 script = ExtResource( 1 )
 cost = 10
 
+[node name="Description" type="Label" parent="."]
+visible = false
+margin_left = -149.5
+margin_top = 25.5
+margin_right = 150.5
+margin_bottom = 39.5
+theme = ExtResource( 4 )
+align = 1
+
 [node name="StationCollisionShape" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource( 1 )

@@ -29,6 +29,7 @@ func _ready():
 	var timer = $Timer
 	if timer != null:
 		timer.move_delay = BeasTiary.EnemyMoveDuration
+	set_health(self.max_hp)
 
 func init(pos : Vector2):
 	self.position = pos;
@@ -91,7 +92,7 @@ func finish_move(_obj, _key):
 func move_tile(x, y, duration):
 	if not agro:
 		var move_score = self.get_move_score()
-		if move_score < 14 and move_score >= 2:
+		if move_score < 14:
 			agro = true
 	
 	if check_move(x, y):
@@ -139,7 +140,7 @@ func generic_move():
 			if not check_move(move.x, move.y):
 				continue
 			var move_score = get_move_score(move.x, move.y)
-			if move_score < best_move_score and move_score >= 2:
+			if move_score < best_move_score:
 				best_move_score = move_score
 				best_move = move
 		

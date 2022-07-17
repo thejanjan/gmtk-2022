@@ -47,6 +47,7 @@ mode = 1
 mass = 4.87
 gravity_scale = 0.0
 script = ExtResource( 3 )
+max_hp = 6
 
 [node name="Timer" type="Timer" parent="."]
 script = ExtResource( 2 )
