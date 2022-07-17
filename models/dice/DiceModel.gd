@@ -5,6 +5,8 @@ var jumping = -10;
 var in_jump = false;
 var current_speed = Vector2(0, 0)
 
+var the_dice_side = Enum.DiceSide.ONE
+
 signal jump_start;
 signal jump_end;
 signal side_swapped(side);
@@ -117,6 +119,7 @@ func get_valid_dice_sides() -> Array:
 func _do_spin():
 	# We gotta pick a side and then do it.
 	var dice_side = Random.choice(self.get_valid_dice_sides())
+	the_dice_side = dice_side
 	emit_signal("side_swapped", dice_side)
 	var goal_quat = self.positional_transforms[dice_side]
 	goal_quat = goal_quat.get_euler()

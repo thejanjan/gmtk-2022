@@ -2,7 +2,7 @@
 
 [ext_resource path="res://game/base/PlayerProjectionBase.gd" type="Script" id=1]
 [ext_resource path="res://models/dice/DiceModel.tscn" type="PackedScene" id=2]
-[ext_resource path="res://textures/player/dice_dropshadow.png" type="Texture" id=3]
+[ext_resource path="res://textures/player/square_dropshadow.png" type="Texture" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2, 1, 2 )
@@ -29,6 +29,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 37.5669, 0 )
 omni_range = 42.4747
 
 [node name="DropShadow" type="Sprite3D" parent="."]
-transform = Transform( 5, 0, 0, 0, -3.27835e-07, -1, 0, 7.5, -4.37114e-08, 0, -1.3, 0 )
+transform = Transform( 12, 0, 0, 0, -5.24537e-07, -1, 0, 12, -4.37114e-08, 0, -1.3, 0 )
 opacity = 0.68
 texture = ExtResource( 3 )
