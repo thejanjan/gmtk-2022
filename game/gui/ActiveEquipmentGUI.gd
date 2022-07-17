@@ -24,12 +24,26 @@ func _ready():
 	self.pips[active_dice].equip_pip(true)
 
 
-func approach_plinth():
+	# Register plinths in level to listen for 
+	register_plinths()
+	
+	
+# TODO: move this plinth registry bullshit somewhere way better
+func register_plinths() -> void:
+	print("registering plinths")
+	var plinths = get_tree().get_nodes_in_group('plinths')
+	for plinth in plinths:
+		print("registered plinth")
+		plinth.connect("body_entered", self, "approach_plinth")
+		plinth.connect("body_exited", self, "unapproach_plinth")
+
+
+func approach_plinth(_node):
 	for pip in self.pips:
 		pip.approach_plinth()
 	
 	
-func unapproach_plinth():
+func unapproach_plinth(_node):
 	for pip in self.pips:
 		pip.unapproach_plinth()
 
