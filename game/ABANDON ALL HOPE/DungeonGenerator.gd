@@ -119,3 +119,4 @@ func place_hallway_tile(x, y, color):
 # Herpes simplex virus.
 func triangulate():
 	pass
+
