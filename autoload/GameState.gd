@@ -49,6 +49,11 @@ var HP = 6
 var cash = 0
 var ActiveCoins = []
 
+func reset_variables():
+	HP = 6
+	cash = 0
+	ActiveCoins = []
+
 func get_player():
 	var player_group = self.get_tree().get_nodes_in_group("Player")
 	if player_group:

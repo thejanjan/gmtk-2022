@@ -321,7 +321,7 @@ func generate_environmental():
 		var on_edge = false
 		for e in environmental:
 			new_object_class = e[1]
-			on_edge = e[2]
+			#on_edge = e[2]
 			if e[0] > choice:
 				break
 		var new_object = new_object_class.instance()
