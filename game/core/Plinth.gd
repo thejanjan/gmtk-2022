@@ -4,6 +4,8 @@ export(int) var cost = 0
 export(Enum.ItemType) var item_type = Enum.ItemType.NIL
 
 onready var _item_sprite = $ItemSprite
+onready var _label = $CenterContainer/Label
+
 var _player_inside: bool = false
 
 # Called when the node enters the scene tree for the first time.
@@ -14,6 +16,7 @@ func _ready():
 		populate()
 	else:
 		set_item_type(item_type)
+	update_label()
 	
 func _unhandled_input(event):
 	if _player_inside and event.is_action_pressed("interact"):
@@ -29,6 +32,17 @@ func set_item_type(new_item_type: int):
 func populate():
 	var item_data: Database._ItemData = ItemPool.pop_random_item()
 	set_item_type(item_data.get_item_type())
+
+func set_cost(new_cost: int):
+	cost = new_cost
+	update_label()
+
+func update_label() -> void:
+	if cost == 0:
+		_label.hide()
+	else:
+		_label.text = "$%d" % cost
+		_label.show()
 
 
 func _on_Plinth_body_entered(_body:Node):

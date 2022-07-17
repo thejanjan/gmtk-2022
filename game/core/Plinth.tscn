@@ -23,5 +23,18 @@ texture = ExtResource( 3 )
 
 [node name="ItemSprite" type="Sprite" parent="."]
 
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -32.5
+margin_right = 32.5
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="CenterContainer"]
+margin_top = 13.0
+margin_right = 65.0
+margin_bottom = 27.0
+text = "Skill Issue"
+
 [connection signal="body_entered" from="." to="." method="_on_Plinth_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_Plinth_body_exited"]
