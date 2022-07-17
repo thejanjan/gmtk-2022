@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal on_new_dice(dice_side)
 signal initialize_equips(equip_dict)
 signal pip_stacks_updated
+signal player_hurt
 
 const PlayerStats = preload("res://game/core/player/PlayerStats.gd")
 const EnemyBase = preload("res://game/base/EnemyBase.gd")
@@ -124,6 +125,7 @@ func _physics_process(delta):
 					GameState.make_text(self, "@!#?@!", "f21")
 					GameState.HP -= 1
 					InvincibilityTimer.start()
+					emit_signal("player_hurt")
 
 	
 	
