@@ -61,7 +61,28 @@ func _statChange(stat, multiplier):
 	var stats = get_player()._stats
 	var og = stats.get(stat)
 	stats.set(stat, stats.get(stat) * multiplier)
+	
 	print("Set {0} from {1} to {2}".format([stat, og, stats.get(stat)]))
+	# Show with particles
+	var player = get_player()
+	var ud = multiplier > 0
+	if stat in player._stats._inverted_stats:
+		ud = !ud
+	ud = "_up" if ud else "_down"
+	var partSprite = "res://textures/items/stat_particles/" + stat + ud + ".png"
+	if ResourceLoader.exists(partSprite):
+		var part = get_player().get_node("CPUParticles2D").duplicate()
+		player.add_child(part)
+		print(player.get_children().size())
+		part.emitting = true
+		part.amount = ceil(multiplier/5.0)
+		part.texture = load(partSprite)
+		
+		# Doesn't use timer because it was being a bitch
+		# Deletes it to not memory leak
+		var timer = get_tree().create_timer(2)
+		yield(timer, "timeout")
+		part.queue_free()
 
 func tempStatChange(stat, multiplier, secondDuration, autostop=false):
 	_statChange(stat, multiplier)
