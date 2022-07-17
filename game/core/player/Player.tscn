@@ -62,7 +62,6 @@ emitting = false
 lifetime = 3.0
 one_shot = true
 explosiveness = 1.0
-texture = ExtResource( 7 )
 emission_shape = 1
 emission_sphere_radius = 8.05
 spread = 180.0

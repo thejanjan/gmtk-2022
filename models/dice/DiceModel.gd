@@ -1,6 +1,8 @@
 extends RigidBody
 
 const JUMP_VELOCITY = 20
+const HOP_VELOCITY = 10
+const SMASH_VELOCITY = -30
 var jumping = -10;
 var in_jump = false;
 var current_speed = Vector2(0, 0)
@@ -39,6 +41,7 @@ func _physics_process(delta):
 	if self.translation.y <= 0 and jumping < 0:
 		if in_jump:
 			emit_signal("jump_end")
+			$land.play()
 			in_jump = false
 		var jump_attempt = Input.is_action_pressed("move_roll")
 		if jump_attempt:
@@ -46,6 +49,7 @@ func _physics_process(delta):
 			jumping = 20
 			in_jump = true
 			emit_signal("jump_start")
+			$jump.play()
 	if jumping == 18 and self.translation.y <= 0:
 		# Our jump failed.
 		jumping = -1
@@ -133,6 +137,13 @@ func _do_spin():
 			0.5, Tween.TRANS_ELASTIC, Tween.EASE_OUT
 		)
 	tween.start()
+	# Do some force funnies
+	self.apply_impulse(Vector3(0, 0, 0), Vector3(0, HOP_VELOCITY, 0))
+	yield(get_tree().create_timer(0.1), "timeout")
+	$bonk.play()
+	yield(get_tree().create_timer(0.3), "timeout")
+	self.apply_impulse(Vector3(0, 0, 0), Vector3(0, SMASH_VELOCITY, 0))
+	
 	
 func _lerp_rotation(new_transform):
 	for DiceModel in self.get_dice_models():

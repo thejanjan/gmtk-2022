@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/BoingUp CRT2010904.ogg-1b11a01d3fca74594fc0180794f6d0d7.oggstr"
+
+[deps]
+
+source_file="res://audio/BoingUp CRT2010904.ogg"
+dest_files=[ "res://.import/BoingUp CRT2010904.ogg-1b11a01d3fca74594fc0180794f6d0d7.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
