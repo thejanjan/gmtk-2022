@@ -49,12 +49,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game/core/equipment/RubberOfTheSoul.gd"
 }, {
-"base": "Node",
+"base": "Node2D",
 "class": "State",
 "language": "GDScript",
 "path": "res://game/core/State.gd"
 }, {
-"base": "Node",
+"base": "Node2D",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://game/core/StateMachine.gd"
@@ -92,14 +92,19 @@ config/icon="res://icon.png"
 
 [autoload]
 
+EditorUtil="*res://autoload/EditorUtil.gd"
+DrawUtil="*res://autoload/DrawUtil.gd"
 Enum="*res://autoload/Enum.gd"
 Database="*res://autoload/Database.gd"
 GameState="*res://autoload/GameState.gd"
 ItemPool="*res://autoload/ItemPool.gd"
 Random="*res://autoload/Random.gd"
 DataClasses="*res://autoload/DataClasses.gd"
-DiceSide="*res://onload/DiceSide.gd"
 BeasTiary="*res://autoload/BEASTiary.gd"
+
+[debug]
+
+gdscript/warnings/shadowed_variable=false
 
 [importer_defaults]
 

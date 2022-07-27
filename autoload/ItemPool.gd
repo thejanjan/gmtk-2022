@@ -23,7 +23,7 @@ func _ready():
 func add_item(item_data, weight):
 	_items.append(Element.new(item_data, weight))
 	_total_weight += weight;
-	for i in range(weight):
+	for _i in range(weight):
 		_weighted_item_datas.append(item_data)
 
 func remove_item(index):
@@ -45,7 +45,7 @@ func pop_random_item_id():
 	
 func pop_random_item():
 	return Random.choice(_weighted_item_datas)
-	return _item_schema[pop_random_item_id()]
+	# return _item_schema[pop_random_item_id()]
 
 func item_id_when_pool_is_empty():
 	return Enum.ItemType.NIL
