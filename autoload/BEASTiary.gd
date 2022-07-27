@@ -1,9 +1,11 @@
+tool
 extends Node
 
 """
 BESAT MODE
 """
 
+# Holds information about enemies
 
 var EnemyMoveDuration = 1.0
 var EnemyVisualMoveDuration = 0.25
@@ -11,19 +13,16 @@ var EnemyVisualMoveDuration = 0.25
 
 class _EnemyData:
 	
-	var enemy_flavor = null
 	var packed_scene = null
 	var floor_range = [1, null]
 	var cost = 1.0
 	
-	func _init(enemy_flavor: int,
-			   floor_range: Array,
-			   cost: float,
-			   packed_scene: String):
-		self.enemy_flavor = enemy_flavor
-		self.floor_range = floor_range
-		self.cost = cost
-		self.packed_scene = load(packed_scene)
+	func _init(_floor_range: Array = [1, null],
+			       _cost: float = 1.0,
+			       scene_path: String = ""):
+		floor_range = _floor_range
+		cost = _cost
+		packed_scene = load(scene_path)
 		
 	"""
 	Getters
@@ -42,68 +41,58 @@ class _EnemyData:
 		return self.packed_scene
 
 
-var EnemyDB = [
-	_EnemyData.new(
-		Enum.EnemyFlavor.PAWN,
+var EnemyDB = {
+	Enum.EnemyFlavor.PAWN: _EnemyData.new(
 		[1, 3],
 		2.0,
 		"res://game/core/enemies/Pawn.tscn"
 	),
-	_EnemyData.new(
-		Enum.EnemyFlavor.BATTLESHIP_S,
+	Enum.EnemyFlavor.BATTLESHIP_S: _EnemyData.new(
 		[3, null],
 		4.0,
 		"res://game/core/enemies/Battleship_Small.tscn"
 	),
-	_EnemyData.new(
-		Enum.EnemyFlavor.BISHOP,
+	Enum.EnemyFlavor.BISHOP: _EnemyData.new(
 		[2, 4],
 		5.0,
 		"res://game/core/enemies/Bishop.tscn"
 	),
-	_EnemyData.new(
-		Enum.EnemyFlavor.GO,
+	Enum.EnemyFlavor.GO: _EnemyData.new(
 		[4, null],
 		8.0,
 		"res://game/core/enemies/Go.tscn"
 	),
-	_EnemyData.new(
-		Enum.EnemyFlavor.KING,
+	Enum.EnemyFlavor.KING: _EnemyData.new(
 		[2, 3],
 		7.0,
 		"res://game/core/enemies/King.tscn"
 	),
-	_EnemyData.new(
-		Enum.EnemyFlavor.KNIGHT,
+	Enum.EnemyFlavor.KNIGHT: _EnemyData.new(
 		[2, 5],
 		5.0,
 		"res://game/core/enemies/Knight.tscn"
 	),
-	_EnemyData.new(
-		Enum.EnemyFlavor.QUEEN,
+	Enum.EnemyFlavor.QUEEN: _EnemyData.new(
 		[3, null],
 		40.0,
 		"res://game/core/enemies/Queen.tscn"
 	),
-	# _EnemyData.new(
-	# 	Enum.EnemyFlavor.REVERSI,
+	# Enum.EnemyFlavor.REVERSI: _EnemyData.new(
 	# 	[3, 5],
 	# 	5.0,
 	# 	"res://game/core/enemies/Reversi.tscn"
 	# ),
-	_EnemyData.new(
-		Enum.EnemyFlavor.ROOK,
+	Enum.EnemyFlavor.ROOK: _EnemyData.new(
 		[2, null],
 		6.0,
 		"res://game/core/enemies/Rook.tscn"
 	),
-	_EnemyData.new(
-		Enum.EnemyFlavor.CHECKERS,
+	Enum.EnemyFlavor.CHECKERS: _EnemyData.new(
 		[3, null],
 		2.0,
 		"res://game/core/enemies/Checkers.tscn"
 	)
-]
+}
 
 
 """
@@ -119,7 +108,7 @@ func get_random_enemy(dungeon_floor: int, remaining_credits: float) -> _EnemyDat
 	var valid_enemies = []
 	
 	# Find an valid enemey :) 
-	for enemy_data in EnemyDB:
+	for enemy_data in EnemyDB.values():
 		var min_floor = enemy_data.get_min_floor()
 		var max_floor = enemy_data.get_max_floor()
 		var cost = enemy_data.get_enemy_cost()
