@@ -47,8 +47,7 @@ func _physics_process(delta):
 			$land.play()
 			emit_signal("side_swapped", the_dice_side)
 			in_jump = false
-			var item_id = GameState.get_player().SideEquipment.get(the_dice_side)
-			var item_data = Database.get_item_data(item_id)
+			var item_data = GameState.get_player().get_active_equipment_data()
 			debounce = item_data.get_cooldown() * 60.0
 			emit_signal("set_cooldown", item_data.get_cooldown())
 		var jump_attempt = Input.is_action_pressed("move_roll")

@@ -115,22 +115,32 @@ func _physics_process(delta):
 	
 	
 	for i in get_slide_count():
-			var collision = get_slide_collision(i)
-			if collision.collider.has_method("handle_player_collision"):
-				collision.collider.handle_player_collision(collision)
-			if collision.collider is EnemyBase:
-				if InvincibilityTimer.time_left == 0 and collision.collider.prickly:
-					# yeowch! take damage and start the invuln timer
-					SpriteAnimator.play("hurt")
-					GameState.make_text(self, "@!#?@!", "f21")
-					GameState.HP -= 1
-					InvincibilityTimer.start()
-					$Hurt.play()
-					emit_signal("player_hurt")
-					
-					if GameState.HP <= 0:
-						GameState.reset_variables()
-						get_tree().reload_current_scene()
+		var collision = get_slide_collision(i)
+		# handle collision with objects
+		if collision.collider.has_method("handle_player_collision"):
+			collision.collider.handle_player_collision(collision)
+		# active pieces of equipment, like oil slick, may change collision rules.
+		# rules should be mutated.
+		var collision_rules = {
+			"take_damage": true
+		}
+		var current_equipment = get_active_equipment()
+		if current_equipment and current_equipment.has_method("handle_player_collision"):
+			current_equipment.handle_player_collision(collision_rules)
+		# handle collision and damage with enemies
+		if collision.collider is EnemyBase:
+			if InvincibilityTimer.time_left == 0 and collision.collider.prickly and collision_rules.take_damage:
+				# yeowch! take damage and start the invuln timer
+				SpriteAnimator.play("hurt")
+				GameState.make_text(self, "@!#?@!", "f21")
+				GameState.HP -= 1
+				InvincibilityTimer.start()
+				$Hurt.play()
+				emit_signal("player_hurt")
+				
+				if GameState.HP <= 0:
+					GameState.reset_variables()
+					get_tree().reload_current_scene()
 
 func _handle_acceleration(accel: Vector2):
 	"""Handles acceleration."""
@@ -149,6 +159,15 @@ Useful getters
 
 func get_active_pip():
 	return self.get_rigid_body().get_active_pip();
+	
+func get_active_equipment_data():
+	var item_id = self.SideEquipment.get(get_active_pip())
+	var item_data = Database.get_item_data(item_id)
+	return item_data
+
+# get it from the state machine. can be null if you haven't rolled yet, so watch out!
+func get_active_equipment():
+	return ESM.state
 
 func get_player_sprite():
 	return PlayerSprite

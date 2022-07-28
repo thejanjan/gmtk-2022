@@ -15,6 +15,9 @@ func apply_stats(invert: bool):
 		_statChange("_speed", 1.0 / 3.0)
 		_statChange("_acceleration", 1.0 / 10.0)
 		_statChange("_friction", 1.0 / 20.0)
+		
+func handle_player_collision(collision_rules):
+	collision_rules.take_damage = false # too slippery to hit
 	
 func exit():
 	self.apply_stats(true)
