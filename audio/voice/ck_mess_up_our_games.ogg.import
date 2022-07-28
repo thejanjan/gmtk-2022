@@ -11,5 +11,5 @@ dest_files=[ "res://.import/ck_mess_up_our_games.ogg-5b4a8e227f7c603b5ac3db30f58
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

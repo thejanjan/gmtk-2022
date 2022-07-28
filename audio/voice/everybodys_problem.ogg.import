@@ -11,5 +11,5 @@ dest_files=[ "res://.import/everybodys_problem.ogg-877edb60348250c3bd5e12b9cc69e
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

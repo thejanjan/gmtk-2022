@@ -11,5 +11,5 @@ dest_files=[ "res://.import/ck_inviting_you.ogg-4c196ceebdc718f071837bb1efedcc84
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
