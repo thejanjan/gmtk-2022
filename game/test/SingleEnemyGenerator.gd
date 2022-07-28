@@ -36,9 +36,10 @@ func _on_Timer_timeout() -> void:
 		return # don't actually spawn enemies in the editor
 
 	var enemy = enemy_pckd.instance() as Node2D
-	enemy.position = position
 	var parent = get_parent()
 	if parent:
+		# try adding to the parent so as to not inherit our position
+		enemy.position = position
 		parent.add_child(enemy)
 	else:
 		self.add_child(enemy)

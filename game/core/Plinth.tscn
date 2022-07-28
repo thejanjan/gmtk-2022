@@ -170,7 +170,6 @@ scale = Vector2( 4, 4 )
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 1 )
-cost = 10
 
 [node name="Description" type="Label" parent="."]
 visible = false
@@ -179,7 +178,11 @@ margin_top = 25.5
 margin_right = 150.5
 margin_bottom = 39.5
 theme = ExtResource( 4 )
+text = "if you're reading this, brush your teeth"
 align = 1
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="StationCollisionShape" type="CollisionShape2D" parent="."]
 rotation = 1.5708
@@ -201,6 +204,9 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -5 )
 texture = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../ItemSprite")
@@ -209,7 +215,7 @@ anims/RESET = SubResource( 2 )
 anims/plinth_item_hover = SubResource( 3 )
 
 [node name="ItemSprite" type="Sprite" parent="."]
-position = Vector2( 513.715, 255.765 )
+position = Vector2( 0, -14 )
 texture = ExtResource( 2 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -219,13 +225,15 @@ margin_left = -32.5
 margin_right = 32.5
 margin_bottom = 40.0
 theme = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Label" type="Label" parent="CenterContainer"]
-margin_left = 23.0
+margin_left = 32.0
 margin_top = 14.0
-margin_right = 41.0
+margin_right = 32.0
 margin_bottom = 25.0
-text = "$10"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CenterContainer"]
 root_node = NodePath("../Label")
